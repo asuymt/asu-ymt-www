@@ -6,6 +6,7 @@
 
 ---
 
+
 ## İÇİNDEKİLER
 1. [Genel Bakış](#1-genel-bakış)
 2. [Hedef Kitle](#2-hedef-kitle)
