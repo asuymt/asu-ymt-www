@@ -12,8 +12,9 @@ html {
 }
 
 .container {
-  min-height: 100vh;
-  background: #000;
+  min-height: auto;
+  background: #0D0D0D;
+  position: relative;
 }
 
 .navbar ul li a {
@@ -33,6 +34,7 @@ html {
 
 .navbar {
   text-align: center;
+  padding-top: 1.4rem;
 }
 
 .navbar ul {
@@ -41,6 +43,7 @@ html {
   justify-self: center;
   padding-top: 2rem;
   margin-bottom: 4rem;
+  list-style-type: none;
 }
 
 .kapak {
@@ -85,3 +88,150 @@ html {
   padding-top: 2rem;
   font-weight: 300;
 }
+
+.box{
+  color: #FF4D4D;
+  margin-top: 15rem;
+}
+
+.box hr{
+  color: #FF6F6F;
+  background-color: #FF6F6F;
+  border: none;
+  width: 70%;
+  height: 0.4rem;
+  justify-self: center;
+}
+
+.box p{
+  font-size: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 6rem;
+  text-align: center;
+  line-height: 3rem;
+  font-weight: 500;
+}
+
+.box h1{
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  padding-top: 6rem;
+}
+
+.box-2{
+  color: #6FBF73;
+  margin-top: 15rem;
+}
+
+.box-2 h1{
+  font-size: 4.5rem;
+  font-weight: 700;
+  text-align: center;
+  padding-bottom: 6rem;
+}
+
+.cardlar{
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.card{
+  width: 25%;
+  height: 28rem;
+  background-color: #1C1C1C;
+  border-radius: 10px;
+}
+
+.card i{
+  font-size: 6rem;
+  position: relative;
+  left: 50%;
+  top: 22%;
+  transform: translate(-50%,-50%);
+}
+
+.card h1{
+  font-size: 4rem;
+  font-weight: 700;
+  text-align: center;
+  padding-top: 6rem;
+  padding-bottom: 1.5rem;
+}
+
+.card p{
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.footlar{
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  padding-top: 10rem;
+}
+.foot{
+  width: 20%;
+}
+
+.foot img{
+  width: 13rem;
+}
+
+.foot ul li a {
+  text-decoration: none;
+  color: #BFBFBF;
+  font-size: 1.8rem;
+  line-height: 2.7rem;
+}
+
+.foot ul{
+  list-style-type: none;
+  padding-left: 1.4rem;
+}
+
+.footer{
+  color: #fff;
+  background-color: #000;
+  margin-top: 20rem;
+}
+
+.footlar h1{
+  font-size: 2.5rem;
+  padding-bottom: 2rem;
+}
+
+.footlar h1::after{
+  content: '';
+  display: block;
+  width: 5rem;
+  height: 0.3rem;
+  background-color: #01579B;
+  margin-top: 0.5rem;
+}
+
+#iletisim a{
+  color: #BFBFBF;
+  font-size: 3rem;
+  margin-right: 1rem;
+}
+
+.footer hr{
+  color: #fff;
+  background-color: #fff;
+  width: 75%;
+  height: 0.2rem;
+  margin: auto;
+  margin-top: 4rem;
+}
+
+.footer p{
+  text-align: center;
+  font-size: 2rem;
+  padding: 4rem;
+  color: #BFBFBF;
+}
+
+
