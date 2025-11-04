@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayfa Bulunamadı - ASÜ YMT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="icon" type="image/x-icon" href="./images/ASÜ-YMT-1.png">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0D0D0D;
+        }
+
+        .hata-sayfasi {
+            min-height: 99.9vh;
+            background: #0D0D0D;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+            padding: 3rem 2rem 0 2rem;
+        }
+
+        .hata-icerik {
+            max-width: 600px;
+        }
+
+        .hata-icerik .logo {
+            width: 15rem;
+            margin-bottom: 1rem;
+        }
+
+        .hata-kod {
+            font-size: 7rem;
+            font-weight: 700;
+            color: #FF4D4D;
+            line-height: 1;
+            margin-bottom: 0;
+        }
+
+        .hata-baslik {
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .hata-mesaj {
+            font-size: 1.8rem;
+            color: #9e9e9e;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .anasayfa-btn {
+            display: inline-block;
+            padding: 1.5rem 4rem;
+            background-color: #01579B;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .anasayfa-btn:hover {
+            background-color: #0277BD;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(1, 87, 155, 0.3);
+        }
+
+        .hata-ikonlar {
+            margin-top: 2rem;
+        }
+
+        .hata-ikonlar a {
+            color: #9e9e9e;
+            font-size: 2.5rem;
+            margin: 0 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .hata-ikonlar a:hover {
+            color: #01579B;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hata-sayfasi">
+        <div class="hata-icerik">
+            <img src="./images/ASÜ-YMT-1.png" alt="ASÜ YMT Logo" class="logo">
+            <div class="hata-kod">404</div>
+            <h1 class="hata-baslik">Sayfa Bulunamadı</h1>
+            <p class="hata-mesaj"> Aradığınız sayfa kaldırılmış, adı değiştirilmiş veya geçici olarak kullanılamıyor olabilir. </p>
+            <a href="index.html" class="anasayfa-btn">Ana Sayfaya Dön</a>
+            <div class="hata-ikonlar">
+                <a href="mailto:info@mefamex.com" title="Mail Gönder" target="_blank" rel="noopener"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://github.com/asuymt" title="GitHub" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.instagram.com/asuymt/" title="Instagram" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
