@@ -1,0 +1,17 @@
+# General
+User-agent: *
+
+# internel query
+# Disallow: /*?q=
+# Disallow: /*?s=
+# Disallow: /*?path=
+
+# loose it
+Allow: /
+Allow: /index.html
+Allow: /sitemap.xml
+Allow: /sitemap/sitemap_pages.xml
+Allow: /robots.txt
+Allow: /navigation.json
+
+Sitemap: https://asuymt.com/sitemap.xml
