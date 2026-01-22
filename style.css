@@ -15,7 +15,7 @@ html {
 .container {
   min-height: fit-content;
   height: auto;
-  background: #0D0D0D;
+  background: #0d0d0d;
   position: relative;
 }
 
@@ -27,7 +27,7 @@ html {
 }
 
 .navbar ul li a:hover {
-  color: #01579B;
+  color: #01579b;
 }
 
 .navbar img {
@@ -74,10 +74,12 @@ html {
 .kapak-text {
   position: absolute;
   z-index: 2;
-  top: 45%;
-  left: 37%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
+  text-align: center;
+  width: 80%;
 }
 
 .kapak-text h1 {
@@ -92,13 +94,13 @@ html {
 }
 
 .box {
-  color: #FF4D4D;
+  color: #00d1ff;
   margin-top: 15rem;
 }
 
 .box hr {
-  color: #FF6F6F;
-  background-color: #FF6F6F;
+  color: #01579b;
+  background-color: #01579b;
   border: none;
   width: 70%;
   height: 0.4rem;
@@ -122,7 +124,7 @@ html {
 }
 
 .box-2 {
-  color: #6FBF73;
+  color: #6366f1;
   margin-top: 15rem;
 }
 
@@ -142,7 +144,7 @@ html {
 .card {
   width: 25%;
   height: 28rem;
-  background-color: #1C1C1C;
+  background-color: #1c1c1c;
   border-radius: 10px;
 }
 
@@ -168,6 +170,44 @@ html {
   font-weight: 600;
 }
 
+/* Takım Kartları İyileştirme */
+.team-card {
+  width: 28%;
+  min-width: 280px;
+  background-color: #1c1c1c;
+  border-radius: 12px;
+  padding: 3rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+  border: 1px solid #333;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  border-color: #01579b;
+}
+
+.team-card i {
+  font-size: 4.5rem;
+  margin-bottom: 2rem;
+  display: block;
+  place-self: center;
+}
+
+.team-card h2 {
+  color: #fff;
+  font-size: 2.2rem;
+  margin-bottom: 0.2rem;
+  margin-top: 3rem;
+}
+
+.team-card p {
+  font-size: 1.5rem;
+  color: #9e9e9e;
+  line-height: 2.22rem;
+  font-weight: 400;
+}
+
 .footlar {
   display: flex;
   justify-content: center;
@@ -185,14 +225,14 @@ html {
 
 .foot ul li a {
   text-decoration: none;
-  color: #BFBFBF;
+  color: #bfbfbf;
   font-size: 1.8rem;
   line-height: 2.7rem;
   transition: color 0.3s ease-in-out;
 }
 
 .foot ul li a:hover {
-  color: #01579B;
+  color: #01579b;
 }
 
 .foot ul {
@@ -212,16 +252,16 @@ html {
 }
 
 .footlar h1::after {
-  content: '';
+  content: "";
   display: block;
   width: 5rem;
   height: 0.3rem;
-  background-color: #01579B;
+  background-color: #01579b;
   margin-top: 0.5rem;
 }
 
 #iletisim a {
-  color: #BFBFBF;
+  color: #bfbfbf;
   font-size: 3.5rem;
   margin-inline: 0.4rem;
   padding: 0.8rem 1rem;
@@ -230,7 +270,7 @@ html {
 }
 
 #iletisim a:hover {
-  color: #01579B;
+  color: #01579b;
   text-shadow: 0px 0px 0.1em #ffffff73;
   border-radius: 20%;
   transform: translateY(-0.3rem) scale(1.1);
@@ -249,5 +289,160 @@ html {
   text-align: center;
   font-size: 2rem;
   padding: 4rem;
-  color: #BFBFBF;
+  color: #bfbfbf;
+}
+
+/* Duyuru Kartları */
+.card-duyuru {
+  width: 30%;
+  min-width: 300px;
+  background: #1c1c1c;
+  border-radius: 12px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  border: 1px solid #333;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.card-duyuru:hover {
+  transform: translateY(-10px);
+  border-color: #01579b;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.date {
+  color: #9e9e9e;
+  font-size: 1.4rem;
+}
+
+.tag {
+  background: #01579b;
+  color: #fff;
+  padding: 0.2rem 1rem;
+  border-radius: 20px;
+  font-size: 1.2rem;
+}
+
+.card-duyuru h2 {
+  color: #fff;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-duyuru p {
+  color: #bfbfbf;
+  font-size: 1.6rem !important;
+  line-height: 2.4rem !important;
+  margin-bottom: 2rem;
+  text-align: left !important;
+}
+
+.read-more {
+  color: #01579b;
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Etkinlik Kartları */
+.card-etkinlik {
+  width: 45%;
+  min-width: 350px;
+  background: #1c1c1c;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+}
+
+.event-image {
+  height: 15rem;
+  background: linear-gradient(135deg, #01579b, #002f54);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-image i {
+  font-size: 6rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.event-info {
+  padding: 2.5rem;
+}
+
+.event-info h2 {
+  color: #fff;
+  font-size: 2.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.event-date,
+.event-location {
+  display: block;
+  color: #9e9e9e;
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.event-date i,
+.event-location i {
+  margin-right: 0.8rem;
+  color: #01579b;
+}
+
+.event-info p {
+  color: #bfbfbf;
+  font-size: 1.6rem !important;
+  line-height: 2.4rem !important;
+  margin: 2rem 0;
+  text-align: left !important;
+}
+
+.btn-katil {
+  display: inline-block;
+  background: #01579b;
+  color: #fff;
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.btn-katil:hover {
+  background: #0277bd;
+}
+
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding-inline: 2rem;
+  }
+
+  .card-duyuru,
+  .card-etkinlik {
+    width: 90%;
+  }
+
+  .kapak-text {
+    left: 50%;
+    width: 90%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
 }
