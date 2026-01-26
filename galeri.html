@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Duyurular | ASÜ-YMT</title>
+    <title>Galeri | ASÜ-YMT</title>
     <link
       rel="icon"
       sizes="64x64"
@@ -23,6 +23,33 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <style>
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+      }
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        height: 250px;
+        background: #1c1c1c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #333;
+      }
+      .gallery-item i {
+        font-size: 5rem;
+        color: #01579b;
+      }
+      .gallery-item:hover i {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+      }
+    </style>
   </head>
 
   <body>
@@ -42,58 +69,40 @@
         </ul>
       </div>
       <div class="box-2" style="margin-top: 5rem">
-        <h1>Duyurular</h1>
-        <div class="cardlar" style="flex-wrap: wrap">
-          <div class="card-duyuru animate__animated animate__fadeIn">
-            <div class="card-header">
-              <span class="date">22 Ocak 2025</span>
-              <span class="tag">Genel</span>
-            </div>
-            <h2>Yeni Eğitim Dönemi Başlıyor!</h2>
-            <p>
-              Bahar dönemi için hazırladığımız yazılım eğitimleri ve atölye
-              çalışmaları çok yakında başlıyor. Takipte kalın!
-            </p>
-            <a href="yeni-egitim-donemi.html" class="read-more"
-              >Devamını Oku <i class="fas fa-arrow-right"></i
-            ></a>
+        <h1>Galeri</h1>
+        <div class="gallery-grid">
+          <div class="gallery-item animate__animated animate__zoomIn">
+            <i class="fas fa-image"></i>
           </div>
-
           <div
-            class="card-duyuru animate__animated animate__fadeIn"
+            class="gallery-item animate__animated animate__zoomIn"
+            style="animation-delay: 0.1s"
+          >
+            <i class="fas fa-camera"></i>
+          </div>
+          <div
+            class="gallery-item animate__animated animate__zoomIn"
             style="animation-delay: 0.2s"
           >
-            <div class="card-header">
-              <span class="date">15 Ocak 2025</span>
-              <span class="tag">Üyelik</span>
-            </div>
-            <h2>Üye Kayıtları Devam Ediyor</h2>
-            <p>
-              Topluluğumuza katılarak projelerimizde yer almak ve
-              etkinliklerimizden haberdar olmak için kayıt formunu
-              doldurabilirsiniz.
-            </p>
-            <a href="uye-kayitlari.html" class="read-more"
-              >Devamını Oku <i class="fas fa-arrow-right"></i
-            ></a>
+            <i class="fas fa-users"></i>
           </div>
-
           <div
-            class="card-duyuru animate__animated animate__fadeIn"
+            class="gallery-item animate__animated animate__zoomIn"
+            style="animation-delay: 0.3s"
+          >
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <div
+            class="gallery-item animate__animated animate__zoomIn"
             style="animation-delay: 0.4s"
           >
-            <div class="card-header">
-              <span class="date">10 Ocak 2025</span>
-              <span class="tag">Yarışma</span>
-            </div>
-            <h2>Kodlama Maratonu Heyecanı</h2>
-            <p>
-              Aksaray Üniversitesi bünyesinde düzenleyeceğimiz 24 saatlik
-              kodlama maratonuna başvurular haftaya başlıyor.
-            </p>
-            <a href="kodlama-maratonu.html" class="read-more"
-              >Devamını Oku <i class="fas fa-arrow-right"></i
-            ></a>
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div
+            class="gallery-item animate__animated animate__zoomIn"
+            style="animation-delay: 0.5s"
+          >
+            <i class="fas fa-project-diagram"></i>
           </div>
         </div>
       </div>
