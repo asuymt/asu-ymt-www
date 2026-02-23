@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Web Geliştirme | ASÜ-YMT</title>
+    <link rel="icon" sizes="64x64" href="../../images/Logo-64.png" type="image/png" />
+    <link rel="icon" type="image/x-icon" href="../../images/ASU-YMT-1.png" />
+    <link rel="stylesheet" href="../../globals.css" />
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <style>
+        .detail-container {
+            padding: 5rem 5%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            color: var(--text-primary);
+        }
+
+        .detail-section {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            padding: 4rem;
+            margin-bottom: 4rem;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .detail-section h2 {
+            font-size: 2.6rem;
+            color: var(--accent);
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            font-weight: 700;
+        }
+
+        .detail-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+        }
+
+        .curriculum h3,
+        .info-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .curriculum ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .curriculum li {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .curriculum li i {
+            color: var(--accent);
+            margin-top: 0.3rem;
+        }
+
+        .info-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2.5rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .detail-container .info-item {
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+        }
+
+        .detail-container .info-item strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        @media (max-width: 992px) {
+            .detail-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .detail-container {
+                padding: 3rem 5%;
+            }
+
+            .detail-section {
+                padding: 2.5rem;
+            }
+
+            .detail-section h2 {
+                font-size: 2rem;
+            }
+
+            .curriculum li {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="../../index.html"><img src="../../images/ASU-YMT-1.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
+            <ul>
+                <li><a href="../../index.html#hakkimizda">Hakkımızda</a></li>
+                <li><a href="../../duyurular.html">Duyurular</a></li>
+                <li><a href="../../etkinlikler.html">Etkinliklerimiz</a></li>
+                <li><a href="../../egitimler.html">Eğitimlerimiz</a></li>
+                <li><a href="../../projeler.html">Projelerimiz</a></li>
+                <li><a href="../../iletisim.html">İletişim</a></li>
+                <li><a href="../../asu-topluluklar.html">ASÜ Toplulukları</a></li>
+            </ul>
+        </div>
+
+        <div class="detail-container">
+            <div class="detail-section animate__animated animate__fadeInUp">
+                <h2><i class="fab fa-js"></i> Modern Web Geliştirme (Frontend)</h2>
+                <div class="detail-content">
+                    <div class="curriculum">
+                        <h3>Eğitim Müfredatı</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Hafta 1: HTML5 Semantik Yapı ve Erişilebilirlik</li>
+                            <li><i class="fas fa-check-circle"></i> Hafta 2: CSS3 Modern Düzenleme (Flexbox, Grid)</li>
+                            <li><i class="fas fa-check-circle"></i> Hafta 3: Responsive Tasarım ve CSS Frameworkleri
+                            </li>
+                            <li><i class="fas fa-check-circle"></i> Hafta 4: JavaScript Temelleri ve DOM Manipülasyonu
+                            </li>
+                            <li><i class="fas fa-check-circle"></i> Hafta 5: ES6+ Özellikleri ve Asenkron Programlama
+                            </li>
+                            <li><i class="fas fa-check-circle"></i> Hafta 6: API Entegrasyonu ve Final Projesi</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <h3>Genel Bilgiler</h3>
+                        <div class="info-item"><strong>Eğitmen:</strong> Topluluk Frontend Ekibi</div>
+                        <div class="info-item"><strong>Süre:</strong> 6 Hafta (Her Çarşamba)</div>
+                        <div class="info-item"><strong>Zorluk:</strong> Orta Seviye</div>
+                        <div class="info-item"><strong>Araçlar:</strong> VS Code, Chrome DevTools</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footlar">
+                <div class="foot">
+                    <a href="../../index.html"><img src="../../images/ASU-YMT-1.png" alt="ASÜ YMT Logo" /></a>
+                </div>
+                <div class="foot">
+                    <h1>Hızlı Menü</h1>
+                    <ul>
+                        <li><a href="../../index.html#hakkimizda">Hakkımızda</a></li>
+                        <li><a href="../../duyurular.html">Duyurular</a></li>
+                        <li><a href="../../etkinlikler.html">Etkinliklerimiz</a></li>
+                        <li><a href="../../egitimler.html">Eğitimlerimiz</a></li>
+                        <li><a href="../../projeler.html">Projelerimiz</a></li>
+                        <li><a href="../../iletisim.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="foot" id="iletisim">
+                    <h1>İletişim</h1>
+                    <a href="https://github.com/asuymt" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+                    <a href="https://www.instagram.com/asuymt/" target="_blank"><i class="fa-brands fa-instagram"></i>
+                        Instagram</a>
+                </div>
+            </div>
+            <p>© 2026 Tüm Hakları Saklıdır.</p>
+        </div>
+    </div>
+</body>
+
+</html>

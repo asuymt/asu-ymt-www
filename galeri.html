@@ -1,159 +1,86 @@
 <!doctype html>
 <html lang="tr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Galeri | ASÜ-YMT</title>
-    <link
-      rel="icon"
-      sizes="64x64"
-      href="/images/Logo-64.png"
-      type="image/png"
-    />
-    <link rel="icon" type="image/x-icon" href="./images/ASU-YMT-1.png" />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galeri | ASÜ-YMT</title>
+  <link rel="icon" sizes="64x64" href="/images/Logo-64.png" type="image/png" />
+  <link rel="icon" type="image/x-icon" href="./images/ASU-YMT-1.png" />
+      <link rel="stylesheet" href="./globals.css" />
     <link rel="stylesheet" href="./style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <style>
-      .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-        padding: 20px;
-      }
-      .gallery-item {
-        position: relative;
-        overflow: hidden;
-        border-radius: 10px;
-        height: 250px;
-        background: #1c1c1c;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid #333;
-      }
-      .gallery-item i {
-        font-size: 5rem;
-        color: #01579b;
-      }
-      .gallery-item:hover i {
-        transform: scale(1.1);
-        transition: transform 0.3s ease;
-      }
-    </style>
-  </head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 
-  <body>
-    <div class="container">
-      <div class="navbar">
-        <a href="index.html"
-          ><img src="images/ASU-YMT-1.png" alt="Yazılım Mühendisliği Topluluğu"
-        /></a>
-        <ul>
-          <li><a href="index.html#hakkimizda">Hakkımızda</a></li>
-          <li><a href="duyurular.html">Duyurular</a></li>
-          <li><a href="etkinlikler.html">Etkinliklerimiz</a></li>
-          <li><a href="egitimler.html">Eğitimlerimiz</a></li>
-          <li><a href="projeler.html">Projelerimiz</a></li>
-          <li><a href="galeri.html">Galeri</a></li>
-          <li><a href="iletisim.html">İletişim</a></li>
-        </ul>
-      </div>
-      <div class="box-2" style="margin-top: 5rem">
-        <h1>Galeri</h1>
-        <div class="gallery-grid">
-          <div class="gallery-item animate__animated animate__zoomIn">
-            <i class="fas fa-image"></i>
-          </div>
-          <div
-            class="gallery-item animate__animated animate__zoomIn"
-            style="animation-delay: 0.1s"
-          >
-            <i class="fas fa-camera"></i>
-          </div>
-          <div
-            class="gallery-item animate__animated animate__zoomIn"
-            style="animation-delay: 0.2s"
-          >
-            <i class="fas fa-users"></i>
-          </div>
-          <div
-            class="gallery-item animate__animated animate__zoomIn"
-            style="animation-delay: 0.3s"
-          >
-            <i class="fas fa-laptop-code"></i>
-          </div>
-          <div
-            class="gallery-item animate__animated animate__zoomIn"
-            style="animation-delay: 0.4s"
-          >
-            <i class="fas fa-graduation-cap"></i>
-          </div>
-          <div
-            class="gallery-item animate__animated animate__zoomIn"
-            style="animation-delay: 0.5s"
-          >
-            <i class="fas fa-project-diagram"></i>
-          </div>
-        </div>
-      </div>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <a href="index.html"><img src="images/ASU-YMT-1.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
+      <ul>
+        <li><a href="index.html#hakkimizda">Hakkımızda</a></li>
+        <li><a href="duyurular.html">Duyurular</a></li>
+        <li><a href="etkinlikler.html">Etkinliklerimiz</a></li>
+        <li><a href="egitimler.html">Eğitimlerimiz</a></li>
+        <li><a href="projeler.html">Projelerimiz</a></li>
+        <li><a href="iletisim.html">İletişim</a></li>
+        <li><a href="asu-topluluklar.html">ASÜ Toplulukları</a>
+        </li>
+      </ul>
+    </div>
 
-      <div class="footer">
-        <div class="footlar">
-          <div class="foot">
-            <a href="index.html" title="ASÜ-YMT"
-              ><img src="./images/ASU-YMT-1.png" alt="ASÜ YMT Logo"
-            /></a>
-          </div>
-          <div class="foot">
-            <h1>Hızlı Menü</h1>
-            <ul>
-              <li><a href="index.html#hakkimizda">Hakkımızda</a></li>
-              <li><a href="duyurular.html">Duyurular</a></li>
-              <li><a href="etkinlikler.html">Etkinliklerimiz</a></li>
-              <li><a href="egitimler.html">Eğitimlerimiz</a></li>
-              <li><a href="projeler.html">Projelerimiz</a></li>
-              <li><a href="galeri.html">Galeri</a></li>
-              <li><a href="iletisim.html">İletişim</a></li>
-            </ul>
-          </div>
-          <div class="foot" id="iletisim">
-            <h1>İletişim</h1>
-            <a
-              href="mailto:info@mefamex.com"
-              title="Mail Gönder"
-              target="_blank"
-              rel="noopener noreferrer"
-              ><i class="fa-solid fa-envelope"></i
-            ></a>
-            <a
-              href="https://github.com/asuymt"
-              title="GitHub"
-              target="_blank"
-              rel="noopener noreferrer"
-              ><i class="fa-brands fa-github"></i
-            ></a>
-            <a
-              href="https://www.instagram.com/asuymt/"
-              title="Instagram"
-              target="_blank"
-              rel="noopener noreferrer"
-              ><i class="fa-brands fa-instagram"></i
-            ></a>
-          </div>
+    <div class="box-2" style="margin-top: 5rem">
+      <h1>Galeri</h1>
+      <div class="gallery-grid">
+        <div class="gallery-item animate__animated animate__fadeInUp">
+          <i class="fas fa-image"></i>
         </div>
-        <hr />
-        <p>© 2025 Tüm Hakları Saklıdır.</p>
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+          <i class="fas fa-camera"></i>
+        </div>
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.15s">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+          <i class="fas fa-laptop-code"></i>
+        </div>
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.25s">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
+          <i class="fas fa-project-diagram"></i>
+        </div>
       </div>
     </div>
-  </body>
+
+    <div class="footer">
+      <div class="footlar">
+        <div class="foot">
+          <a href="index.html" title="ASÜ-YMT"><img src="./images/ASU-YMT-1.png" alt="ASÜ YMT Logo" /></a>
+        </div>
+        <div class="foot">
+          <h1>Hızlı Menü</h1>
+          <ul>
+            <li><a href="index.html#hakkimizda">Hakkımızda</a></li>
+            <li><a href="duyurular.html">Duyurular</a></li>
+            <li><a href="etkinlikler.html">Etkinliklerimiz</a></li>
+            <li><a href="egitimler.html">Eğitimlerimiz</a></li>
+            <li><a href="projeler.html">Projelerimiz</a></li>
+            <li><a href="iletisim.html">İletişim</a></li>
+          </ul>
+        </div>
+        <div class="foot" id="iletisim">
+          <h1>İletişim</h1>
+
+          <a href="https://github.com/asuymt" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+          <a href="https://www.instagram.com/asuymt/" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        </div>
+      </div>
+      <p>© 2026 Tüm Hakları Saklıdır.</p>
+    </div>
+  </div>
+</body>
+
 </html>
