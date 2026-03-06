@@ -4,11 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Galeri | ASÜ-YMT</title>
+  <title>Foto Galeri | ASÜ-YMT</title>
+  <meta name="description" content="ASÜ Yazılım Mühendisliği Topluluğu etkinlik ve organizasyon fotoğrafları." />
   <link rel="icon" sizes="64x64" href="/images/Logo-64.png" type="image/png" />
   <link rel="icon" type="image/x-icon" href="./images/asuymt-logo.png" />
-      <link rel="stylesheet" href="./globals.css" />
-    <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./globals.css" />
+  <link rel="stylesheet" href="./style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
@@ -26,31 +27,87 @@
         <li><a href="egitimler.html">Eğitimlerimiz</a></li>
         <li><a href="projeler.html">Projelerimiz</a></li>
         <li><a href="iletisim.html">İletişim</a></li>
-        <li><a href="asu-topluluklar.html">ASÜ Toplulukları</a>
-        </li>
+        <li><a href="galeri.html">Foto Galeri</a></li>
+        <li><a href="asu-topluluklar.html">ASÜ Toplulukları</a></li>
       </ul>
     </div>
 
     <div class="box-2" style="margin-top: 5rem">
-      <h1>Galeri</h1>
+      <h1>Foto Galeri</h1>
+      <p class="galeri-subtitle">Etkinliklerimizden ve organizasyonlarımızdan kareler 📸</p>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           FOTOĞRAF EKLEME REHBERİ:
+           Her fotoğraf için aşağıdaki yapıyı kopyalayın kardeşlerim, 
+           fotoğrafların daha estetik açılıp kapanması için yaptığımız bir uygulama.
+
+           <div class="gallery-item animate__animated animate__fadeInUp">
+             <img src="images/FOTOGRAF_ADI.jpg" alt="Açıklama" />
+             <div class="gallery-overlay">
+               <span>Açıklama</span>
+             </div>
+           </div>
+
+           animation-delay değerini 0.05s artırarak ekleyin.
+      ═══════════════════════════════════════════════════════════ -->
+
       <div class="gallery-grid">
+
         <div class="gallery-item animate__animated animate__fadeInUp">
-          <i class="fas fa-image"></i>
+          <img src="images/ana_sayfa.jpeg" alt="ASÜ-YMT Topluluk" />
+          <div class="gallery-overlay">
+            <span>ASÜ-YMT Topluluk</span>
+          </div>
         </div>
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
-          <i class="fas fa-camera"></i>
+
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.05s">
+          <img src="images/ASU-YMT-1.png" alt="ASÜ-YMT Etkinlik" />
+          <div class="gallery-overlay">
+            <span>ASÜ-YMT Etkinlik</span>
+          </div>
         </div>
+
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.10s">
+          <img src="images/ymt-logo.jpg" alt="YMT Logo" />
+          <div class="gallery-overlay">
+            <span>YMT Logo</span>
+          </div>
+        </div>
+
         <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.15s">
-          <i class="fas fa-users"></i>
+          <img src="images/ymt_border.png" alt="YMT Afiş" />
+          <div class="gallery-overlay">
+            <span>YMT Afiş</span>
+          </div>
         </div>
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
-          <i class="fas fa-laptop-code"></i>
+
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.20s">
+          <img src="images/asuymt-logo.png" alt="ASÜ-YMT Logo" />
+          <div class="gallery-overlay">
+            <span>ASÜ-YMT Logo</span>
+          </div>
         </div>
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.25s">
-          <i class="fas fa-graduation-cap"></i>
-        </div>
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
-          <i class="fas fa-project-diagram"></i>
+
+      </div>
+    </div>
+
+    <!-- ══════ LIGHTBOX MODAL ══════ -->
+    <div class="gallery-lightbox" id="galleryLightbox">
+      <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+      <button class="lightbox-close" id="lightboxClose" aria-label="Kapat">
+        <i class="fas fa-times"></i>
+      </button>
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Önceki">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Sonraki">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      <div class="lightbox-content">
+        <img src="" alt="" id="lightboxImg" />
+        <div class="lightbox-info">
+          <span class="lightbox-caption" id="lightboxCaption"></span>
+          <span class="lightbox-counter" id="lightboxCounter"></span>
         </div>
       </div>
     </div>
@@ -68,19 +125,127 @@
             <li><a href="etkinlikler.html">Etkinliklerimiz</a></li>
             <li><a href="egitimler.html">Eğitimlerimiz</a></li>
             <li><a href="projeler.html">Projelerimiz</a></li>
+            <li><a href="galeri.html">Foto Galeri</a></li>
             <li><a href="iletisim.html">İletişim</a></li>
           </ul>
         </div>
         <div class="foot" id="iletisim">
           <h1>İletişim</h1>
-
-          <a href="https://github.com/asuymt" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
-          <a href="https://www.instagram.com/asuymt/" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="https://github.com/asuymt" title="GitHub" target="_blank" rel="noopener noreferrer"><i
+              class="fa-brands fa-github"></i> GitHub</a>
+          <a href="https://www.instagram.com/asuymt/" title="Instagram" target="_blank" rel="noopener noreferrer"><i
+              class="fa-brands fa-instagram"></i> Instagram</a>
         </div>
       </div>
       <p>© 2026 Tüm Hakları Saklıdır.</p>
     </div>
   </div>
+
+  <script>
+    (function () {
+      const lightbox = document.getElementById('galleryLightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxCaption = document.getElementById('lightboxCaption');
+      const lightboxCounter = document.getElementById('lightboxCounter');
+      const lightboxClose = document.getElementById('lightboxClose');
+      const lightboxBackdrop = document.getElementById('lightboxBackdrop');
+      const lightboxPrev = document.getElementById('lightboxPrev');
+      const lightboxNext = document.getElementById('lightboxNext');
+
+      const items = document.querySelectorAll('.gallery-item');
+      let currentIndex = 0;
+
+      function openLightbox(index) {
+        currentIndex = index;
+        updateLightbox();
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.add('closing');
+        setTimeout(() => {
+          lightbox.classList.remove('active', 'closing');
+          document.body.style.overflow = '';
+        }, 350);
+      }
+
+      function updateLightbox() {
+        const item = items[currentIndex];
+        const img = item.querySelector('img');
+        const caption = item.querySelector('.gallery-overlay span');
+
+        // Animate content
+        const content = lightbox.querySelector('.lightbox-content');
+        content.classList.remove('lightbox-slide-left', 'lightbox-slide-right');
+        void content.offsetWidth; // force reflow
+
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightboxCaption.textContent = caption ? caption.textContent : img.alt;
+        lightboxCounter.textContent = (currentIndex + 1) + ' / ' + items.length;
+
+        // Hide nav buttons at boundaries
+        lightboxPrev.style.display = currentIndex === 0 ? 'none' : '';
+        lightboxNext.style.display = currentIndex === items.length - 1 ? 'none' : '';
+      }
+
+      function navigatePrev() {
+        if (currentIndex > 0) {
+          const content = lightbox.querySelector('.lightbox-content');
+          content.classList.add('lightbox-slide-right');
+          setTimeout(() => {
+            currentIndex--;
+            updateLightbox();
+          }, 150);
+        }
+      }
+
+      function navigateNext() {
+        if (currentIndex < items.length - 1) {
+          const content = lightbox.querySelector('.lightbox-content');
+          content.classList.add('lightbox-slide-left');
+          setTimeout(() => {
+            currentIndex++;
+            updateLightbox();
+          }, 150);
+        }
+      }
+
+      // Click handlers
+      items.forEach((item, i) => {
+        item.addEventListener('click', () => openLightbox(i));
+        item.style.cursor = 'pointer';
+      });
+
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightboxBackdrop.addEventListener('click', closeLightbox);
+      lightboxPrev.addEventListener('click', navigatePrev);
+      lightboxNext.addEventListener('click', navigateNext);
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') navigatePrev();
+        if (e.key === 'ArrowRight') navigateNext();
+      });
+
+      // Swipe support for mobile
+      let touchStartX = 0;
+      lightbox.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      lightbox.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 60) {
+          if (diff > 0) navigateNext();
+          else navigatePrev();
+        }
+      }, { passive: true });
+    })();
+  </script>
 </body>
 
 </html>
