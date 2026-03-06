@@ -36,58 +36,34 @@
       <h1>Foto Galeri</h1>
       <p class="galeri-subtitle">Etkinliklerimizden ve organizasyonlarımızdan kareler 📸</p>
 
-      <!-- ═══════════════════════════════════════════════════════════
-           FOTOĞRAF EKLEME REHBERİ:
-           Her fotoğraf için aşağıdaki yapıyı kopyalayın kardeşlerim, 
-           fotoğrafların daha estetik açılıp kapanması için yaptığımız bir uygulama.
 
-           <div class="gallery-item animate__animated animate__fadeInUp">
-             <img src="images/FOTOGRAF_ADI.jpg" alt="Açıklama" />
-             <div class="gallery-overlay">
-               <span>Açıklama</span>
-             </div>
-           </div>
-
-           animation-delay değerini 0.05s artırarak ekleyin.
-      ═══════════════════════════════════════════════════════════ -->
-
-      <div class="gallery-grid">
-
-        <div class="gallery-item animate__animated animate__fadeInUp">
-          <img src="images/ana_sayfa.jpeg" alt="ASÜ-YMT Topluluk" />
-          <div class="gallery-overlay">
-            <span>ASÜ-YMT Topluluk</span>
-          </div>
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.05s"
+          onclick="openLightbox(0)">
+          <img src="images/ASU-YMT-1.png" alt="Asu ymt 1" loading="lazy" />
+          <div class="gallery-overlay"><span>Asu ymt 1</span></div>
         </div>
-
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.05s">
-          <img src="images/ASU-YMT-1.png" alt="ASÜ-YMT Etkinlik" />
-          <div class="gallery-overlay">
-            <span>ASÜ-YMT Etkinlik</span>
-          </div>
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.1s"
+          onclick="openLightbox(1)">
+          <img src="images/ana_sayfa.jpeg" alt="Ana sayfa" loading="lazy" />
+          <div class="gallery-overlay"><span>Ana sayfa</span></div>
         </div>
-
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.10s">
-          <img src="images/ymt-logo.jpg" alt="YMT Logo" />
-          <div class="gallery-overlay">
-            <span>YMT Logo</span>
-          </div>
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.15s"
+          onclick="openLightbox(2)">
+          <img src="images/asuymt-logo.png" alt="Asuymt logo" loading="lazy" />
+          <div class="gallery-overlay"><span>Asuymt logo</span></div>
         </div>
-
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.15s">
-          <img src="images/ymt_border.png" alt="YMT Afiş" />
-          <div class="gallery-overlay">
-            <span>YMT Afiş</span>
-          </div>
+        
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.25s"
+          onclick="openLightbox(4)">
+          <img src="images/ymt-logo.jpg" alt="Ymt logo" loading="lazy" />
+          <div class="gallery-overlay"><span>Ymt logo</span></div>
         </div>
-
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.20s">
-          <img src="images/asuymt-logo.png" alt="ASÜ-YMT Logo" />
-          <div class="gallery-overlay">
-            <span>ASÜ-YMT Logo</span>
-          </div>
+        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.3s"
+          onclick="openLightbox(5)">
+          <img src="images/ymt_border.png" alt="Ymt border" loading="lazy" />
+          <div class="gallery-overlay"><span>Ymt border</span></div>
         </div>
-
       </div>
     </div>
 
@@ -143,6 +119,7 @@
 
   <script>
     (function () {
+      // ── DOM Elements ──
       const lightbox = document.getElementById('galleryLightbox');
       const lightboxImg = document.getElementById('lightboxImg');
       const lightboxCaption = document.getElementById('lightboxCaption');
@@ -152,10 +129,24 @@
       const lightboxPrev = document.getElementById('lightboxPrev');
       const lightboxNext = document.getElementById('lightboxNext');
 
-      const items = document.querySelectorAll('.gallery-item');
+      const photoElements = document.querySelectorAll('.gallery-item');
+      let photos = [];
+
+      // Collect data from HTML elements
+      photoElements.forEach(el => {
+        const img = el.querySelector('img');
+        const caption = el.querySelector('.gallery-overlay span').textContent;
+        photos.push({
+          src: img.getAttribute('src'),
+          alt: img.getAttribute('alt'),
+          caption: caption
+        });
+      });
+
       let currentIndex = 0;
 
-      function openLightbox(index) {
+      // ── Lightbox functions ──
+      window.openLightbox = function (index) {
         currentIndex = index;
         updateLightbox();
         lightbox.classList.add('active');
@@ -171,59 +162,42 @@
       }
 
       function updateLightbox() {
-        const item = items[currentIndex];
-        const img = item.querySelector('img');
-        const caption = item.querySelector('.gallery-overlay span');
-
-        // Animate content
+        const photo = photos[currentIndex];
         const content = lightbox.querySelector('.lightbox-content');
         content.classList.remove('lightbox-slide-left', 'lightbox-slide-right');
-        void content.offsetWidth; // force reflow
+        void content.offsetWidth;
 
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
-        lightboxCaption.textContent = caption ? caption.textContent : img.alt;
-        lightboxCounter.textContent = (currentIndex + 1) + ' / ' + items.length;
+        lightboxImg.src = photo.src;
+        lightboxImg.alt = photo.alt || photo.caption || '';
+        lightboxCaption.textContent = photo.caption || photo.alt || '';
+        lightboxCounter.textContent = (currentIndex + 1) + ' / ' + photos.length;
 
-        // Hide nav buttons at boundaries
         lightboxPrev.style.display = currentIndex === 0 ? 'none' : '';
-        lightboxNext.style.display = currentIndex === items.length - 1 ? 'none' : '';
+        lightboxNext.style.display = currentIndex === photos.length - 1 ? 'none' : '';
       }
 
       function navigatePrev() {
         if (currentIndex > 0) {
           const content = lightbox.querySelector('.lightbox-content');
           content.classList.add('lightbox-slide-right');
-          setTimeout(() => {
-            currentIndex--;
-            updateLightbox();
-          }, 150);
+          setTimeout(() => { currentIndex--; updateLightbox(); }, 150);
         }
       }
 
       function navigateNext() {
-        if (currentIndex < items.length - 1) {
+        if (currentIndex < photos.length - 1) {
           const content = lightbox.querySelector('.lightbox-content');
           content.classList.add('lightbox-slide-left');
-          setTimeout(() => {
-            currentIndex++;
-            updateLightbox();
-          }, 150);
+          setTimeout(() => { currentIndex++; updateLightbox(); }, 150);
         }
       }
 
-      // Click handlers
-      items.forEach((item, i) => {
-        item.addEventListener('click', () => openLightbox(i));
-        item.style.cursor = 'pointer';
-      });
-
+      // ── Event listeners ──
       lightboxClose.addEventListener('click', closeLightbox);
       lightboxBackdrop.addEventListener('click', closeLightbox);
       lightboxPrev.addEventListener('click', navigatePrev);
       lightboxNext.addEventListener('click', navigateNext);
 
-      // Keyboard navigation
       document.addEventListener('keydown', (e) => {
         if (!lightbox.classList.contains('active')) return;
         if (e.key === 'Escape') closeLightbox();
@@ -231,7 +205,7 @@
         if (e.key === 'ArrowRight') navigateNext();
       });
 
-      // Swipe support for mobile
+      // Swipe support
       let touchStartX = 0;
       lightbox.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
@@ -245,6 +219,7 @@
         }
       }, { passive: true });
     })();
+
   </script>
 </body>
 
