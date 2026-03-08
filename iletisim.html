@@ -67,7 +67,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 3rem;
-      align-items: start;
+      align-items: stretch;
     }
 
     .contact-panel {
@@ -179,6 +179,107 @@
       background: var(--accent-subtle);
     }
 
+    .info-card.ic-linkedin .info-card-icon {
+      background: rgba(10, 102, 194, 0.12);
+      color: #0a66c2;
+    }
+
+    a.info-card.ic-linkedin:hover {
+      border-color: rgba(10, 102, 194, 0.35);
+      background: rgba(10, 102, 194, 0.06);
+    }
+
+    /* ---- Başvuru Formu Paneli ---- */
+    .contact-content {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .apply-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      -webkit-backdrop-filter: var(--blur-sm);
+      backdrop-filter: var(--blur-sm);
+      position: relative;
+      overflow: hidden;
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2rem;
+    }
+
+    .apply-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, var(--accent-subtle), transparent 65%);
+      pointer-events: none;
+    }
+
+    .apply-panel h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 0;
+    }
+
+    .apply-panel h2 i {
+      color: var(--accent);
+      font-size: 1.6rem;
+    }
+
+    .apply-panel p {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.7;
+      position: relative;
+      margin: 0;
+    }
+
+    .apply-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 1.1rem 2.6rem;
+      background: var(--accent);
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: var(--radius-full);
+      transition: all var(--transition);
+      position: relative;
+      letter-spacing: 0.01em;
+    }
+
+    .apply-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(14, 165, 233, 0.35);
+    }
+
+    .apply-btn i {
+      font-size: 1.3rem;
+    }
+
+    @media (max-width: 768px) {
+      .apply-panel {
+        padding: 2rem;
+      }
+
+      .apply-panel h2 {
+        font-size: 1.7rem;
+      }
+    }
+
     .info-card-text {
       flex: 1;
     }
@@ -243,7 +344,8 @@
 
     .map-panel iframe {
       width: 100%;
-      height: 380px;
+      flex: 1;
+      min-height: 220px;
       border: none;
       display: block;
       filter: brightness(0.85) saturate(0.6) hue-rotate(180deg) invert(0.9);
@@ -353,7 +455,7 @@
     </div>
     <div class="contact-content">
       <div class="contact-panel animate__animated animate__fadeInUp">
-        <h2><i class="fas fa-address-card"></i> İletişim Bilgileri</h2>
+        <h2><i class="fas fa-address-card"></i> İletişim Platformları</h2>
         <div class="info-list">
           <div class="info-card ic-location">
             <div class="info-card-icon"><i class="fas fa-map-marker-alt"></i></div>
@@ -379,7 +481,17 @@
             </div>
             <i class="fas fa-arrow-right info-card-arrow"></i>
           </a>
-          <a href="https://topluluklar.aksaray.edu.tr/" class="info-card ic-telegram" target="_blank"
+         
+          <a href="https://www.linkedin.com/company/asuymt/" class="info-card ic-linkedin" target="_blank"
+            rel="noopener noreferrer">
+            <div class="info-card-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+            <div class="info-card-text">
+              <span class="label">LinkedIn</span>
+              <span class="value">linkedin.com/company/asuymt</span>
+            </div>
+            <i class="fas fa-arrow-right info-card-arrow"></i>
+          </a>
+           <a href="https://topluluklar.aksaray.edu.tr/" class="info-card ic-telegram" target="_blank"
             rel="noopener noreferrer">
             <div class="info-card-icon"><i class="fas fa-link"></i></div>
             <div class="info-card-text">
@@ -406,6 +518,13 @@
             rel="noopener noreferrer"> Yol Tarifi Al <i class="fas fa-arrow-right"></i>
           </a>
         </div>
+      </div>
+      <div class="apply-panel animate__animated animate__fadeInUp" style="animation-delay:0.25s">
+        <h2><i class="fas fa-user-plus"></i> Topluluk Üyelik Başvuru Formu</h2>
+        <p>ASÜ Yazılım Mühendisliği Topluluğu'na katılmak ve etkinliklere, projelere ortak olmak için üyelik başvuru formunu doldurabilirsin.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd2BhXusrtSe-jeLRr7kTVk4Ooup7tXWWU5kiow8sU57-O37w/viewform" class="apply-btn" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-arrow-up-right-from-square"></i> Başvuru Formuna Git
+        </a>
       </div>
     </div>
     <div class="footer">
