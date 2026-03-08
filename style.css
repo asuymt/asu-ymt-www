@@ -1,6 +1,5 @@
 :root {
   --bg-primary: var(--bg-page);
-  --border-subtle: var(--border-default);
   --font: var(--font-sans);
   --purple: var(--accent-2);
   --purple-glow: var(--accent-2-glow);
@@ -506,6 +505,159 @@
   gap: 1rem;
 }
 
+
+/* ═══════════════════════════════════════
+   FEATURED CARD — PURPLE FIRE EFFECT
+   ═══════════════════════════════════════ */
+
+@keyframes fireGlowPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 15px rgba(168, 85, 247, 0.4),
+      0 0 40px rgba(168, 85, 247, 0.2),
+      0 0 80px rgba(139, 92, 246, 0.1);
+  }
+
+  25% {
+    box-shadow:
+      0 0 20px rgba(192, 132, 252, 0.5),
+      0 0 50px rgba(168, 85, 247, 0.3),
+      0 0 100px rgba(139, 92, 246, 0.15);
+  }
+
+  50% {
+    box-shadow:
+      0 0 25px rgba(216, 180, 254, 0.5),
+      0 0 60px rgba(192, 132, 252, 0.3),
+      0 0 110px rgba(168, 85, 247, 0.15);
+  }
+
+  75% {
+    box-shadow:
+      0 0 18px rgba(168, 85, 247, 0.45),
+      0 0 45px rgba(139, 92, 246, 0.25),
+      0 0 90px rgba(168, 85, 247, 0.12);
+  }
+}
+
+@keyframes flameFlicker {
+
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scaleY(1) translateY(0);
+  }
+
+  20% {
+    opacity: 0.8;
+    transform: scaleY(1.05) translateY(-2px);
+  }
+
+  40% {
+    opacity: 0.5;
+    transform: scaleY(0.95) translateY(1px);
+  }
+
+  60% {
+    opacity: 0.9;
+    transform: scaleY(1.08) translateY(-3px);
+  }
+
+  80% {
+    opacity: 0.55;
+    transform: scaleY(0.98) translateY(0);
+  }
+}
+
+.card-featured {
+  border: 1.5px solid rgba(168, 85, 247, 0.5);
+  background: linear-gradient(160deg,
+      rgba(88, 28, 135, 0.15),
+      rgba(15, 15, 25, 0.95) 40%,
+      rgba(88, 28, 135, 0.08));
+  /* NO animation here — avoids overriding animate.css fadeInUp */
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+}
+
+/* Pulsing glow — lives on ::before so it doesn't conflict with fadeInUp */
+.card-featured::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at bottom center, rgba(168, 85, 247, 0.12), transparent 60%),
+    radial-gradient(ellipse at top right, rgba(139, 92, 246, 0.08), transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+  animation: fireGlowPulse 3s ease-in-out infinite;
+}
+
+/* Flame effect from bottom */
+.card-featured::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: -5px;
+  right: -5px;
+  height: 60%;
+  background: linear-gradient(to top,
+      rgba(168, 85, 247, 0.3) 0%,
+      rgba(192, 132, 252, 0.15) 20%,
+      rgba(139, 92, 246, 0.08) 40%,
+      transparent 100%);
+  border-radius: 0 0 var(--radius) var(--radius);
+  pointer-events: none;
+  z-index: 0;
+  animation: flameFlicker 2s ease-in-out infinite;
+}
+
+/* Override tag to purple */
+.card-featured .tag {
+  background: rgba(168, 85, 247, 0.2);
+  color: #d8b4fe;
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+/* Purple accent for read-more link */
+.card-featured .read-more {
+  color: #c084fc;
+}
+
+.card-featured .read-more:hover {
+  color: #d8b4fe;
+}
+
+/* Hover: intensify flames */
+.card-featured:hover {
+  transform: translateY(-10px);
+  border-color: rgba(192, 132, 252, 0.7);
+  background: linear-gradient(160deg,
+      rgba(88, 28, 135, 0.25),
+      rgba(15, 15, 25, 0.9) 40%,
+      rgba(88, 28, 135, 0.15));
+  box-shadow:
+    0 0 30px rgba(168, 85, 247, 0.6),
+    0 0 70px rgba(192, 132, 252, 0.35),
+    0 0 120px rgba(139, 92, 246, 0.2),
+    0 0 200px rgba(168, 85, 247, 0.1),
+    inset 0 0 40px rgba(168, 85, 247, 0.12);
+}
+
+.card-featured:hover::after {
+  height: 80%;
+  background: linear-gradient(to top,
+      rgba(192, 132, 252, 0.5) 0%,
+      rgba(168, 85, 247, 0.3) 15%,
+      rgba(216, 180, 254, 0.15) 35%,
+      rgba(139, 92, 246, 0.05) 55%,
+      transparent 100%);
+  animation: flameFlicker 1.2s ease-in-out infinite;
+}
 
 /* ═══════════════════════════════════════
    FOTO GALERİ

@@ -56,6 +56,7 @@
 
 
     --border-default: rgba(255, 255, 255, 0.06);
+    --border-subtle: rgba(255, 255, 255, 0.06);
     --border-hover: rgba(14, 165, 233, 0.40);
     --border-focus: var(--color-blue-500);
 
@@ -71,6 +72,7 @@
 
     --accent: var(--color-blue-500);
     --accent-hover: var(--color-blue-400);
+    --accent-dark: var(--color-blue-600);
     --accent-glow: rgba(14, 165, 233, 0.25);
     --accent-subtle: rgba(14, 165, 233, 0.08);
     --accent-border: rgba(14, 165, 233, 0.15);
@@ -190,8 +192,11 @@
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
     --shadow: 0 4px 16px rgba(0, 0, 0, 0.30);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.40);
-    --shadow-blue: 0 8px 24px var(--accent-glow);
-    --shadow-purple: 0 8px 24px var(--accent-2-glow);
+    --shadow-accent: 0 8px 24px var(--accent-glow);
+    --shadow-accent-2: 0 8px 24px var(--accent-2-glow);
+    /* Legacy aliases */
+    --shadow-blue: var(--shadow-accent);
+    --shadow-purple: var(--shadow-accent-2);
 
     --blur-sm: blur(8px);
     --blur: blur(16px);
@@ -423,7 +428,7 @@ button {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--accent), var(--color-blue-600));
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
     color: var(--color-white);
 }
 
