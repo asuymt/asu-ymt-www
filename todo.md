@@ -10,9 +10,7 @@ text içine yazılan duyuruları py okuyup tüm duyuru ve duyurualar sayfaların
 
 ## galeriyi düzenle güzel bir tasarım yap
 
-## iletişime uyelik formu ve linkedin
 
-## codebase 2 nin tarihi 27 mart olacak
 
 ## etkinlikler ve duyurular
 

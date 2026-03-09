@@ -38,9 +38,13 @@
     const container = document.createElement('div');
     container.className = 'palette-switcher';
     container.innerHTML = `
-        <button class="palette-switcher-toggle" title="Renk Paleti">🎨</button>
+        <button class="palette-switcher-toggle" title="Tema Seçici">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+            </svg>
+        </button>
         <div class="palette-switcher-panel">
-            <div class="palette-switcher-title">🎨 Renk Paleti</div>
+            <div class="palette-switcher-title">Yapay Zeka Temaları ✨</div>
             ${palettes.map(p => `
                 <div class="palette-option" data-theme="${p.id}">
                     <div class="palette-colors">
