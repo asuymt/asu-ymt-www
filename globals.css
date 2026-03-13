@@ -209,6 +209,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    cursor: none !important;
 }
 
 html {
@@ -231,6 +232,74 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
+    cursor: none; /* Hide default cursor to use custom magnetic cursor */
+}
+
+/* ═══════════════════════════════════════
+   CUSTOM MAGNETIC CURSOR
+   ═══════════════════════════════════════ */
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s;
+}
+
+.cursor-outline {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(14, 165, 233, 0.5);
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.2), inset 0 0 10px rgba(14, 165, 233, 0.1);
+    transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                height 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                border-color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-radius 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cursor-dot, .cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    z-index: 10000;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+.cursor-dot {
+    top: var(--mouse-y, -100px);
+    left: var(--mouse-x, -100px);
+    transform: translate(-50%, -50%);
+}
+
+.cursor-outline {
+    top: var(--outline-y, -100px);
+    left: var(--outline-x, -100px);
+    transform: translate(-50%, -50%);
+}
+
+/* Hovering over links - "Tech Scanner" Effect */
+.cursor-outline.hover-active {
+    width: 50px;
+    height: 50px;
+    border: 2px dashed var(--accent-2); /* Changes to a neon pink dashed border */
+    border-radius: 8px; /* Morphs from a circle to a rounded square */
+    background-color: rgba(244, 63, 94, 0.05);
+    box-shadow: 0 0 20px rgba(244, 63, 94, 0.4), inset 0 0 15px rgba(244, 63, 94, 0.2);
+    animation: rotateCursor 4s linear infinite; /* Slowly rotates */
+}
+
+/* Shrink the dot and change color */
+.cursor-dot.hover-active {
+    transform: translate(-50%, -50%) scale(0.5);
+    background-color: var(--accent-2);
+    box-shadow: 0 0 15px var(--accent-2);
+}
+
+@keyframes rotateCursor {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* Uzak yıldızlar katmanı */

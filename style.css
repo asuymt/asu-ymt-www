@@ -111,11 +111,42 @@
   letter-spacing: -0.04em;
   line-height: 1.1;
   margin-bottom: 2rem;
-  background: linear-gradient(135deg, #ffffff 30%, var(--accent));
+  background: linear-gradient(300deg, #ffffff, var(--accent), var(--accent-2), #ffffff);
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: 0 0 40px rgba(14, 165, 233, 0.3);
+  animation: liquidGradient 8s ease infinite;
+}
+
+@keyframes liquidGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 3D Floating Tech Icons in Hero */
+.floating-tech {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.15);
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 0 15px rgba(14, 165, 233, 0.3));
+  animation: float3D 10s infinite ease-in-out alternate;
+}
+
+.tech-1 { top: 15%; left: 10%; font-size: 8rem; animation-duration: 12s; }
+.tech-2 { bottom: 20%; right: 15%; font-size: 12rem; animation-duration: 15s; animation-direction: alternate-reverse; }
+.tech-3 { top: 30%; right: 25%; font-size: 6rem; animation-duration: 9s; opacity: 0.1; }
+.tech-4 { bottom: 25%; left: 20%; font-size: 9rem; animation-duration: 14s; }
+
+@keyframes float3D {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  50% { transform: translateY(-40px) rotate(10deg) scale(1.1); }
+  100% { transform: translateY(0) rotate(-5deg) scale(1); }
 }
 
 .kapak-text p {
@@ -174,10 +205,12 @@
   text-align: center;
   padding-bottom: 5rem;
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, #ffffff, var(--accent));
+  background: linear-gradient(300deg, #ffffff, var(--accent), var(--accent-2), #ffffff);
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: liquidGradient 8s ease infinite;
 }
 
 .cardlar {
@@ -197,26 +230,20 @@
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 24px;
   text-align: center;
-  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.4s ease;
   position: relative;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transform-style: preserve-3d;
 }
 
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top left,
-      rgba(14, 165, 233, 0.15),
-      transparent 70%);
-  pointer-events: none;
+.card i, .card h1, .card p {
+  transform: translateZ(40px); /* Brings content slightly forward */
 }
 
 .card:hover {
-  transform: translateY(-10px);
   border-color: rgba(14, 165, 233, 0.4);
-  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2);
+  box-shadow: 0 30px 60px rgba(14, 165, 233, 0.2), 0 0 40px rgba(14, 165, 233, 0.1) inset;
   background: rgba(14, 165, 233, 0.05);
 }
 
@@ -707,25 +734,28 @@
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-auto-rows: 250px;
   gap: 2rem;
   padding: 0 2rem;
+  grid-auto-flow: dense;
 }
 
-/* Gallery Item - Uniform Size */
+/* Gallery Item - Masonry Look */
 .gallery-item {
   position: relative;
   overflow: hidden;
   border-radius: 20px;
-  /* Modern yuvarlatılmış köşeler */
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   cursor: pointer;
-  aspect-ratio: 4 / 3;
-  /* Tüm fotoğraflar aynı boyutta standart dikdörtgen */
   transform: translateZ(0);
-  /* Donanım hızlandırma */
+  transform-style: preserve-3d;
 }
+
+/* Create dynamic sizing variation to fake Masonry */
+.gallery-item:nth-child(3n+1) { grid-row: span 2; }
+.gallery-item:nth-child(4n+2) { grid-column: span 2; }
 
 .gallery-item img {
   width: 100%;
@@ -733,21 +763,19 @@
   object-fit: cover;
   transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
   will-change: transform, filter;
-  transform: scale(1.01);
-  /* Resim kenar boşluklarını engellemek için */
+  transform: scale(1.05); /* slightly zoomed to allow 3D parallax out */
 }
 
-/* Hover Animasyonları - Ultra Premium */
+/* Hover Animasyonları - Ultra Premium 3D */
 .gallery-item:hover {
-  transform: translateY(-8px) scale(1.02);
   z-index: 10;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  border-color: rgba(168, 85, 247, 0.4);
+  border-color: rgba(14, 165, 233, 0.6);
 }
 
 .gallery-item:hover img {
-  transform: scale(1.1);
-  filter: brightness(0.6) saturate(1.2) contrast(1.1);
+  transform: scale(1.15) translateZ(-30px);
+  filter: brightness(0.5) saturate(1.4) contrast(1.1);
 }
 
 /* Glassmorphism Overlay */
@@ -763,7 +791,8 @@
   transition: opacity 0.4s ease;
   pointer-events: none;
   z-index: 2;
-  background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 50%, transparent 100%);
+  background: linear-gradient(to top, rgba(3, 12, 23, 0.9) 0%, rgba(3, 12, 23, 0.3) 50%, transparent 100%);
+  transform: translateZ(50px); /* Brings text forward in 3D */
 }
 
 .gallery-item:hover .gallery-overlay {
@@ -1997,5 +2026,92 @@
     font-size: 1.4rem;
     padding-left: 15px;
     border-left-width: 1.5px;
+  }
+}
+
+/* ═══════════════════════════════════════
+   SUB-PAGE (DETAIL) GOD-TIER STYLES
+   ═══════════════════════════════════════ */
+.subpage-container {
+  max-width: 900px;
+  margin: 10rem auto 5rem;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.subpage-glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  padding: 4rem;
+  box-shadow: 
+    0 10px 40px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+/* Optional hover glow effect for the card */
+.subpage-glass-card:hover {
+  box-shadow: 
+    0 20px 50px rgba(0,0,0,0.6),
+    0 0 40px rgba(14, 165, 233, 0.1),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.subpage-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+  background: linear-gradient(to right, #ffffff, var(--accent), var(--accent-2));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 4s linear infinite;
+}
+
+.subpage-description {
+  color: var(--text-secondary);
+  font-size: 1.6rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.subpage-list {
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  line-height: 2.4;
+  margin-bottom: 3rem;
+  padding-left: 2rem;
+  list-style-type: none;
+}
+
+.subpage-list li {
+  position: relative;
+  padding-left: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.subpage-list li::before {
+  content: '➤';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .subpage-glass-card {
+    padding: 2.5rem;
+  }
+  .subpage-title {
+    font-size: 2.5rem;
   }
 }

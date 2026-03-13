@@ -18,7 +18,24 @@
 </head>
 
 <body>
-  <div class="container">
+
+  <!-- Manyetik İmleç -->
+  <div class="cursor-dot" data-cursor-dot></div>
+  <div class="cursor-outline" data-cursor-outline></div>
+
+
+
+  <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
+
+
+
+
+
+
+
+
+  <!-- Deep Space Particle Canvas -->
+    <div class="container">
     <div class="navbar">
       <a href="index.html"><img src="images/asuymt-logo.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
       <ul>
@@ -39,7 +56,7 @@
 
 
       <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.05s"
+        <div class="gallery-item animate__animated animate__fadeInUp card-tilt" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" style="animation-delay: 0.05s"
           onclick="openLightbox(0)">
           <img src="images/ASU-YMT-1.png" alt="Asu ymt 1" loading="lazy" />
           <div class="gallery-overlay">
@@ -47,7 +64,7 @@
             <span>ASU-YMT Ekip</span>
           </div>
         </div>
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.1s"
+        <div class="gallery-item animate__animated animate__fadeInUp card-tilt" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" style="animation-delay: 0.1s"
           onclick="openLightbox(1)">
           <img src="images/ana_sayfa.jpeg" alt="Ana sayfa" loading="lazy" />
           <div class="gallery-overlay">
@@ -55,7 +72,7 @@
             <span>Topluluğumuz</span>
           </div>
         </div>
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.15s"
+        <div class="gallery-item animate__animated animate__fadeInUp card-tilt" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" style="animation-delay: 0.15s"
           onclick="openLightbox(2)">
           <img src="images/asuymt-logo.png" alt="Asuymt logo" loading="lazy" />
           <div class="gallery-overlay">
@@ -64,7 +81,7 @@
           </div>
         </div>
 
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.25s"
+        <div class="gallery-item animate__animated animate__fadeInUp card-tilt" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" style="animation-delay: 0.25s"
           onclick="openLightbox(3)">
           <img src="images/ymt-logo.jpg" alt="Ymt logo" loading="lazy" />
           <div class="gallery-overlay">
@@ -72,7 +89,7 @@
             <span>YMT Logo</span>
           </div>
         </div>
-        <div class="gallery-item animate__animated animate__fadeInUp" style="animation-delay: 0.3s"
+        <div class="gallery-item animate__animated animate__fadeInUp card-tilt" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" style="animation-delay: 0.3s"
           onclick="openLightbox(4)">
           <img src="images/ymt_border.png" alt="Ymt border" loading="lazy" />
           <div class="gallery-overlay">
@@ -133,109 +150,100 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   <script>
-    (function () {
-      // ── DOM Elements ──
-      const lightbox = document.getElementById('galleryLightbox');
-      const lightboxImg = document.getElementById('lightboxImg');
-      const lightboxCaption = document.getElementById('lightboxCaption');
-      const lightboxCounter = document.getElementById('lightboxCounter');
-      const lightboxClose = document.getElementById('lightboxClose');
-      const lightboxBackdrop = document.getElementById('lightboxBackdrop');
-      const lightboxPrev = document.getElementById('lightboxPrev');
-      const lightboxNext = document.getElementById('lightboxNext');
+    
 
-      const photoElements = document.querySelectorAll('.gallery-item');
-      let photos = [];
+  </script>
+<script src="./particles.js"></script>
 
-      // Collect data from HTML elements
-      photoElements.forEach(el => {
-        const img = el.querySelector('img');
-        const caption = el.querySelector('.gallery-overlay span').textContent;
-        photos.push({
-          src: img.getAttribute('src'),
-          alt: img.getAttribute('alt'),
-          caption: caption
+  <!-- Özel Manyetik İmleç (Custom Magnetic Cursor) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Check if cursor already exists to avoid dupes in re-injected pages
+      if(window.customCursorInitialized) return;
+      window.customCursorInitialized = true;
+
+      const cursorDot = document.querySelector("[data-cursor-dot]");
+      const cursorOutline = document.querySelector("[data-cursor-outline]");
+      if(!cursorDot || !cursorOutline) return;
+
+      let mouseX = 0, mouseY = 0;
+      let outlineX = 0, outlineY = 0;
+      let firstMove = false;
+
+      // Saniyede bir kere veya event fire olana kadar görünmez yap
+      cursorDot.style.opacity = "0";
+      cursorOutline.style.opacity = "0";
+
+      window.addEventListener("mousemove", function (e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        if (!firstMove) {
+          outlineX = mouseX;
+          outlineY = mouseY;
+          cursorDot.style.opacity = "1";
+          cursorOutline.style.opacity = "1";
+          firstMove = true;
+        }
+
+        document.documentElement.style.setProperty('--mouse-x', mouseX + 'px');
+        document.documentElement.style.setProperty('--mouse-y', mouseY + 'px');
+      });
+
+      const renderCursor = () => {
+        if (firstMove) {
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+            document.documentElement.style.setProperty('--outline-x', outlineX + 'px');
+            document.documentElement.style.setProperty('--outline-y', outlineY + 'px');
+        }
+        requestAnimationFrame(renderCursor);
+      };
+      requestAnimationFrame(renderCursor);
+
+      const interactiveElements = document.querySelectorAll("a, button, .gallery-item");
+      
+      interactiveElements.forEach(link => {
+        link.addEventListener("mouseenter", () => {
+          cursorOutline.classList.add("hover-active");
+          cursorDot.classList.add("hover-active");
+        });
+        link.addEventListener("mouseleave", () => {
+          cursorOutline.classList.remove("hover-active");
+          cursorDot.classList.remove("hover-active");
         });
       });
-
-      let currentIndex = 0;
-
-      // ── Lightbox functions ──
-      window.openLightbox = function (index) {
-        currentIndex = index;
-        updateLightbox();
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
-
-      function closeLightbox() {
-        lightbox.classList.add('closing');
-        setTimeout(() => {
-          lightbox.classList.remove('active', 'closing');
-          document.body.style.overflow = '';
-        }, 350);
-      }
-
-      function updateLightbox() {
-        const photo = photos[currentIndex];
-        const content = lightbox.querySelector('.lightbox-content');
-        content.classList.remove('lightbox-slide-left', 'lightbox-slide-right');
-        void content.offsetWidth;
-
-        lightboxImg.src = photo.src;
-        lightboxImg.alt = photo.alt || photo.caption || '';
-        lightboxCaption.textContent = photo.caption || photo.alt || '';
-        lightboxCounter.textContent = (currentIndex + 1) + ' / ' + photos.length;
-
-        lightboxPrev.style.display = currentIndex === 0 ? 'none' : '';
-        lightboxNext.style.display = currentIndex === photos.length - 1 ? 'none' : '';
-      }
-
-      function navigatePrev() {
-        if (currentIndex > 0) {
-          const content = lightbox.querySelector('.lightbox-content');
-          content.classList.add('lightbox-slide-right');
-          setTimeout(() => { currentIndex--; updateLightbox(); }, 150);
-        }
-      }
-
-      function navigateNext() {
-        if (currentIndex < photos.length - 1) {
-          const content = lightbox.querySelector('.lightbox-content');
-          content.classList.add('lightbox-slide-left');
-          setTimeout(() => { currentIndex++; updateLightbox(); }, 150);
-        }
-      }
-
-      // ── Event listeners ──
-      lightboxClose.addEventListener('click', closeLightbox);
-      lightboxBackdrop.addEventListener('click', closeLightbox);
-      lightboxPrev.addEventListener('click', navigatePrev);
-      lightboxNext.addEventListener('click', navigateNext);
-
-      document.addEventListener('keydown', (e) => {
-        if (!lightbox.classList.contains('active')) return;
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowLeft') navigatePrev();
-        if (e.key === 'ArrowRight') navigateNext();
+      
+      // MutationObserver to attach events to newly added nodes (like mobile menus)
+      const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          mutation.addedNodes.forEach(node => {
+            if(node.nodeType === 1) { // ELEMENT_NODE
+              const links = node.querySelectorAll ? node.querySelectorAll("a, button") : [];
+              if(node.matches && node.matches("a, button")) {
+                 attachCursorEvents(node);
+              }
+              links.forEach(attachCursorEvents);
+            }
+          });
+        });
       });
+      observer.observe(document.body, { childList: true, subtree: true });
 
-      // Swipe support
-      let touchStartX = 0;
-      lightbox.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
+      function attachCursorEvents(link) {
+        link.addEventListener("mouseenter", () => {
+          cursorOutline.classList.add("hover-active");
+          cursorDot.classList.add("hover-active");
+        });
+        link.addEventListener("mouseleave", () => {
+          cursorOutline.classList.remove("hover-active");
+          cursorDot.classList.remove("hover-active");
+        });
+      }
 
-      lightbox.addEventListener('touchend', (e) => {
-        const diff = touchStartX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) > 60) {
-          if (diff > 0) navigateNext();
-          else navigatePrev();
-        }
-      }, { passive: true });
-    })();
-
+    });
   </script>
 
 </body>

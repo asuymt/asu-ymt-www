@@ -17,6 +17,20 @@
 </head>
 
 <body>
+
+  <!-- Manyetik İmleç -->
+  <div class="cursor-dot" data-cursor-dot></div>
+  <div class="cursor-outline" data-cursor-outline></div>
+
+
+
+  <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
+
+
+
+
+
+
   <div class="container">
     <div class="navbar">
       <a href="index.html"><img src="images/asuymt-logo.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
@@ -88,6 +102,96 @@
       <p>© 2026 Tüm Hakları Saklıdır.</p>
     </div>
   </div>
+<script src="./particles.js"></script>
+
+  <!-- Özel Manyetik İmleç (Custom Magnetic Cursor) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Check if cursor already exists to avoid dupes in re-injected pages
+      if(window.customCursorInitialized) return;
+      window.customCursorInitialized = true;
+
+      const cursorDot = document.querySelector("[data-cursor-dot]");
+      const cursorOutline = document.querySelector("[data-cursor-outline]");
+      if(!cursorDot || !cursorOutline) return;
+
+      let mouseX = 0, mouseY = 0;
+      let outlineX = 0, outlineY = 0;
+      let firstMove = false;
+
+      // Saniyede bir kere veya event fire olana kadar görünmez yap
+      cursorDot.style.opacity = "0";
+      cursorOutline.style.opacity = "0";
+
+      window.addEventListener("mousemove", function (e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        if (!firstMove) {
+          outlineX = mouseX;
+          outlineY = mouseY;
+          cursorDot.style.opacity = "1";
+          cursorOutline.style.opacity = "1";
+          firstMove = true;
+        }
+
+        document.documentElement.style.setProperty('--mouse-x', mouseX + 'px');
+        document.documentElement.style.setProperty('--mouse-y', mouseY + 'px');
+      });
+
+      const renderCursor = () => {
+        if (firstMove) {
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+            document.documentElement.style.setProperty('--outline-x', outlineX + 'px');
+            document.documentElement.style.setProperty('--outline-y', outlineY + 'px');
+        }
+        requestAnimationFrame(renderCursor);
+      };
+      requestAnimationFrame(renderCursor);
+
+      const interactiveElements = document.querySelectorAll("a, button, .gallery-item");
+      
+      interactiveElements.forEach(link => {
+        link.addEventListener("mouseenter", () => {
+          cursorOutline.classList.add("hover-active");
+          cursorDot.classList.add("hover-active");
+        });
+        link.addEventListener("mouseleave", () => {
+          cursorOutline.classList.remove("hover-active");
+          cursorDot.classList.remove("hover-active");
+        });
+      });
+      
+      // MutationObserver to attach events to newly added nodes (like mobile menus)
+      const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          mutation.addedNodes.forEach(node => {
+            if(node.nodeType === 1) { // ELEMENT_NODE
+              const links = node.querySelectorAll ? node.querySelectorAll("a, button") : [];
+              if(node.matches && node.matches("a, button")) {
+                 attachCursorEvents(node);
+              }
+              links.forEach(attachCursorEvents);
+            }
+          });
+        });
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      function attachCursorEvents(link) {
+        link.addEventListener("mouseenter", () => {
+          cursorOutline.classList.add("hover-active");
+          cursorDot.classList.add("hover-active");
+        });
+        link.addEventListener("mouseleave", () => {
+          cursorOutline.classList.remove("hover-active");
+          cursorDot.classList.remove("hover-active");
+        });
+      }
+
+    });
+  </script>
 
 </body>
 

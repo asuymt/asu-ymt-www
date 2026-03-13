@@ -19,7 +19,24 @@
 </head>
 
 <body>
-  <div class="container">
+
+  <!-- Manyetik İmleç -->
+  <div class="cursor-dot" data-cursor-dot></div>
+  <div class="cursor-outline" data-cursor-outline></div>
+
+
+
+  <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
+
+
+
+
+
+
+
+
+  <!-- Deep Space Particle Canvas -->
+    <div class="container">
     <div class="navbar">
       <a href="index.html"><img src="images/asuymt-logo.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
       <ul>
@@ -37,6 +54,7 @@
 
     <div class="kapak">
       <div class="blur-layer"></div>
+      
       <div class="kapak-text">
         <h1 class="animate__animated animate__fadeInDown">
           Yazılımın geleceği burada başlıyor.
@@ -62,17 +80,17 @@
     <div class="box-2">
       <h1>İstatistiklerimiz</h1>
       <div class="cardlar">
-        <div class="card animate__animated animate__fadeInUp">
+        <div class="card card-tilt animate__animated animate__fadeInUp" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" data-tilt-speed="400" data-tilt-max="15">
           <i class="fa-regular fa-circle-user"></i>
           <h1 class="counter" data-target="123">0</h1>
           <p>Üye Sayımız</p>
         </div>
-        <div class="card animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+        <div class="card card-tilt animate__animated animate__fadeInUp" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" data-tilt-speed="400" data-tilt-max="15" style="animation-delay: 0.1s">
           <i class="fa-regular fa-clock"></i>
           <h1 class="counter" data-target="60">0</h1>
           <p>Toplam Etkinlik Saatimiz</p>
         </div>
-        <div class="card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+        <div class="card card-tilt animate__animated animate__fadeInUp" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" data-tilt-speed="400" data-tilt-max="15" style="animation-delay: 0.2s">
           <i class="fa-regular fas fa-trophy"></i>
           <h1 class="counter" data-target="10">0</h1>
           <p>Etkinlik Sayımız</p>
@@ -111,47 +129,138 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
   <script>
-    // Dinamik İstatistik Sayacı
-    const counters = document.querySelectorAll(".counter");
-    const duration = 2000;
+    // ScrollReveal Animations
+    ScrollReveal().reveal('.animate__fadeInUp', {
+      delay: 200,
+      distance: '50px',
+      duration: 1000,
+      easing: 'cubic-bezier(0.5, 0, 0, 1)',
+      interval: 100
+    });
 
-    const startCounting = () => {
-      counters.forEach((counter) => {
-        const target = +counter.getAttribute("data-target");
-        let start = 0;
-        const startTime = performance.now();
+    // İstatistik Sayacı (Animated Counters)
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200; // Sayma hızı bölücüsü
 
-        const updateCount = (currentTime) => {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const easeOut = 1 - Math.pow(1 - progress, 3);
-          counter.innerText = Math.floor(easeOut * target);
-          if (progress < 1) {
-            requestAnimationFrame(updateCount);
-          } else {
-            counter.innerText = target;
-          }
-        };
+    // Sadece ekranda görünür olduklarında saymaya başla
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target;
+          const updateCount = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const inc = target / speed;
 
-        requestAnimationFrame(updateCount);
-      });
-    };
-
-    const statsSection = document.querySelector(".box-2");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          startCounting();
-          observer.disconnect();
+            if (count < target) {
+              counter.innerText = Math.ceil(count + inc);
+              setTimeout(updateCount, 10);
+            } else {
+              counter.innerText = target + "+"; // Sonuna + eklendi
+            }
+          };
+          updateCount();
+          observer.unobserve(counter); // Sadece 1 kere çalışması için
         }
-      },
-      { threshold: 0.5 },
-    );
+      });
+    }, { threshold: 0.5 }); // Kartın en az %50'si göründüğünde tetikle
 
-    observer.observe(statsSection);
+    counters.forEach(counter => {
+      observer.observe(counter);
+    });
+  </script>
+<script src="./particles.js"></script>
 
+  <!-- Özel Manyetik İmleç (Custom Magnetic Cursor) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Check if cursor already exists to avoid dupes in re-injected pages
+      if(window.customCursorInitialized) return;
+      window.customCursorInitialized = true;
 
+      const cursorDot = document.querySelector("[data-cursor-dot]");
+      const cursorOutline = document.querySelector("[data-cursor-outline]");
+      if(!cursorDot || !cursorOutline) return;
+
+      let mouseX = 0, mouseY = 0;
+      let outlineX = 0, outlineY = 0;
+      let firstMove = false;
+
+      // Saniyede bir kere veya event fire olana kadar görünmez yap
+      cursorDot.style.opacity = "0";
+      cursorOutline.style.opacity = "0";
+
+      window.addEventListener("mousemove", function (e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        if (!firstMove) {
+          outlineX = mouseX;
+          outlineY = mouseY;
+          cursorDot.style.opacity = "1";
+          cursorOutline.style.opacity = "1";
+          firstMove = true;
+        }
+
+        document.documentElement.style.setProperty('--mouse-x', mouseX + 'px');
+        document.documentElement.style.setProperty('--mouse-y', mouseY + 'px');
+      });
+
+      const renderCursor = () => {
+        if (firstMove) {
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+            document.documentElement.style.setProperty('--outline-x', outlineX + 'px');
+            document.documentElement.style.setProperty('--outline-y', outlineY + 'px');
+        }
+        requestAnimationFrame(renderCursor);
+      };
+      requestAnimationFrame(renderCursor);
+
+      const interactiveElements = document.querySelectorAll("a, button, .gallery-item");
+      
+      interactiveElements.forEach(link => {
+        link.addEventListener("mouseenter", () => {
+          cursorOutline.classList.add("hover-active");
+          cursorDot.classList.add("hover-active");
+        });
+        link.addEventListener("mouseleave", () => {
+          cursorOutline.classList.remove("hover-active");
+          cursorDot.classList.remove("hover-active");
+        });
+      });
+      
+      // MutationObserver to attach events to newly added nodes (like mobile menus)
+      const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          mutation.addedNodes.forEach(node => {
+            if(node.nodeType === 1) { // ELEMENT_NODE
+              const links = node.querySelectorAll ? node.querySelectorAll("a, button") : [];
+              if(node.matches && node.matches("a, button")) {
+                 attachCursorEvents(node);
+              }
+              links.forEach(attachCursorEvents);
+            }
+          });
+        });
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      function attachCursorEvents(link) {
+        link.addEventListener("mouseenter", () => {
+          cursorOutline.classList.add("hover-active");
+          cursorDot.classList.add("hover-active");
+        });
+        link.addEventListener("mouseleave", () => {
+          cursorOutline.classList.remove("hover-active");
+          cursorDot.classList.remove("hover-active");
+        });
+      }
+
+    });
   </script>
 
 </body>
