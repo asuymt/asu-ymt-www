@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eğitimler | ASÜ-YMT</title>
-  <link rel="icon" sizes="64x64" href="/images/Logo-64.png" type="image/png" />
+  <link rel="icon" sizes="64x64" href="/assets/images/Logo-64.png" type="image/png" />
   <link rel="icon" type="image/x-icon" href="./images/asuymt-logo.png" />
-  <link rel="stylesheet" href="./globals.css" />
-  <link rel="stylesheet" href="./style.css" />
-  <link rel="stylesheet" href="./theme.css" />
+  <link rel="stylesheet" href="./assets/css/globals.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./assets/css/theme.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
@@ -24,6 +24,10 @@
 
 
 
+
+
+
+
   <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
 
 
@@ -33,7 +37,7 @@
 
   <div class="container">
     <div class="navbar">
-      <a href="index.html"><img src="images/asuymt-logo.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
+      <a href="index.html"><img src="assets/images/asuymt-logo.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
       <ul>
         <li><a href="index.html#hakkimizda">Hakkımızda</a></li>
         <li><a href="duyurular.html">Duyurular</a></li>
@@ -78,7 +82,7 @@
     <div class="footer">
       <div class="footlar">
         <div class="foot">
-          <a href="index.html" title="ASÜ-YMT"><img src="./images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
+          <a href="index.html" title="ASÜ-YMT"><img src="./assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
         </div>
         <div class="foot">
           <h1>Hızlı Menü</h1>
@@ -102,7 +106,7 @@
       <p>© 2026 Tüm Hakları Saklıdır.</p>
     </div>
   </div>
-<script src="./particles.js"></script>
+<script src="./assets/js/particles.js"></script>
 
   <!-- Özel Manyetik İmleç (Custom Magnetic Cursor) -->
   <script>
@@ -124,8 +128,24 @@
       cursorOutline.style.opacity = "0";
 
       window.addEventListener("mousemove", function (e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+        updatePosition(e.clientX, e.clientY);
+      });
+
+      window.addEventListener("touchstart", function (e) {
+        if (e.touches && e.touches[0]) {
+          updatePosition(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: false });
+
+      window.addEventListener("touchmove", function (e) {
+        if (e.touches && e.touches[0]) {
+          updatePosition(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: false });
+
+      function updatePosition(x, y) {
+        mouseX = x;
+        mouseY = y;
         
         if (!firstMove) {
           outlineX = mouseX;
@@ -137,7 +157,7 @@
 
         document.documentElement.style.setProperty('--mouse-x', mouseX + 'px');
         document.documentElement.style.setProperty('--mouse-y', mouseY + 'px');
-      });
+      }
 
       const renderCursor = () => {
         if (firstMove) {
@@ -150,7 +170,7 @@
       };
       requestAnimationFrame(renderCursor);
 
-      const interactiveElements = document.querySelectorAll("a, button, .gallery-item");
+      const interactiveElements = document.querySelectorAll("a, button, .gallery-list-item");
       
       interactiveElements.forEach(link => {
         link.addEventListener("mouseenter", () => {

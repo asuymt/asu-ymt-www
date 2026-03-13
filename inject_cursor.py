@@ -30,8 +30,24 @@ cursor_js = """
       cursorOutline.style.opacity = "0";
 
       window.addEventListener("mousemove", function (e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+        updatePosition(e.clientX, e.clientY);
+      });
+
+      window.addEventListener("touchstart", function (e) {
+        if (e.touches && e.touches[0]) {
+          updatePosition(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: false });
+
+      window.addEventListener("touchmove", function (e) {
+        if (e.touches && e.touches[0]) {
+          updatePosition(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: false });
+
+      function updatePosition(x, y) {
+        mouseX = x;
+        mouseY = y;
         
         if (!firstMove) {
           outlineX = mouseX;
@@ -43,7 +59,7 @@ cursor_js = """
 
         document.documentElement.style.setProperty('--mouse-x', mouseX + 'px');
         document.documentElement.style.setProperty('--mouse-y', mouseY + 'px');
-      });
+      }
 
       const renderCursor = () => {
         if (firstMove) {
@@ -56,7 +72,7 @@ cursor_js = """
       };
       requestAnimationFrame(renderCursor);
 
-      const interactiveElements = document.querySelectorAll("a, button, .gallery-item");
+      const interactiveElements = document.querySelectorAll("a, button, .gallery-list-item");
       
       interactiveElements.forEach(link => {
         link.addEventListener("mouseenter", () => {

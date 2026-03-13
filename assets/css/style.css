@@ -84,11 +84,11 @@
   background: linear-gradient(160deg,
       rgba(3, 12, 23, 0.85),
       rgba(14, 165, 233, 0.2)),
-    url(images/ana_sayfa.jpeg);
+    url(../images/ana_sayfa.jpeg);
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
-  filter: blur(5px);
+  filter: blur(0px); /* Significantly reduced blur so faces are visible */
   z-index: 1;
   transform: scale(1.1);
 }
@@ -96,7 +96,7 @@
 .kapak-text {
   position: absolute;
   z-index: 2;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--text-primary);
@@ -110,7 +110,7 @@
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1.1;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem; 
   background: linear-gradient(300deg, #ffffff, var(--accent), var(--accent-2), #ffffff);
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -161,6 +161,7 @@
   margin: 10rem auto;
   padding: 0 5%;
   color: var(--text-primary);
+  scroll-margin-top: 20rem; /* Increased offset to fully clear navbar */
 }
 
 .box hr {
@@ -731,106 +732,81 @@
   font-weight: 500;
 }
 
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  grid-auto-rows: 250px;
-  gap: 2rem;
-  padding: 0 2rem;
-  grid-auto-flow: dense;
-}
-
-/* Gallery Item - Masonry Look */
-.gallery-item {
-  position: relative;
-  overflow: hidden;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-  cursor: pointer;
-  transform: translateZ(0);
-  transform-style: preserve-3d;
-}
-
-/* Create dynamic sizing variation to fake Masonry */
-.gallery-item:nth-child(3n+1) { grid-row: span 2; }
-.gallery-item:nth-child(4n+2) { grid-column: span 2; }
-
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
-  will-change: transform, filter;
-  transform: scale(1.05); /* slightly zoomed to allow 3D parallax out */
-}
-
-/* Hover Animasyonları - Ultra Premium 3D */
-.gallery-item:hover {
-  z-index: 10;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  border-color: rgba(14, 165, 233, 0.6);
-}
-
-.gallery-item:hover img {
-  transform: scale(1.15) translateZ(-30px);
-  filter: brightness(0.5) saturate(1.4) contrast(1.1);
-}
-
-/* Glassmorphism Overlay */
-.gallery-overlay {
-  position: absolute;
-  inset: 0;
+.gallery-list-view {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  z-index: 2;
-  background: linear-gradient(to top, rgba(3, 12, 23, 0.9) 0%, rgba(3, 12, 23, 0.3) 50%, transparent 100%);
-  transform: translateZ(50px); /* Brings text forward in 3D */
+  max-width: 1000px;
+  margin: 0 auto;
+  background: rgba(10, 15, 25, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  backdrop-filter: blur(20px);
 }
 
-.gallery-item:hover .gallery-overlay {
-  opacity: 1;
-}
-
-.gallery-overlay i {
-  font-size: 3.5rem;
-  color: #fff;
-  text-shadow: 0 0 25px rgba(168, 85, 247, 0.8);
-  transform: scale(0.5) translateY(20px);
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s, color 0.3s;
-}
-
-.gallery-item:hover .gallery-overlay i {
-  transform: scale(1) translateY(0);
-}
-
-.gallery-overlay span {
-  color: #fff;
-  font-size: 1.4rem;
-  font-weight: 700;
+.gallery-list-header {
+  display: grid;
+  grid-template-columns: 50px 3fr 2fr 2fr 1fr;
+  padding: 1.2rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  font-weight: 600;
   letter-spacing: 0.05em;
-  padding: 0.6rem 1.8rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 30px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transform: translateY(20px);
-  opacity: 0;
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s, opacity 0.5s ease 0.15s;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  align-items: center;
 }
 
-.gallery-item:hover .gallery-overlay span {
-  transform: translateY(0);
-  opacity: 1;
+.gallery-list-item {
+  display: grid;
+  grid-template-columns: 50px 3fr 2fr 2fr 1fr;
+  padding: 1rem 2rem;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  transition: background 0.2s;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 1.4rem;
+}
+
+.gallery-list-item:hover {
+  background: rgba(14, 165, 233, 0.1); /* Smooth Windows selection blue tint */
+}
+
+.gallery-list-item:last-child {
+  border-bottom: none;
+}
+
+.list-col-icon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.list-col-icon img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.list-col-name {
+  color: var(--text-primary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.list-col-name i {
+  color: #60a5fa; 
+}
+
+.list-col-size {
+  text-align: right;
 }
 
 /* ═══════════════════════════════════════

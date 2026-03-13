@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Foto Galeri | ASÜ-YMT</title>
   <meta name="description" content="ASÜ Yazılım Mühendisliği Topluluğu etkinlik ve organizasyon fotoğrafları." />
-  <link rel="icon" sizes="64x64" href="/images/Logo-64.png" type="image/png" />
+  <link rel="icon" sizes="64x64" href="/assets/images/Logo-64.png" type="image/png" />
   <link rel="icon" type="image/x-icon" href="./images/asuymt-logo.png" />
-  <link rel="stylesheet" href="./globals.css" />
-  <link rel="stylesheet" href="./style.css" />
-  <link rel="stylesheet" href="./theme.css" />
+  <link rel="stylesheet" href="./assets/css/globals.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./assets/css/theme.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
@@ -22,6 +22,10 @@
   <!-- Manyetik İmleç -->
   <div class="cursor-dot" data-cursor-dot></div>
   <div class="cursor-outline" data-cursor-outline></div>
+
+
+
+
 
 
 
@@ -37,7 +41,7 @@
   <!-- Deep Space Particle Canvas -->
     <div class="container">
     <div class="navbar">
-      <a href="index.html"><img src="images/asuymt-logo.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
+      <a href="index.html"><img src="assets/images/asuymt-logo.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
       <ul>
         <li><a href="index.html#hakkimizda">Hakkımızda</a></li>
         <li><a href="duyurular.html">Duyurular</a></li>
@@ -55,47 +59,53 @@
       <p class="galeri-subtitle">Etkinliklerimizden ve organizasyonlarımızdan kareler 📸</p>
 
 
-      <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-item animate__animated animate__fadeInUp card-tilt" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" style="animation-delay: 0.05s"
-          onclick="openLightbox(0)">
-          <img src="images/ASU-YMT-1.png" alt="Asu ymt 1" loading="lazy" />
-          <div class="gallery-overlay">
-            <i class="fa-solid fa-expand"></i>
-            <span>ASU-YMT Ekip</span>
-          </div>
-        </div>
-        <div class="gallery-item animate__animated animate__fadeInUp card-tilt" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" style="animation-delay: 0.1s"
-          onclick="openLightbox(1)">
-          <img src="images/ana_sayfa.jpeg" alt="Ana sayfa" loading="lazy" />
-          <div class="gallery-overlay">
-            <i class="fa-solid fa-expand"></i>
-            <span>Topluluğumuz</span>
-          </div>
-        </div>
-        <div class="gallery-item animate__animated animate__fadeInUp card-tilt" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" style="animation-delay: 0.15s"
-          onclick="openLightbox(2)">
-          <img src="images/asuymt-logo.png" alt="Asuymt logo" loading="lazy" />
-          <div class="gallery-overlay">
-            <i class="fa-solid fa-expand"></i>
-            <span>ASU-YMT Logo</span>
-          </div>
+      <div class="gallery-list-view" id="galleryGrid">
+        <div class="gallery-list-header">
+          <div class="list-col-icon"></div>
+          <div class="list-col-name">Ad</div>
+          <div class="list-col-date">Değiştirme Tarihi</div>
+          <div class="list-col-type">Tür</div>
+          <div class="list-col-size">Boyut</div>
         </div>
 
-        <div class="gallery-item animate__animated animate__fadeInUp card-tilt" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" style="animation-delay: 0.25s"
-          onclick="openLightbox(3)">
-          <img src="images/ymt-logo.jpg" alt="Ymt logo" loading="lazy" />
-          <div class="gallery-overlay">
-            <i class="fa-solid fa-expand"></i>
-            <span>YMT Logo</span>
-          </div>
+        <div class="gallery-list-item animate__animated animate__fadeInUp" style="animation-delay: 0.05s" onclick="openLightbox(0)">
+          <div class="list-col-icon"><img src="assets/images/ASU-YMT-1.png" alt="Asu ymt 1" loading="lazy" /></div>
+          <div class="list-col-name">ASU-YMT_Ekip.png</div>
+          <div class="list-col-date">10.03.2026 14:30</div>
+          <div class="list-col-type">PNG Dosyası</div>
+          <div class="list-col-size">2.4 MB</div>
         </div>
-        <div class="gallery-item animate__animated animate__fadeInUp card-tilt" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" style="animation-delay: 0.3s"
-          onclick="openLightbox(4)">
-          <img src="images/ymt_border.png" alt="Ymt border" loading="lazy" />
-          <div class="gallery-overlay">
-            <i class="fa-solid fa-expand"></i>
-            <span>YMT Border</span>
-          </div>
+        
+        <div class="gallery-list-item animate__animated animate__fadeInUp" style="animation-delay: 0.1s" onclick="openLightbox(1)">
+          <div class="list-col-icon"><img src="assets/images/ana_sayfa.jpeg" alt="Ana sayfa" loading="lazy" /></div>
+          <div class="list-col-name">Toplulugumuz_Kapak.jpeg</div>
+          <div class="list-col-date">12.03.2026 09:15</div>
+          <div class="list-col-type">JPEG Dosyası</div>
+          <div class="list-col-size">3.1 MB</div>
+        </div>
+
+        <div class="gallery-list-item animate__animated animate__fadeInUp" style="animation-delay: 0.15s" onclick="openLightbox(2)">
+          <div class="list-col-icon"><img src="assets/images/asuymt-logo.png" alt="Asuymt logo" loading="lazy" /></div>
+          <div class="list-col-name">ASU_YMT_Logo_Orjinal.png</div>
+          <div class="list-col-date">01.01.2026 10:00</div>
+          <div class="list-col-type">PNG Dosyası</div>
+          <div class="list-col-size">1.2 MB</div>
+        </div>
+
+        <div class="gallery-list-item animate__animated animate__fadeInUp" style="animation-delay: 0.25s" onclick="openLightbox(3)">
+          <div class="list-col-icon"><img src="assets/images/ymt-logo.jpg" alt="Ymt logo" loading="lazy" /></div>
+          <div class="list-col-name">eski_ymt_logo_arsiv.jpg</div>
+          <div class="list-col-date">15.11.2025 16:45</div>
+          <div class="list-col-type">JPG Dosyası</div>
+          <div class="list-col-size">845 KB</div>
+        </div>
+
+        <div class="gallery-list-item animate__animated animate__fadeInUp" style="animation-delay: 0.3s" onclick="openLightbox(4)">
+          <div class="list-col-icon"><img src="assets/images/ymt_border.png" alt="Ymt border" loading="lazy" /></div>
+          <div class="list-col-name">Tasarim_Cerceve_Asset.png</div>
+          <div class="list-col-date">05.02.2026 11:20</div>
+          <div class="list-col-type">PNG Dosyası</div>
+          <div class="list-col-size">1.8 MB</div>
         </div>
       </div>
     </div>
@@ -124,7 +134,7 @@
     <div class="footer">
       <div class="footlar">
         <div class="foot">
-          <a href="index.html" title="ASÜ-YMT"><img src="./images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
+          <a href="index.html" title="ASÜ-YMT"><img src="./assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
         </div>
         <div class="foot">
           <h1>Hızlı Menü</h1>
@@ -152,10 +162,74 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   <script>
-    
+    // Lightbox Functionality
+    const lightbox = document.getElementById("galleryLightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const lightboxCaption = document.getElementById("lightboxCaption");
+    const lightboxCounter = document.getElementById("lightboxCounter");
+    const closeBtn = document.getElementById("lightboxClose");
+    const prevBtn = document.getElementById("lightboxPrev");
+    const nextBtn = document.getElementById("lightboxNext");
+    const backdrop = document.getElementById("lightboxBackdrop");
 
+    // Re-select our new list items
+    const galleryItems = document.querySelectorAll(".gallery-list-item");
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+      if (index < 0 || index >= galleryItems.length) return;
+      currentIndex = index;
+      
+      const targetItem = galleryItems[currentIndex];
+      // Get image from the .list-col-icon child
+      const imgEl = targetItem.querySelector(".list-col-icon img");
+      // Get title from the .list-col-name child
+      const nameEl = targetItem.querySelector(".list-col-name");
+
+      if (!imgEl) return;
+
+      lightboxImg.src = imgEl.src;
+      lightboxCaption.textContent = nameEl ? nameEl.textContent : "";
+      lightboxCounter.textContent = `${currentIndex + 1} / ${galleryItems.length}`;
+
+      lightbox.style.visibility = "visible";
+      lightbox.style.opacity = "1";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      lightbox.style.opacity = "0";
+      setTimeout(() => {
+        lightbox.style.visibility = "hidden";
+        lightboxImg.src = "";
+      }, 350);
+      document.body.style.overflow = "auto";
+    }
+
+    function showNext() {
+      openLightbox((currentIndex + 1) % galleryItems.length);
+    }
+
+    function showPrev() {
+      openLightbox((currentIndex - 1 + galleryItems.length) % galleryItems.length);
+    }
+
+    closeBtn.addEventListener("click", closeLightbox);
+    backdrop.addEventListener("click", closeLightbox);
+    nextBtn.addEventListener("click", showNext);
+    prevBtn.addEventListener("click", showPrev);
+
+    document.addEventListener("keydown", (e) => {
+      if (lightbox.style.visibility === "visible") {
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowRight") showNext();
+        if (e.key === "ArrowLeft") showPrev();
+      }
+    });
+
+    // We no longer need masonry logic as we use a direct flex/grid layout
   </script>
-<script src="./particles.js"></script>
+<script src="./assets/js/particles.js"></script>
 
   <!-- Özel Manyetik İmleç (Custom Magnetic Cursor) -->
   <script>
@@ -177,8 +251,24 @@
       cursorOutline.style.opacity = "0";
 
       window.addEventListener("mousemove", function (e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+        updatePosition(e.clientX, e.clientY);
+      });
+
+      window.addEventListener("touchstart", function (e) {
+        if (e.touches && e.touches[0]) {
+          updatePosition(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: false });
+
+      window.addEventListener("touchmove", function (e) {
+        if (e.touches && e.touches[0]) {
+          updatePosition(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: false });
+
+      function updatePosition(x, y) {
+        mouseX = x;
+        mouseY = y;
         
         if (!firstMove) {
           outlineX = mouseX;
@@ -190,7 +280,7 @@
 
         document.documentElement.style.setProperty('--mouse-x', mouseX + 'px');
         document.documentElement.style.setProperty('--mouse-y', mouseY + 'px');
-      });
+      }
 
       const renderCursor = () => {
         if (firstMove) {
@@ -203,7 +293,7 @@
       };
       requestAnimationFrame(renderCursor);
 
-      const interactiveElements = document.querySelectorAll("a, button, .gallery-item");
+      const interactiveElements = document.querySelectorAll("a, button, .gallery-list-item");
       
       interactiveElements.forEach(link => {
         link.addEventListener("mouseenter", () => {
