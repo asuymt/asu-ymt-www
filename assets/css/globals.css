@@ -262,21 +262,18 @@ body {
     top: 0;
     left: 0;
     border-radius: 50%;
-    z-index: 99999; /* Increased to ensure it is always above modals */
+    z-index: 99999;
     pointer-events: none;
     mix-blend-mode: screen;
+    will-change: transform; /* Hint for layer promotion */
 }
 
 .cursor-dot {
-    top: var(--mouse-y, -100px);
-    left: var(--mouse-x, -100px);
-    transform: translate(-50%, -50%);
+    transform: translate3d(var(--mouse-x, -100px), var(--mouse-y, -100px), 0) translate(-50%, -50%);
 }
 
 .cursor-outline {
-    top: var(--outline-y, -100px);
-    left: var(--outline-x, -100px);
-    transform: translate(-50%, -50%);
+    transform: translate3d(var(--outline-x, -100px), var(--outline-y, -100px), 0) translate(-50%, -50%);
 }
 
 /* Hovering over links - "Tech Scanner" Effect */
@@ -292,14 +289,36 @@ body {
 
 /* Shrink the dot and change color */
 .cursor-dot.hover-active {
-    transform: translate(-50%, -50%) scale(0.5);
+    transform: translate3d(var(--mouse-x, -100px), var(--mouse-y, -100px), 0) translate(-50%, -50%); /* Removed scale(0.5) to keep it visible */
     background-color: var(--accent-2);
     box-shadow: 0 0 15px var(--accent-2);
 }
 
 @keyframes rotateCursor {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
+    0% { transform: translate3d(var(--outline-x), var(--outline-y), 0) translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate3d(var(--outline-x), var(--outline-y), 0) translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 📱 Mobile Performance Optimization */
+@media (max-width: 768px) {
+    *, *::before, *::after {
+        cursor: auto !important; /* Restore default cursor for touch */
+    }
+    
+    .cursor-dot, .cursor-outline {
+        display: none !important; /* Hide custom cursor on mobile to save CPU */
+    }
+
+    .glass-card, .navbar, .box-2, .gallery-list-view {
+        backdrop-filter: none !important; /* Disable heavy blur on mobile */
+        -webkit-backdrop-filter: none !important;
+        background: rgba(10, 15, 25, 0.95) !important; /* Fallback to solid */
+    }
+
+    body::before, body::after {
+        animation-duration: 300s !important; /* Slow down bg animations */
+        opacity: 0.3 !important;
+    }
 }
 
 /* Uzak yıldızlar katmanı */

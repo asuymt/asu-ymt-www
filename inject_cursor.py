@@ -73,25 +73,15 @@ cursor_js = """
       requestAnimationFrame(renderCursor);
 
       const interactiveElements = document.querySelectorAll("a, button, .gallery-list-item");
-      
-      interactiveElements.forEach(link => {
-        link.addEventListener("mouseenter", () => {
-          cursorOutline.classList.add("hover-active");
-          cursorDot.classList.add("hover-active");
-        });
-        link.addEventListener("mouseleave", () => {
-          cursorOutline.classList.remove("hover-active");
-          cursorDot.classList.remove("hover-active");
-        });
-      });
+      interactiveElements.forEach(attachCursorEvents);
       
       // MutationObserver to attach events to newly added nodes (like mobile menus)
       const observer = new MutationObserver(mutations => {
         mutations.forEach(mutation => {
           mutation.addedNodes.forEach(node => {
             if(node.nodeType === 1) { // ELEMENT_NODE
-              const links = node.querySelectorAll ? node.querySelectorAll("a, button") : [];
-              if(node.matches && node.matches("a, button")) {
+              const links = node.querySelectorAll ? node.querySelectorAll("a, button, .gallery-list-item") : [];
+              if(node.matches && node.matches("a, button, .gallery-list-item")) {
                  attachCursorEvents(node);
               }
               links.forEach(attachCursorEvents);
@@ -112,6 +102,15 @@ cursor_js = """
         });
       }
 
+      // 📱 Global Mobile Optimization: Disable heavy tilt on small screens
+      if (window.innerWidth < 768) {
+        const tiltElements = document.querySelectorAll("[data-tilt]");
+        tiltElements.forEach(el => {
+           if (el.vanillaTilt) el.vanillaTilt.destroy();
+           el.removeAttribute("data-tilt");
+        });
+      }
+
     });
   </script>
 """
@@ -120,9 +119,6 @@ def process_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # If it already has the cursor-dot from our manual index/galeri edit, let's remove it to standardize
-    content = re.sub(r'^\s*<!-- Manyetik İmleç -->\s*<div class="cursor-dot" data-cursor-dot></div>\s*<div class="cursor-outline" data-cursor-outline></div>', '', content, flags=re.MULTILINE)
-    
     # Always strip out the old cursor scripts before injecting new one
     content = re.sub(r'\s*<!-- Özel Manyetik İmleç \(Custom Magnetic Cursor\) -->.*?<\/script>\s*', '\n', content, flags=re.DOTALL)
     

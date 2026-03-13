@@ -124,8 +124,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function initParticles() {
         particlesArray = [];
-        // Increase density slightly for a better mesh net
-        let numberOfParticles = (canvas.height * canvas.width) / 6000;
+        // Detect mobile to reduce density
+        const isMobile = window.innerWidth < 768;
+        let numberOfParticles = (canvas.height * canvas.width) / (isMobile ? 12000 : 6000);
         
         for (let i = 0; i < numberOfParticles; i++) {
             // Assign random depth layer
