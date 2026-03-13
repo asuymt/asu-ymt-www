@@ -281,8 +281,8 @@ body {
 
 /* Hovering over links - "Tech Scanner" Effect */
 .cursor-outline.hover-active {
-    width: 50px;
-    height: 50px;
+    width: 36px;
+    height: 36px;
     border: 2px dashed var(--accent-2); /* Changes to a neon pink dashed border */
     border-radius: 8px; /* Morphs from a circle to a rounded square */
     background-color: rgba(244, 63, 94, 0.05);
