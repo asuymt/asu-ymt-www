@@ -12,17 +12,22 @@
 
 .navbar {
   position: sticky;
-  top: 0;
+  top: 1.5rem;
   z-index: 100;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.8rem;
-  padding: 1.4rem 5%;
-  background: rgba(10, 10, 15, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle);
+  padding: 1.2rem 3rem;
+  width: max-content;
+  max-width: 95%;
+  margin: 0 auto;
+  border-radius: 100px;
+  background: rgba(10, 15, 25, 0.65);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .navbar img {
@@ -48,41 +53,44 @@
   color: var(--text-secondary);
   font-size: 1.4rem;
   font-weight: 500;
-  padding: 0.5rem 1.1rem;
-  border-radius: 8px;
+  padding: 0.6rem 1.4rem;
+  border-radius: 100px;
   transition: all var(--transition);
-  letter-spacing: -0.01em;
+  letter-spacing: 0.02em;
 }
 
 .navbar ul li a:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
 }
 
 .kapak {
   position: relative;
-  height: 75vh;
-  min-height: 500px;
-  width: 90%;
-  max-width: var(--max-width);
-  margin: 3rem auto;
+  height: 85vh;
+  min-height: 600px;
+  width: 95%;
+  max-width: 1400px;
+  margin: 2rem auto 5rem;
   overflow: hidden;
-  border-radius: var(--radius);
-  border: 1px solid var(--border-subtle);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
 }
 
 .blur-layer {
   position: absolute;
-  inset: 0;
+  inset: -10%;
   background: linear-gradient(160deg,
-      rgba(10, 10, 15, 0.85),
-      rgba(10, 10, 15, 0.7)),
+      rgba(3, 12, 23, 0.85),
+      rgba(14, 165, 233, 0.2)),
     url(images/ana_sayfa.jpeg);
   background-position: center;
   background-size: cover;
-  filter: blur(4px);
+  background-attachment: fixed;
+  filter: blur(5px);
   z-index: 1;
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .kapak-text {
@@ -94,19 +102,20 @@
   color: var(--text-primary);
   text-align: center;
   width: 80%;
-  max-width: 700px;
+  max-width: 800px;
 }
 
 .kapak-text h1 {
-  font-size: 4.2rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
+  font-size: 5.2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
   margin-bottom: 2rem;
-  background: linear-gradient(135deg, var(--text-primary), var(--accent));
+  background: linear-gradient(135deg, #ffffff 30%, var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 0 40px rgba(14, 165, 233, 0.3);
 }
 
 .kapak-text p {
@@ -133,11 +142,11 @@
 }
 
 .box h1 {
-  font-size: 3.2rem;
-  font-weight: 700;
+  font-size: 3.6rem;
+  font-weight: 800;
   text-align: center;
   padding: 4rem 0 1.5rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color: var(--text-primary);
 }
 
@@ -160,12 +169,12 @@
 }
 
 .box-2>h1 {
-  font-size: 3.6rem;
-  font-weight: 700;
+  font-size: 4rem;
+  font-weight: 800;
   text-align: center;
   padding-bottom: 5rem;
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--text-primary), var(--accent));
+  background: linear-gradient(135deg, #ffffff, var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -183,14 +192,15 @@
   min-width: 220px;
   max-width: 320px;
   padding: 3.5rem 2.5rem;
-  background: var(--bg-card);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
   text-align: center;
-  transition: all var(--transition);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .card::before {
@@ -198,16 +208,16 @@
   position: absolute;
   inset: 0;
   background: radial-gradient(circle at top left,
-      rgba(14, 165, 233, 0.08),
+      rgba(14, 165, 233, 0.15),
       transparent 70%);
   pointer-events: none;
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  border-color: var(--border-hover);
-  box-shadow: 0 12px 30px var(--accent-glow);
-  background: var(--bg-card-hover);
+  transform: translateY(-10px);
+  border-color: rgba(14, 165, 233, 0.4);
+  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2);
+  background: rgba(14, 165, 233, 0.05);
 }
 
 .card i {
@@ -420,15 +430,16 @@
 .card-duyuru {
   width: 30%;
   min-width: 300px;
-  background: var(--bg-card);
-  backdrop-filter: blur(10px);
-  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px) saturate(120%);
+  border-radius: 24px;
   padding: 2.5rem;
   margin-bottom: 3rem;
-  border: 1px solid var(--border-subtle);
-  transition: all var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .card-duyuru::before {
@@ -442,10 +453,10 @@
 }
 
 .card-duyuru:hover {
-  transform: translateY(-8px);
-  border-color: var(--border-hover);
-  box-shadow: 0 12px 30px var(--accent-glow);
-  background: var(--bg-card-hover);
+  transform: translateY(-10px);
+  border-color: rgba(14, 165, 233, 0.4);
+  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2);
+  background: rgba(14, 165, 233, 0.05);
 }
 
 .card-header {
@@ -1039,11 +1050,12 @@
 .contact-form {
   flex: 1;
   min-width: 300px;
-  background: var(--bg-card);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(24px) saturate(150%);
   padding: 3.5rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--border-subtle);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
 }
 
 .contact-form h2 {
@@ -1070,14 +1082,15 @@
 .form-group textarea {
   width: 100%;
   padding: 1.2rem 1.4rem;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-subtle);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-primary);
-  border-radius: var(--radius-sm);
+  border-radius: 16px;
   font-size: 1.5rem;
   font-family: var(--font);
   outline: none;
-  transition: all var(--transition);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
 }
 
 .form-group input:focus,
@@ -1152,24 +1165,25 @@
 }
 
 .project-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
   padding: 3rem;
-  transition: all var(--transition);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--border-hover);
-  box-shadow: 0 16px 40px var(--accent-glow);
-  background: var(--bg-card-hover);
+  transform: translateY(-10px);
+  border-color: rgba(14, 165, 233, 0.4);
+  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2);
+  background: rgba(14, 165, 233, 0.05);
 }
 
 .project-card::before {

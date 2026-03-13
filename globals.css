@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap");
 
 :root {
 
@@ -102,7 +102,7 @@
 }
 
 :root {
-    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-sans: "Outfit", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
 
 
@@ -186,21 +186,21 @@
 
 :root {
     --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 0.40s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
-    --shadow: 0 4px 16px rgba(0, 0, 0, 0.30);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.40);
-    --shadow-accent: 0 8px 24px var(--accent-glow);
-    --shadow-accent-2: 0 8px 24px var(--accent-2-glow);
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.40);
+    --shadow-accent: 0 8px 32px var(--accent-glow);
+    --shadow-accent-2: 0 8px 32px var(--accent-2-glow);
     /* Legacy aliases */
     --shadow-blue: var(--shadow-accent);
     --shadow-purple: var(--shadow-accent-2);
 
     --blur-sm: blur(8px);
     --blur: blur(16px);
-    --blur-lg: blur(24px);
+    --blur-lg: blur(32px);
 }
 
 *,
@@ -439,9 +439,10 @@ button {
 }
 
 .btn-secondary {
-    background: var(--color-white-6);
+    background: rgba(255, 255, 255, 0.03);
     color: var(--text-primary);
     border-color: var(--border-default);
+    backdrop-filter: var(--blur-sm);
 }
 
 .btn-secondary:hover {
