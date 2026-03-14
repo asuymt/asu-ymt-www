@@ -112,4 +112,32 @@
 - [x] Akışkan tipografi (fluid typography) ve mobil öncelikli boşluk düzenlerini uygula
 - [x] Dokunmatik cihazlar için navbar ve hero alanını optimize et
 - [x] Ağır görsel efektleri (bulanıklık, gölge) mobil GPU'lar için hafiflet
+- [x] Ağır görsel efektleri (bulanıklık, gölge) mobil GPU'lar için hafiflet
 - [x] Mobil simülatörlerde 60 FPS akıcılığını ve kusursuz yerleşimi doğrula
+
+## Aşama 20: Footer (Sayfa Altı) Temizliği
+- [x] 18 HTML dosyasının tamamından gereksiz "Hızlı Menü" bloğunu kaldır
+- [x] Sayfa altı yerleşiminin daha sade ve dengeli olduğunu doğrula
+
+## Aşama 21: Footer "Made By" (Geliştirenler) Bölümü
+- [x] `style.css` içinde "Made By" alanı için premium stil ve animasyonlar hazırla
+- [x] 18 HTML dosyasının tamamına geliştirici isimlerini (Emir Fetolmaz, Burak Arıkan, Mehmet Akif Akkoç) otomatik olarak enjekte et
+- [x] Footer alanının görsel dengesini ve "Ocean Ember" temasını doğrula
+
+## Aşama 22: Geliştirici İsmi Üzerine Resim Baloncuğu (Tooltip)
+- [x] `style.css` içinde buzlu cam efektli (glassmorphism) ve animasyonlu tooltip yapısını hazırla
+- [x] 18 HTML dosyasının tamamında "Emir Fetolmaz" ismini resim destekli tooltip tetikleyicisiyle güncelle
+- [x] Etkileşimin jilet gibi akıcı olduğunu ve resim alanının doğru konumlandığını doğrula
+
+## Aşama 23: Tooltip Görsel İyileştirmesi (Netlik Operasyonu)
+- [x] Baloncuk boyutlarını resim detaylarını daha iyi gösterecek şekilde büyüt (180x240)
+- [x] Resim netliğini artırmak için yüksek kontrastlı render kurallarını (`image-rendering`) uygula
+- [x] Resmin arka plandan daha net ayrılması için ince çerçeve ve derinlik ekle
+
+## Aşama 24: Burak Arıkan için Tooltip (Resim Baloncuğu)
+- [x] Burak Arıkan ismini 18 HTML dosyasının tamamında `burak-arikan.jpg` destekli tooltip ile güncelle
+- [x] Tüm ekip imzalarının aynı jilet netlik ve premium efektlerle çalıştığını doğrula
+
+## Aşama 25: Mehmet Akif Akkoç için Tooltip (Resim Baloncuğu)
+- [x] Mehmet Akif Akkoç ismini 18 HTML dosyasının tamamında `mehmet-akif-akkoc.jpg` destekli tooltip ile güncelle
+- [x] Üç kişilik geliştirici ekibinin tamamı için interaktif ve jilet gibi net imzaları tamamla

@@ -598,6 +598,125 @@
   display: none;
 }
 
+.made-by {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.made-by-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.made-by-list li {
+  color: var(--text-secondary);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: var(--transition);
+  position: relative;
+  width: fit-content;
+  cursor: pointer;
+  padding: 0.2rem 0;
+}
+
+.made-by-list li::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: var(--transition);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.made-by-list li:hover {
+  color: var(--accent);
+  transform: translateX(5px);
+}
+
+.made-by-list li:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .made-by {
+    align-items: center;
+    text-align: center;
+  }
+  .made-by-list {
+    align-items: center;
+  }
+  .made-by-list li:hover {
+    transform: none;
+  }
+}
+
+/* Developer Tooltip Styles */
+.has-tooltip {
+  position: relative !important;
+}
+
+.tooltip-bubble {
+  position: absolute;
+  bottom: calc(100% + 15px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  width: 180px;
+  height: 240px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 15px var(--accent-glow);
+}
+
+.tooltip-bubble::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid rgba(255, 255, 255, 0.08); /* Match bubble border/bg subtle feel */
+}
+
+.tooltip-bubble img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  image-rendering: -webkit-optimize-contrast; /* Jilet gibi netlik için */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Resim netliğini vurgulamak için ince çerçeve */
+}
+
+.has-tooltip:hover .tooltip-bubble {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Mobile: Disable tooltip or handle carefully */
+@media (max-width: 768px) {
+  .tooltip-bubble {
+    display: none;
+  }
+}
+
 .footer p {
   text-align: center;
   font-size: 1.3rem;
