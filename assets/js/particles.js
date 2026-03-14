@@ -1,5 +1,3 @@
-
-
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("particleCanvas");
     if (!canvas) return;
@@ -7,15 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const ctx = canvas.getContext("2d");
     let particlesArray = [];
 
-    const baseColor1 = 'rgba(14, 165, 233, 0.7)'; // Cyan
-    const baseColor2 = 'rgba(244, 63, 94, 0.6)';  // Neon Pink
-    const repulseRadius = 200; // Radius of mouse interaction
+    const baseColor1 = 'rgba(14, 165, 233, 0.7)';
+    const baseColor2 = 'rgba(244, 63, 94, 0.6)';
+    const repulseRadius = 200;
 
     let mouse = {
         x: undefined,
         y: undefined,
-        vx: 0, // Velocity X
-        vy: 0  // Velocity Y
+        vx: 0,
+        vy: 0
     };
 
     let lastMouse = { x: undefined, y: undefined };
@@ -25,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lastMouse.y = mouse.y;
         mouse.x = event.clientX;
         mouse.y = event.clientY;
-        
+
         if(lastMouse.x !== undefined) {
              mouse.vx = mouse.x - lastMouse.x;
              mouse.vy = mouse.y - lastMouse.y;
@@ -58,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
             this.baseSize = size;
             this.color = color;
             this.layer = layer;
-            
+
             this.speedMultiplier = layer === 0 ? 0.2 : (layer === 1 ? 0.6 : 1.2);
             this.reactivity = layer === 0 ? 0 : (layer === 1 ? 0.5 : 1);
         }
@@ -84,19 +82,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (distance < repulseRadius) {
                     let force = (repulseRadius - distance) / repulseRadius;
-                    
+
                     let dirX = dx / distance;
                     let dirY = dy / distance;
-                    
+
                     let dragX = mouse.vx * 0.1 * force;
                     let dragY = mouse.vy * 0.1 * force;
 
                     targetX -= (dirX * force * 5 * this.reactivity) - dragX;
                     targetY -= (dirY * force * 5 * this.reactivity) - dragY;
-                    
+
                     this.size = this.baseSize + (force * 2);
                 } else {
-                    this.size = this.baseSize; // Reset size
+                    this.size = this.baseSize;
                 }
             } else {
                  this.size = this.baseSize;
@@ -112,17 +110,17 @@ document.addEventListener("DOMContentLoaded", () => {
         particlesArray = [];
         const isMobile = window.innerWidth < 768;
         let numberOfParticles = (canvas.height * canvas.width) / (isMobile ? 18000 : 6000);
-        
+
         for (let i = 0; i < numberOfParticles; i++) {
             let rand = Math.random();
             let layer = rand > 0.8 ? 2 : (rand > 0.4 ? 1 : 0);
-            
+
             let size = layer === 0 ? 1 : (layer === 1 ? 1.5 : 2.5);
             let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
             let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
             let dx = (Math.random() * 0.5) - 0.25;
             let dy = (Math.random() * 0.5) - 0.25;
-            
+
             let color;
             if(layer === 0) color = 'rgba(255,255,255,0.1)';
             else if(layer === 2) color = Math.random() > 0.5 ? baseColor1 : baseColor2;
@@ -133,9 +131,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function connect() {
-        let maxDistance = 120; // Maximum line length
+        let maxDistance = 120;
         for (let a = 0; a < particlesArray.length; a++) {
-            if (particlesArray[a].layer === 0) continue; 
+            if (particlesArray[a].layer === 0) continue;
 
             for (let b = a; b < particlesArray.length; b++) {
                 if (particlesArray[b].layer === 0) continue;
@@ -146,16 +144,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (distance < maxDistance) {
                     let opacity = 1 - (distance / maxDistance);
-                    
+
                     let mdx = mouse.x - particlesArray[a].x;
                     let mdy = mouse.y - particlesArray[a].y;
                     let mDist = Math.sqrt(mdx * mdx + mdy * mdy);
                     if (mDist < repulseRadius && mouse.x !== undefined) {
-                        opacity += 0.3; // Boost brightness
+                        opacity += 0.3;
                     }
 
-                    opacity = Math.min(opacity * 0.4, 0.8); // Cap opacity so it doesn't get completely solid
-                    
+                    opacity = Math.min(opacity * 0.4, 0.8);
+
                     ctx.strokeStyle = `rgba(14, 165, 233, ${opacity})`;
                     ctx.lineWidth = particlesArray[a].layer === 2 ? 1 : 0.5;
                     ctx.beginPath();
@@ -170,18 +168,17 @@ document.addEventListener("DOMContentLoaded", () => {
     function animateParticles() {
         requestAnimationFrame(animateParticles);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
-        
+
         mouse.vx *= 0.9;
         mouse.vy *= 0.9;
 
         for (let i = 0; i < particlesArray.length; i++) {
             particlesArray[i].update();
         }
-        
-        connect(); // Draw the network mesh lines
+
+        connect();
     }
 
     initParticles();
     animateParticles();
 });
-

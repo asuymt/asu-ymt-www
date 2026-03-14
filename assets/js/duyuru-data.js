@@ -64,7 +64,6 @@ const duyuruVerileri = [
     }
 ];
 
-// Dışarıya aktaralım
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = duyuruVerileri;
 }

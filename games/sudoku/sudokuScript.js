@@ -1,11 +1,3 @@
-/**
- * @fileoverview SUDOKU | Parantez Ruhu
- * @author Parantez Ruhu
- * @license MIT
- * @since 2024-08-20
- * @lastModified 2025-08-14
- */
-
 class SudokuGame {
     constructor() {
         this.gridSize = 9;
@@ -25,14 +17,12 @@ class SudokuGame {
         this.history = [];
         this.redoStack = [];
 
-        // Dynamic Sizes based on selection
         this.modes = {
             "9": { size: 9, subW: 3, subH: 3, ratio: 0.70 },
             "12": { size: 12, subW: 4, subH: 3, ratio: 0.72 },
             "15": { size: 15, subW: 5, subH: 3, ratio: 0.75 }
         };
 
-        // UI Binding
         this.elems = {
             board: document.getElementById('board'),
             timer: document.getElementById('timer'),
@@ -55,10 +45,9 @@ class SudokuGame {
             hintCount: document.getElementById('hint-count'),
             loadingOverlay: document.getElementById('loading-overlay')
         };
-        
+
         this.init();
-        
-        // Auto-show tutorial on startup
+
         setTimeout(() => this.showTutorial(), 800);
     }
 
@@ -72,17 +61,15 @@ class SudokuGame {
             this.startNewGame();
         };
 
-        // Tutorial Events
         if (this.elems.tutorialBtn) this.elems.tutorialBtn.onclick = () => this.showTutorial();
         if (this.elems.closeTutorialBtn) this.elems.closeTutorialBtn.onclick = () => this.closeTutorial();
         const closeX = document.getElementById('close-tut-x');
         if (closeX) closeX.onclick = () => this.closeTutorial();
 
-        // Custom Dropdown Logic
         const wrapper = document.querySelector('.quantum-select-wrapper');
         const trigger = document.querySelector('.quantum-select-trigger');
         const options = document.querySelectorAll('.quantum-option');
-        
+
         if (trigger && wrapper) {
             trigger.onclick = (e) => {
                 e.stopPropagation();
@@ -111,8 +98,7 @@ class SudokuGame {
         };
 
         window.onkeydown = (e) => this.handleKeyPress(e);
-        
-        // Mobile keyboard input
+
         if (this.elems.keyboardTrigger) {
             this.elems.keyboardTrigger.oninput = (e) => {
                 const val = e.target.value.slice(-1);
@@ -146,13 +132,13 @@ class SudokuGame {
         this.gridSize = mode.size;
         this.subGridWidth = mode.subW;
         this.subGridHeight = mode.subH;
-        
+
         if (this.elems.loadingOverlay) this.elems.loadingOverlay.classList.remove('hidden');
         this.reset();
 
         if (this.worker) {
-            this.worker.postMessage({ 
-                gridSize: this.gridSize, 
+            this.worker.postMessage({
+                gridSize: this.gridSize,
                 ratio: mode.ratio,
                 subW: this.subGridWidth,
                 subH: this.subGridHeight
@@ -163,7 +149,7 @@ class SudokuGame {
     finalizeGameStart() {
         if (this.elems.loadingOverlay) this.elems.loadingOverlay.classList.add('hidden');
         this.elems.board.style.setProperty('--grid-size', this.gridSize);
-        
+
         let cellSize = "clamp(30px, 6.2vh, 60px)";
         if (this.gridSize === 12) cellSize = "clamp(25px, 5vh, 45px)";
         if (this.gridSize === 15) cellSize = "clamp(20px, 4.2vh, 38px)";
@@ -210,7 +196,7 @@ class SudokuGame {
         this.board.forEach((val, i) => {
             const cell = document.createElement('div');
             cell.className = 'cell';
-            
+
             const r = Math.floor(i / this.gridSize);
             const c = i % this.gridSize;
             if ((c + 1) % this.subGridWidth === 0 && (c + 1) !== this.gridSize) cell.classList.add('border-right');
@@ -231,7 +217,7 @@ class SudokuGame {
         if (!this.gameActive) return;
         this.selectedIdx = idx;
         const target = e.target.closest('.cell');
-        
+
         document.querySelectorAll('.cell').forEach(c => c.classList.remove('selected', 'highlight-house', 'highlight-match'));
         target.classList.add('selected');
 
@@ -249,8 +235,6 @@ class SudokuGame {
 
         if (this.elems.keyboardTrigger) this.elems.keyboardTrigger.focus();
     }
-
-
 
     setCellValue(num) {
         if (this.selectedIdx === null || !this.gameActive) return;

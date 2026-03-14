@@ -2,8 +2,6 @@
 
 <html lang="tr">
 
-
-
 <head>
 
     <meta charset="UTF-8" />
@@ -38,8 +36,6 @@
 
         }
 
-
-
         .detail-section {
 
             background: var(--bg-card);
@@ -55,8 +51,6 @@
             border: 1px solid var(--border-subtle);
 
         }
-
-
 
         .detail-section h2 {
 
@@ -76,8 +70,6 @@
 
         }
 
-
-
         .detail-content {
 
             display: grid;
@@ -87,8 +79,6 @@
             gap: 4rem;
 
         }
-
-
 
         .curriculum h3,
 
@@ -102,8 +92,6 @@
 
         }
 
-
-
         .curriculum ul {
 
             list-style: none;
@@ -111,8 +99,6 @@
             padding: 0;
 
         }
-
-
 
         .curriculum li {
 
@@ -130,8 +116,6 @@
 
         }
 
-
-
         .curriculum li i {
 
             color: var(--accent);
@@ -139,8 +123,6 @@
             margin-top: 0.3rem;
 
         }
-
-
 
         .info-box {
 
@@ -154,8 +136,6 @@
 
         }
 
-
-
         .detail-container .info-item {
 
             margin-bottom: 1.5rem;
@@ -165,8 +145,6 @@
             color: var(--text-secondary);
 
         }
-
-
 
         .detail-container .info-item strong {
 
@@ -178,8 +156,6 @@
 
         }
 
-
-
         @media (max-width: 992px) {
 
             .detail-content {
@@ -190,8 +166,6 @@
 
         }
 
-
-
         @media (max-width: 768px) {
 
             .detail-container {
@@ -200,23 +174,17 @@
 
             }
 
-
-
             .detail-section {
 
                 padding: 2.5rem;
 
             }
 
-
-
             .detail-section h2 {
 
                 font-size: 2rem;
 
             }
-
-
 
             .curriculum li {
 
@@ -230,23 +198,9 @@
 
 </head>
 
-
-
 <body>
 
 <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div class="container">
 
@@ -283,8 +237,6 @@
             </ul>
 
         </div>
-
-
 
         <div class="subpage-container">
 
@@ -338,8 +290,6 @@
 
         </div>
 
-
-
         <div class="footer">
 
             <div class="footlar">
@@ -347,8 +297,6 @@
                 <div class="foot">
 
           <a href="../../"><img src="../../assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
-
-        
 
                 </div>
 
@@ -398,8 +346,6 @@
 
         </div>
 
-                
-
                 <div class="foot" id="iletisim">
 
                     <h1>İletişim</h1>
@@ -446,10 +392,6 @@
 
   </script>
 
-
-
-  
-
   <script>
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -458,20 +400,14 @@
 
       window.amazingCursorInitialized = true;
 
-
-
       const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
 
       if (!hasFinePointer) return;
       document.body.classList.add('cursor-enabled');
 
-
-
       const cursorDot = document.createElement('div');
 
       cursorDot.id = 'cursor-dot';
-
-      
 
       const cursorCircleOuter = document.createElement('div');
 
@@ -482,8 +418,6 @@
       cursorCircleInner.id = 'cursor-circle-inner';
 
       cursorCircleOuter.appendChild(cursorCircleInner);
-
-
 
       document.body.appendChild(cursorDot);
 
@@ -529,8 +463,6 @@
 
       }
 
-
-
       let mouseX = 0;
 
       let mouseY = 0;
@@ -542,8 +474,6 @@
       let isVisible = false;
 
       let firstMove = false;
-
-
 
       const evaluateHoverState = (target) => {
 
@@ -562,8 +492,6 @@
         }
 
       };
-
-
 
       window.addEventListener('mousemove', (e) => {
 
@@ -586,8 +514,6 @@
 
         }
 
-        
-
         if (!isVisible) {
 
           document.body.classList.add('cursor-visible');
@@ -601,13 +527,9 @@
         mouseY = e.clientY;
         try { sessionStorage.setItem('amazingCursorPos', JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
 
-        
-
         cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
 
       });
-
-
 
       const updateCircle = () => {
 
@@ -627,8 +549,6 @@
 
       requestAnimationFrame(updateCircle);
 
-
-
       document.body.addEventListener('mouseover', (e) => evaluateHoverState(e.target));
 
       document.body.addEventListener('mouseout', (e) => {
@@ -637,15 +557,11 @@
 
       });
 
-
-
       window.addEventListener('mousedown', () => {
 
           document.body.classList.add('cursor-active');
 
       });
-
-      
 
       window.addEventListener('mouseup', (e) => {
 
@@ -654,8 +570,6 @@
           evaluateHoverState(e.target);
 
       });
-
-
 
       document.addEventListener('mouseleave', () => {
 
@@ -673,23 +587,11 @@
 
       });
 
-      
-
     });
 
   </script>
 
-
-
 <script src="../../assets/js/headerfooter.js"></script>
 </body>
 
-
-
 </html>
-
-
-
-
-
-

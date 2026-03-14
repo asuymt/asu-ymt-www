@@ -7,13 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    duyuruVerileri.forEach((duyuru, index) => {
-
-        let etiketMetni = duyuru.etiket;
+    etkinlikVerileri.forEach((etkinlik, index) => {
+        let etiketMetni = etkinlik.etiket;
         let etiketStili = "";
 
-        if (duyuru.hedefTarih) {
-            const target = new Date(duyuru.hedefTarih);
+        if (etkinlik.hedefTarih) {
+            const target = new Date(etkinlik.hedefTarih);
             target.setHours(0, 0, 0, 0);
             const diffTime = target - today;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -33,12 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const cardHTML = `
             <div class="card-duyuru animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
                 <div class="card-header">
-                    <span class="date">${duyuru.tarih}</span>
+                    <span class="date">${etkinlik.tarih}</span>
                     <span class="tag" style="${etiketStili}">${etiketMetni}</span>
                 </div>
-                <h2>${duyuru.baslik}</h2>
-                <p>${duyuru.aciklama}</p>
-                <a href="${duyuru.link}" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
+                <h2>${etkinlik.baslik}</h2>
+                <p>${etkinlik.aciklama}</p>
+                <a href="${etkinlik.link}" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
             </div>
         `;
 

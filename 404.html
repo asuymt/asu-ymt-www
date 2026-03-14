@@ -2,8 +2,6 @@
 
 <html lang="tr">
 
-
-
 <head>
 
     <meta charset="UTF-8">
@@ -28,15 +26,11 @@
 
         @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-
-
         * {
 
             box-sizing: border-box;
 
         }
-
-
 
         body,
 
@@ -51,8 +45,6 @@
             background-color: #0a0a0f;
 
         }
-
-
 
         .hata-sayfasi {
 
@@ -72,8 +64,6 @@
 
         }
 
-
-
         .hata-icerik {
 
             max-width: 500px;
@@ -92,8 +82,6 @@
 
         }
 
-
-
         .hata-icerik .logo {
 
             width: 8rem;
@@ -103,8 +91,6 @@
             opacity: 0.8;
 
         }
-
-
 
         .hata-kod {
 
@@ -128,8 +114,6 @@
 
         }
 
-
-
         .hata-baslik {
 
             font-size: 2.4rem;
@@ -144,8 +128,6 @@
 
         }
 
-
-
         .hata-mesaj {
 
             font-size: 1.5rem;
@@ -157,8 +139,6 @@
             line-height: 1.7;
 
         }
-
-
 
         .anasayfa-btn {
 
@@ -184,8 +164,6 @@
 
         }
 
-
-
         .anasayfa-btn:hover {
 
             transform: translateY(-3px);
@@ -193,8 +171,6 @@
             box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
 
         }
-
-
 
         .hata-ikonlar {
 
@@ -207,8 +183,6 @@
             gap: 1rem;
 
         }
-
-
 
         .hata-ikonlar a {
 
@@ -236,8 +210,6 @@
 
         }
 
-
-
         .hata-ikonlar a:hover {
 
             color: #0ea5e9;
@@ -254,23 +226,9 @@
 
 </head>
 
-
-
 <body>
 
 <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div class="hata-sayfasi">
 
@@ -289,8 +247,6 @@
             <a href="index.html" class="anasayfa-btn">Ana Sayfaya Dön</a>
 
             <div class="hata-ikonlar">
-
-
 
                 <a href="https://github.com/asuymt" title="GitHub" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
 
@@ -324,10 +280,6 @@
 
   </script>
 
-
-
-  
-
   <script>
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -336,20 +288,14 @@
 
       window.amazingCursorInitialized = true;
 
-
-
       const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
 
       if (!hasFinePointer) return;
       document.body.classList.add('cursor-enabled');
 
-
-
       const cursorDot = document.createElement('div');
 
       cursorDot.id = 'cursor-dot';
-
-      
 
       const cursorCircleOuter = document.createElement('div');
 
@@ -360,8 +306,6 @@
       cursorCircleInner.id = 'cursor-circle-inner';
 
       cursorCircleOuter.appendChild(cursorCircleInner);
-
-
 
       document.body.appendChild(cursorDot);
 
@@ -407,8 +351,6 @@
 
       }
 
-
-
       let mouseX = 0;
 
       let mouseY = 0;
@@ -420,8 +362,6 @@
       let isVisible = false;
 
       let firstMove = false;
-
-
 
       const evaluateHoverState = (target) => {
 
@@ -440,8 +380,6 @@
         }
 
       };
-
-
 
       window.addEventListener('mousemove', (e) => {
 
@@ -464,8 +402,6 @@
 
         }
 
-        
-
         if (!isVisible) {
 
           document.body.classList.add('cursor-visible');
@@ -479,13 +415,9 @@
         mouseY = e.clientY;
         try { sessionStorage.setItem('amazingCursorPos', JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
 
-        
-
         cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
 
       });
-
-
 
       const updateCircle = () => {
 
@@ -505,8 +437,6 @@
 
       requestAnimationFrame(updateCircle);
 
-
-
       document.body.addEventListener('mouseover', (e) => evaluateHoverState(e.target));
 
       document.body.addEventListener('mouseout', (e) => {
@@ -515,15 +445,11 @@
 
       });
 
-
-
       window.addEventListener('mousedown', () => {
 
           document.body.classList.add('cursor-active');
 
       });
-
-      
 
       window.addEventListener('mouseup', (e) => {
 
@@ -532,8 +458,6 @@
           evaluateHoverState(e.target);
 
       });
-
-
 
       document.addEventListener('mouseleave', () => {
 
@@ -551,23 +475,11 @@
 
       });
 
-      
-
     });
 
   </script>
 
-
-
 <script src="assets/js/headerfooter.js"></script>
 </body>
 
-
-
 </html>
-
-
-
-
-
-

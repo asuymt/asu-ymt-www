@@ -4,7 +4,7 @@
     --bg-dark: #020408;
     --quantum-neon: #00f2fe;
     --quantum-neon-glow: rgba(0, 242, 254, 0.4);
-    --quantum-green: #1DB954; /* Spotify Green */
+    --quantum-green: #1DB954;
     --quantum-red: #ff5252;
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.1);
@@ -48,7 +48,7 @@ body {
     left: -50%;
     width: 200%;
     height: 200%;
-    background-image: 
+    background-image:
         linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
     background-size: 80px 80px;
@@ -93,7 +93,7 @@ h1 {
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.3s;
-    -webkit-text-fill-color: var(--quantum-neon); /* Force color back */
+    -webkit-text-fill-color: var(--quantum-neon);
     font-weight: 800;
     box-shadow: 0 0 10px var(--quantum-neon-glow);
 }
@@ -223,10 +223,10 @@ h1 {
         justify-items: center;
     }
     .side-panel { width: 100%; max-width: 450px; justify-self: center; }
-    .panel-group { 
-        flex-direction: row; 
-        flex-wrap: wrap; 
-        justify-content: center; 
+    .panel-group {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
         padding: 0.8rem;
         gap: 0.5rem;
     }
@@ -505,7 +505,7 @@ h1 {
 
 .credits-panel {
     width: 100%;
-    margin-top: 0; 
+    margin-top: 0;
     padding: 0.5rem 0;
     opacity: 0;
     transform: translateY(-20px);
@@ -525,8 +525,6 @@ h1 {
     white-space: nowrap;
     text-align: center;
 }
-
-
 
 .modal-backdrop {
     position: fixed;
@@ -556,7 +554,7 @@ h1 {
     overflow-y: auto;
     text-align: center;
     position: relative;
-    /* Custom scrollbar for tutorial content */
+
     scrollbar-width: thin;
     scrollbar-color: var(--quantum-neon) transparent;
 }
@@ -612,7 +610,7 @@ h1 {
     opacity: 0.8;
 }
 
-.quantum-footer span { 
+.quantum-footer span {
     color: var(--quantum-neon);
     text-shadow: 0 0 10px var(--quantum-neon-glow);
 }

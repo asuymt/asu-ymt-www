@@ -188,19 +188,19 @@
             <div class="search-section animate__animated animate__fadeInDown">
                 <h1>Yazılım Mühendisliği Sözlüğü</h1>
                 <p>Terimler, kavramlar ve teknoloji dünyasına dair her şey.</p>
-                
+
                 <div class="search-box">
                     <i class="fas fa-search"></i>
                     <input type="text" id="termSearch" placeholder="Bir terim arayın... (örn: API, Docker, Agile)">
                 </div>
 
                 <div class="alphabet-filter" id="alphabetFilter">
-                    <!-- JavaScript by alphabet buttons -->
+
                 </div>
             </div>
 
             <div class="results-section" id="resultsGrid">
-                <!-- JavaScript filtered cards -->
+
             </div>
         </div>
 
@@ -265,7 +265,7 @@
                     activeLetter = letter;
                     btn.classList.add('active');
                     searchInput.value = '';
-                    const filtered = sozlukData.filter(item => 
+                    const filtered = sozlukData.filter(item =>
                         item.term.toLowerCase().startsWith(letter.toLowerCase())
                     );
                     renderTerms(filtered);
@@ -296,8 +296,8 @@
                 activeLetter = null;
                 document.querySelectorAll('.letter-btn').forEach(b => b.classList.remove('active'));
                 const query = e.target.value.toLowerCase();
-                const filtered = sozlukData.filter(item => 
-                    item.term.toLowerCase().includes(query) || 
+                const filtered = sozlukData.filter(item =>
+                    item.term.toLowerCase().includes(query) ||
                     item.definition.toLowerCase().includes(query)
                 );
                 renderTerms(filtered);

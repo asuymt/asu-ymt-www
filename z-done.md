@@ -42,6 +42,10 @@
 - [x] Tooltip resim netliği (`image-rendering`) ve derinlik efektleri artırıldı
 
 ### Projeler
+- [x] **Site Klasör Restorasyonu**: Tüm sayfalar klasör bazlı yapıya (SEO uyumlu) taşındı.
+- [x] **Dinamik Header/Footer**: Tüm sayfalarda tek merkezden yönetilen menü ve alt kısım sistemi.
+- [x] **Duyuru & Etkinlik Motoru**: JSON tabanlı veri girişiyle otomatik kart oluşturma sistemi.
+- [x] **Global Yol Standardizasyonu**: Alt sayfalardaki varlık (asset) yollarının otomatik onarımı.
 - **Yazılım Mühendisliği Sözlüğü**:
     - 150+ profesyonel teknik terim ve tanım.
     - Alfabetik filtreleme ve anlık arama motoru.

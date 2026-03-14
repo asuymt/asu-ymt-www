@@ -12,8 +12,9 @@
 
 ## ⚙️ Teknik Standartlar ve Araçlar
 - **İmleç Motoru:** Proje genelinde özel bir "Spot Işığı" imleci kullanılır. İmleç değişiklikleri için `inject_cursor.py` scripti kullanılmalı ve 18 HTML dosyasına birden enjekte edilmelidir.
-- **Dosya Yapısı:** Statik dosyalar `assets/` klasörü altında (js, css, images) tutulmalıdır.
-- **Gelişmiş Klasör Yapısı**: Alt sayfalar ve duyurular için standartlaştırılmış dizin yapısı.
+- **Dosya Yapısı:** SEO uyumlu klasör yapısı (`/klasor/index.html`) kullanılır.
+- **Motor Sistemleri:** `duyuru-motoru.js` ve `etkinlik-motoru.js` üzerinden veri tabanlı (JSON) içerik yönetimi yapılır.
+- **Merkezi Navigasyon:** `headerfooter.js` tüm sayfalarda navbar/footer'ı dinamik üretir.
 
 ### ✨ Tamamlananlar
 - **Dosya Yapısı Modernizasyonu**: Tüm ana sayfalar (`duyurular`, `etkinlikler`, `projeler` vb.) ilgili klasörlerin içine `index.html` olarak taşındı. SEO uyumlu ve temiz URL yapısı sağlandı.

@@ -61,7 +61,6 @@
           <a href="games/sudoku/index.html" class="project-link">Oyna <i class="fas fa-play-circle"></i></a>
         </div>
 
-        <!-- Yazılım Mühendisliği Sözlüğü -->
         <div class="project-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
           <span class="project-status status-completed">SÖZLÜK</span>
           <div class="project-icon"><i class="fas fa-book"></i></div>
@@ -81,7 +80,6 @@
           <a href="sozluk/index.html" class="project-link">İncele <i class="fas fa-search"></i></a>
         </div>
 
-
         <div class="project-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
           <span class="project-status status-dev">Başlanmadı</span>
           <div class="project-icon"><i class="fab fa-discord"></i></div>
@@ -100,7 +98,6 @@
           <a href="#" class="project-link">GitHub'da İncele <i class="fas fa-external-link-alt"></i></a>
         </div>
 
-
         <div class="project-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
           <span class="project-status status-dev">Başlanmadı</span>
           <div class="project-icon"><i class="fas fa-mobile-alt"></i></div>
@@ -118,7 +115,6 @@
           </div>
           <a href="#" class="project-link">Yakında <i class="fas fa-hourglass-half"></i></a>
         </div>
-
 
         <div class="project-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
           <span class="project-status status-dev">Başlanmadı</span>
@@ -144,7 +140,7 @@
       <div class="footlar">
         <div class="foot">
           <a href="../"><img src="../assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
-        
+
         </div>
         <div class="foot made-by">
           <h1>Made By</h1>
@@ -169,7 +165,7 @@
             </li>
           </ul>
         </div>
-        
+
         <div class="foot" id="iletisim">
           <h1>İletişim</h1>
 
@@ -194,7 +190,6 @@
     });
   </script>
 
-  
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       if(window.amazingCursorInitialized) return;
@@ -206,7 +201,7 @@
 
       const cursorDot = document.createElement('div');
       cursorDot.id = 'cursor-dot';
-      
+
       const cursorCircleOuter = document.createElement('div');
       cursorCircleOuter.id = 'cursor-circle-outer';
       const cursorCircleInner = document.createElement('div');
@@ -264,7 +259,7 @@
             cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
             evaluateHoverState(document.elementFromPoint(mouseX, mouseY));
         }
-        
+
         if (!isVisible) {
           document.body.classList.add('cursor-visible');
           isVisible = true;
@@ -272,7 +267,7 @@
         mouseX = e.clientX;
         mouseY = e.clientY;
         try { sessionStorage.setItem('amazingCursorPos', JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
-        
+
         cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
       });
 
@@ -294,7 +289,7 @@
       window.addEventListener('mousedown', () => {
           document.body.classList.add('cursor-active');
       });
-      
+
       window.addEventListener('mouseup', (e) => {
           document.body.classList.remove('cursor-active');
           evaluateHoverState(e.target);
@@ -308,7 +303,7 @@
         document.body.classList.add('cursor-visible');
         isVisible = true;
       });
-      
+
     });
   </script>
 
