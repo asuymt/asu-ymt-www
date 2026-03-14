@@ -146,6 +146,7 @@
       // fareyi gizlememesi için sadece (pointer: fine) kontrolü yapıyoruz.
       const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
       if (!hasFinePointer) return;
+      document.body.classList.add('cursor-enabled');
 
       const cursorDot = document.createElement('div');
       cursorDot.id = 'cursor-dot';

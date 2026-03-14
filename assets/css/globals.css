@@ -216,7 +216,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    cursor: none !important;
 }
 
 html {
@@ -239,7 +238,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
     padding: 0 5%; /* Fluid Mobile Padding */
-    cursor: none; /* Hide default cursor to use custom magnetic cursor */
 }
 
 @media (min-width: 768px) {
@@ -252,10 +250,10 @@ body {
    GOD TIER ESTETİK - THE AMAZING CURSOR
    ═══════════════════════════════════════ */
 @media (pointer: fine) {
-    body {
+    body.cursor-enabled {
         cursor: none; /* Standart imleci tamamen gizler */
     }
-    *, *::before, *::after {
+    body.cursor-enabled *, body.cursor-enabled *::before, body.cursor-enabled *::after {
         cursor: none !important;
     }
 }
