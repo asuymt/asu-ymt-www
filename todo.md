@@ -6,9 +6,9 @@ her html sayfasında headerfooter.js dosyasını çağırıp sayfada otomatik ol
 ## python ile duyuru otomasyonu
 /duyurular/ içindeki text ve py dosyaları yine duyuru yayınlarken kullanılacak 
 
-text içine yazılan duyuruları py okuyup tüm duyuru ve duyurualar sayfalarını yeniden yazacak
+text içine yazılan duyuruları py okuyup tüm duyuru ve duyurular sayfalarını yeniden yazacak
 
-## galeriyi düzenle güzel bir tasarım yap
+## galeriyi düzenle güzel bir tasarım yap (şimdilik windowstaki listeleme görünümü yapıldı)
 
 
 

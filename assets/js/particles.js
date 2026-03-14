@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         particlesArray = [];
         // Detect mobile to reduce density
         const isMobile = window.innerWidth < 768;
-        let numberOfParticles = (canvas.height * canvas.width) / (isMobile ? 12000 : 6000);
+        let numberOfParticles = (canvas.height * canvas.width) / (isMobile ? 18000 : 6000);
         
         for (let i = 0; i < numberOfParticles; i++) {
             // Assign random depth layer

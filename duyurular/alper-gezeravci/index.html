@@ -97,11 +97,8 @@
         <div class="footer">
             <div class="footlar">
                 <div class="foot">
-                    <div class="navbar-brand">
-        <span class="brand-text">Aksaray Üniversitesi</span>
-        <a href="../../index.html"><img src="../../assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
-        <span class="brand-text">Yazılım Mühendisliği Topluluğu</span>
-      </div>
+          <a href="../../index.html"><img src="../../assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
+        
                 </div>
                 <div class="foot">
                     <h1>Hızlı Menü</h1>
@@ -132,7 +129,6 @@
   <!-- Özel Manyetik İmleç (Custom Magnetic Cursor) -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Check if cursor already exists to avoid dupes in re-injected pages
       if(window.customCursorInitialized) return;
       window.customCursorInitialized = true;
 
@@ -144,41 +140,35 @@
       let outlineX = 0, outlineY = 0;
       let firstMove = false;
 
-      // Saniyede bir kere veya event fire olana kadar görünmez yap
       cursorDot.style.opacity = "0";
       cursorOutline.style.opacity = "0";
+      cursorDot.style.transition = "none";
+      cursorOutline.style.transition = "none";
 
-      window.addEventListener("mousemove", function (e) {
-        updatePosition(e.clientX, e.clientY);
-      });
-
-      window.addEventListener("touchstart", function (e) {
-        if (e.touches && e.touches[0]) {
-          updatePosition(e.touches[0].clientX, e.touches[0].clientY);
-        }
-      }, { passive: false });
-
-      window.addEventListener("touchmove", function (e) {
-        if (e.touches && e.touches[0]) {
-          updatePosition(e.touches[0].clientX, e.touches[0].clientY);
-        }
-      }, { passive: false });
-
-      function updatePosition(x, y) {
-        mouseX = x;
-        mouseY = y;
+      window.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
         
         if (!firstMove) {
           outlineX = mouseX;
           outlineY = mouseY;
-          cursorDot.style.opacity = "1";
-          cursorOutline.style.opacity = "1";
+          document.documentElement.style.setProperty('--mouse-x', mouseX + 'px');
+          document.documentElement.style.setProperty('--mouse-y', mouseY + 'px');
+          document.documentElement.style.setProperty('--outline-x', outlineX + 'px');
+          document.documentElement.style.setProperty('--outline-y', outlineY + 'px');
+          
+          requestAnimationFrame(() => {
+            cursorDot.style.opacity = "1";
+            cursorOutline.style.opacity = "1";
+            cursorDot.style.transition = "opacity 0.2s";
+            cursorOutline.style.transition = "width 0.3s, height 0.3s, border-color 0.3s, border-radius 0.3s, opacity 0.3s";
+          });
           firstMove = true;
         }
 
         document.documentElement.style.setProperty('--mouse-x', mouseX + 'px');
         document.documentElement.style.setProperty('--mouse-y', mouseY + 'px');
-      }
+      });
 
       const renderCursor = () => {
         if (firstMove) {
@@ -194,15 +184,12 @@
       const interactiveElements = document.querySelectorAll("a, button, .gallery-list-item");
       interactiveElements.forEach(attachCursorEvents);
       
-      // MutationObserver to attach events to newly added nodes (like mobile menus)
       const observer = new MutationObserver(mutations => {
         mutations.forEach(mutation => {
           mutation.addedNodes.forEach(node => {
-            if(node.nodeType === 1) { // ELEMENT_NODE
+            if(node.nodeType === 1) {
               const links = node.querySelectorAll ? node.querySelectorAll("a, button, .gallery-list-item") : [];
-              if(node.matches && node.matches("a, button, .gallery-list-item")) {
-                 attachCursorEvents(node);
-              }
+              if(node.matches && node.matches("a, button, .gallery-list-item")) attachCursorEvents(node);
               links.forEach(attachCursorEvents);
             }
           });
@@ -221,15 +208,12 @@
         });
       }
 
-      // 📱 Global Mobile Optimization: Disable heavy tilt on small screens
       if (window.innerWidth < 768) {
-        const tiltElements = document.querySelectorAll("[data-tilt]");
-        tiltElements.forEach(el => {
+        document.querySelectorAll("[data-tilt]").forEach(el => {
            if (el.vanillaTilt) el.vanillaTilt.destroy();
            el.removeAttribute("data-tilt");
         });
       }
-
     });
   </script>
 
