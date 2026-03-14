@@ -14,6 +14,9 @@
 - **İmleç Motoru:** Proje genelinde özel bir "Spot Işığı" imleci kullanılır. İmleç değişiklikleri için `inject_cursor.py` scripti kullanılmalı ve 18 HTML dosyasına birden enjekte edilmelidir.
 - **Dosya Yapısı:** Statik dosyalar `assets/` klasörü altında (js, css, images) tutulmalıdır.
 - **Gelişmiş Klasör Yapısı**: Alt sayfalar ve duyurular için standartlaştırılmış dizin yapısı.
+
+### ✨ Tamamlananlar
+- **Dosya Yapısı Modernizasyonu**: Tüm ana sayfalar (`duyurular`, `etkinlikler`, `projeler` vb.) ilgili klasörlerin içine `index.html` olarak taşındı. SEO uyumlu ve temiz URL yapısı sağlandı.
 - **Yazılım Mühendisliği Sözlüğü**: Yayına alındı, 150+ terim içeriyor.
 - **Header/Footer:** Tüm sayfalarda header ve footer dinamik olarak yönetilmeli (todo listesinde planlandı).
 

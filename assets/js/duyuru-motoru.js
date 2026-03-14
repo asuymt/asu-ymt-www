@@ -1,0 +1,49 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const cardContainer = document.querySelector(".cardlar");
+    if (!cardContainer) return;
+
+    // Temizle (varsa eski statik kartları uçurur)
+    cardContainer.innerHTML = "";
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    duyuruVerileri.forEach((duyuru, index) => {
+        // Tarih Hesaplama Mantığı
+        let etiketMetni = duyuru.etiket;
+        let etiketStili = "";
+
+        if (duyuru.hedefTarih) {
+            const target = new Date(duyuru.hedefTarih);
+            target.setHours(0, 0, 0, 0);
+            const diffTime = target - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays > 0) {
+                etiketMetni = `${diffDays} GÜN KALDI`;
+                etiketStili = "border-color: var(--accent); color: var(--accent);";
+            } else if (diffDays === 0) {
+                etiketMetni = "BUGÜN!";
+                etiketStili = "border-color: #22c55e; color: #22c55e;";
+            } else {
+                etiketMetni = "GEÇMİŞ ETKİNLİK";
+                etiketStili = "border-color: rgba(255, 255, 255, 0.2); color: var(--text-muted);";
+            }
+        }
+
+        // Kart HTML Oluşturma
+        const cardHTML = `
+            <div class="card-duyuru animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
+                <div class="card-header">
+                    <span class="date">${duyuru.tarih}</span>
+                    <span class="tag" style="${etiketStili}">${etiketMetni}</span>
+                </div>
+                <h2>${duyuru.baslik}</h2>
+                <p>${duyuru.aciklama}</p>
+                <a href="${duyuru.link}" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
+            </div>
+        `;
+
+        cardContainer.insertAdjacentHTML("beforeend", cardHTML);
+    });
+});
