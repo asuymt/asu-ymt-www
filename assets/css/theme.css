@@ -1,10 +1,8 @@
-/* ═══════════════════════════════════════
-   THEME SYSTEM — Ocean Ember (Premium)
-   ═══════════════════════════════════════ */
+
 
 :root,
 [data-theme="ocean-ember"] {
-    --bg-page: #030c17; /* Deeper, richer dark blue */
+    --bg-page: #030c17; 
     --bg-surface: #07172b;
     --bg-card: rgba(14, 165, 233, 0.04);
     --bg-card-hover: rgba(14, 165, 233, 0.08);
@@ -22,7 +20,7 @@
     --text-link: #38bdf8;
     --text-link-hover: #bae6fd;
 
-    --accent: #0ea5e9; /* Brighter, more vibrant blue */
+    --accent: #0ea5e9; 
     --accent-hover: #38bdf8;
     --accent-dark: #0284c7;
     --accent-glow: rgba(14, 165, 233, 0.40);

@@ -106,7 +106,6 @@ def process_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Clean previous blocks
     content = re.sub(r'\s*<!-- Özel Manyetik İmleç \(Custom Magnetic Cursor\) -->.*?<\/script>\s*', '\n', content, flags=re.DOTALL)
     content = re.sub(r'\s*<!-- The Amazing Cursor -->.*?<\/script>\s*', '\n', content, flags=re.DOTALL)
     content = re.sub(r'\s*<!-- Manyetik İmleç -->\s*<div class="cursor-dot"[^>]*></div>\s*<div class="cursor-outline"[^>]*></div>\s*', '\n', content, flags=re.DOTALL)
@@ -120,3 +119,4 @@ for root, dirs, files in os.walk(html_dir):
     for file in files:
         if file.endswith('.html'):
             process_file(os.path.join(root, file))
+

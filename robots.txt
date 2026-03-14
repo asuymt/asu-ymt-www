@@ -1,12 +1,6 @@
-# General
 User-agent: *
 
-# internel query
-# Disallow: /*?q=
-# Disallow: /*?s=
-# Disallow: /*?path=
 
-# loose it
 Allow: /
 Allow: /index.html
 Allow: /sitemap.xml

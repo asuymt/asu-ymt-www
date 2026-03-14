@@ -44,7 +44,7 @@
     --color-black-20: rgba(0, 0, 0, 0.20);
     --color-black-40: rgba(0, 0, 0, 0.40);
 
-    /* Fluid Spacing Steps */
+    
     --space-xs: clamp(0.75rem, 0.7rem + 0.25vw, 1rem);
     --space-s: clamp(1rem, 0.95rem + 0.25vw, 1.25rem);
     --space-m: clamp(1.5rem, 1.4rem + 0.5vw, 2rem);
@@ -201,7 +201,7 @@
     --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.40);
     --shadow-accent: 0 8px 32px var(--accent-glow);
     --shadow-accent-2: 0 8px 32px var(--accent-2-glow);
-    /* Legacy aliases */
+    
     --shadow-blue: var(--shadow-accent);
     --shadow-purple: var(--shadow-accent-2);
 
@@ -237,7 +237,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
-    padding: 0 5%; /* Fluid Mobile Padding */
+    padding: 0 5%; 
 }
 
 @media (min-width: 768px) {
@@ -246,24 +246,22 @@ body {
     }
 }
 
-/* ═══════════════════════════════════════
-   GOD TIER ESTETİK - THE AMAZING CURSOR
-   ═══════════════════════════════════════ */
+
 @media (pointer: fine) {
     body.cursor-enabled {
-        cursor: none; /* Standart imleci tamamen gizler */
+        cursor: none; 
     }
     body.cursor-enabled *, body.cursor-enabled *::before, body.cursor-enabled *::after {
         cursor: none !important;
     }
 }
 
-/* Noktayı (dot) tamamen SİLDİK. O devrin estetiği bitti. */
+
 #cursor-dot {
     display: none !important;
 }
 
-/* Sadece takip eden Ana Halka var, sıvımsı ve esnek bir yapıya sahip */
+
 #cursor-circle-outer {
     position: fixed;
     top: 0;
@@ -271,8 +269,8 @@ body {
     z-index: 999999;
     pointer-events: none;
     will-change: transform;
-    /* Dış kapsayıcı sadece konumu tutar, transformu JS verir. */
-    /* Karışım modu "difference" ile arkasındaki her şeyin rengini tersine çevirir (siyahsa beyaz yapar, beyazsa siyah, renkliyse tamamlayıcısına) */
+    
+    
     mix-blend-mode: difference;
 }
 
@@ -280,14 +278,14 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    /* Küçücük bir ana gövde */
+    
     width: 14px;
     height: 14px;
-    background-color: #ffffff; /* Sapsarı/Beyaz saf ışık */
+    background-color: #ffffff; 
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(1);
     transform-origin: center center;
-    /* Aşırı tatlı bir yaylanma katsayısı */
+    
     transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), 
                 width 0.4s cubic-bezier(0.19, 1, 0.22, 1),
                 height 0.4s cubic-bezier(0.19, 1, 0.22, 1),
@@ -296,68 +294,45 @@ body {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
-/* 
-  EĞER KULLANICI HAREKET ETMİYORSA KENDİNİ GÖSTERİR 
-*/
+
 body.cursor-visible #cursor-circle-outer {
     opacity: 1;
 }
 
-/*
-  ASIL BÜYÜ BURADA: HOVER EFEKTİ!
-  Sadece şişip büyümüyor. Yatay bir "hap" veya dev bir spot ışığı şeklini alıp
-  içine aldığı metnin rengini BEYAZ/SİYAHA çeviriyor!
-*/
+
 body.cursor-hover #cursor-circle-inner {
-    /* Dev bir spot ışığı gibi büyür */
-    width: 40px;
-    height: 40px;
-    /* Rengi tamamen beyaz yaparak alttaki metni tam siyah zıtlığına çeker */
-    background-color: #ffffff;
-    box-shadow: none; /* Gölgeyi sıfırla ki keskin, grafiksel bir obje olsun */
-    /* Biraz daha kareye yakın, gergin bir form (Squircle etkisi) */
-    border-radius: 35%;
-    /* Esneyerek (scale ile değil doğrudan width/height ile) büyür */
-    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
-                height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                border-radius 0.5s ease-out,
-                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    /* Hafif bir dönüş ekleyerek fütüristik bir "kilitlenme" hissi ver */
-    transform: translate(-50%, -50%) rotate(45deg);
+    transform: translate(-50%, -50%);
 }
 
-/*
-  TIKLAMA ANI: Keskin ve güçlü bir tepki. 
-  Sıvı gibi içe çöker, sonra patlar.
-*/
+
 body.cursor-active #cursor-circle-inner {
     transform: translate(-50%, -50%) scale(0.3) rotate(-45deg);
     transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 📱 Mobile Performance Optimization */
+
 @media (max-width: 768px) {
     *, *::before, *::after {
-        cursor: auto !important; /* Restore default cursor for touch */
+        cursor: auto !important; 
     }
     
     .cursor-dot, .cursor-outline {
-        display: none !important; /* Hide custom cursor on mobile to save CPU */
+        display: none !important; 
     }
 
     .glass-card, .navbar, .box-2, .gallery-list-view {
-        backdrop-filter: none !important; /* Disable heavy blur on mobile */
+        backdrop-filter: none !important; 
         -webkit-backdrop-filter: none !important;
-        background: rgba(10, 15, 25, 0.95) !important; /* Fallback to solid */
+        background: rgba(10, 15, 25, 0.95) !important; 
     }
 
     body::before, body::after {
-        animation-duration: 300s !important; /* Slow down bg animations */
+        animation-duration: 300s !important; 
         opacity: 0.3 !important;
     }
 }
 
-/* Uzak yıldızlar katmanı */
+
 body::before {
     content: '';
     position: fixed;
@@ -379,7 +354,7 @@ body::before {
     pointer-events: none;
 }
 
-/* Yakın yıldızlar katmanı */
+
 body::after {
     content: '';
     position: fixed;
@@ -699,3 +674,4 @@ hr {
     outline-offset: 3px;
     border-radius: 4px;
 }
+

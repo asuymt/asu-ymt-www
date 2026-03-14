@@ -1,18 +1,13 @@
-# yapılacaklar
 
-## header footer js 
 her html sayfasında headerfooter.js dosyasını çağırıp sayfada otomatik olarak header ve footer'ı oluşturacak.
 
-## python ile duyuru otomasyonu
 /duyurular/ içindeki text ve py dosyaları yine duyuru yayınlarken kullanılacak 
 
 text içine yazılan duyuruları py okuyup tüm duyuru ve duyurular sayfalarını yeniden yazacak
 
-## galeriyi düzenle güzel bir tasarım yap (şimdilik windowstaki listeleme görünümü yapıldı)
 
 
 
-## etkinlikler ve duyurular
 
 1. etkinlikler ve duyurular sayfası '/etkinlikler/index.html' , '/duyurular/index.html' içinde olucak
 
@@ -22,10 +17,7 @@ text içine yazılan duyuruları py okuyup tüm duyuru ve duyurular sayfaların�
 
 4. yazı rengi beyazlatılacak stili biraz daha okunabilir olacak
 
-## sitemap.xml otomatik olacak py ile 
 
-## dosya yapısında bazı dosyalar '/src/' içine alınacak
 
-## organizasyon yapısı
 
 toplulukta rol alan kişilerin fotoğraflarının üzerine tıklandığında küçük bir özgeçmiş sayfası çıkacak

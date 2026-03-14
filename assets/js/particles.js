@@ -1,7 +1,4 @@
-/**
- * Antigravity God-Tier Particle Mesh System
- * Creates a layered, reactive network of nodes with gravity and vortex effects.
- */
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("particleCanvas");
@@ -10,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const ctx = canvas.getContext("2d");
     let particlesArray = [];
 
-    // Configuration
     const baseColor1 = 'rgba(14, 165, 233, 0.7)'; // Cyan
     const baseColor2 = 'rgba(244, 63, 94, 0.6)';  // Neon Pink
     const repulseRadius = 200; // Radius of mouse interaction
@@ -30,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
         mouse.x = event.clientX;
         mouse.y = event.clientY;
         
-        // Calculate mouse velocity for vortex effect
         if(lastMouse.x !== undefined) {
              mouse.vx = mouse.x - lastMouse.x;
              mouse.vy = mouse.y - lastMouse.y;
@@ -54,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.height = window.innerHeight;
 
     class Particle {
-        // layer: 0 (bg, slow, dark), 1 (mid, normal), 2 (fg, fast, bright, reactive)
         constructor(x, y, dx, dy, size, color, layer) {
             this.x = x;
             this.y = y;
@@ -65,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
             this.color = color;
             this.layer = layer;
             
-            // Adjust physics based on depth layer
             this.speedMultiplier = layer === 0 ? 0.2 : (layer === 1 ? 0.6 : 1.2);
             this.reactivity = layer === 0 ? 0 : (layer === 1 ? 0.5 : 1);
         }
@@ -78,15 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         update() {
-            // Apply bounds bouncing
             if (this.x > canvas.width || this.x < 0) this.dx = -this.dx;
             if (this.y > canvas.height || this.y < 0) this.dy = -this.dy;
 
-            // Base movement
             let targetX = this.x + (this.dx * this.speedMultiplier);
             let targetY = this.y + (this.dy * this.speedMultiplier);
 
-            // Mouse Interaction (Vortex / Gravity)
             if (mouse.x !== undefined && mouse.y !== undefined && this.reactivity > 0) {
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
@@ -95,19 +85,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (distance < repulseRadius) {
                     let force = (repulseRadius - distance) / repulseRadius;
                     
-                    // Repulse away from center of mouse
                     let dirX = dx / distance;
                     let dirY = dy / distance;
                     
-                    // Add mouse velocity to create "vortex/drag" effect
                     let dragX = mouse.vx * 0.1 * force;
                     let dragY = mouse.vy * 0.1 * force;
 
-                    // Final applied force
                     targetX -= (dirX * force * 5 * this.reactivity) - dragX;
                     targetY -= (dirY * force * 5 * this.reactivity) - dragY;
                     
-                    // Glow effect
                     this.size = this.baseSize + (force * 2);
                 } else {
                     this.size = this.baseSize; // Reset size
@@ -124,12 +110,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function initParticles() {
         particlesArray = [];
-        // Detect mobile to reduce density
         const isMobile = window.innerWidth < 768;
         let numberOfParticles = (canvas.height * canvas.width) / (isMobile ? 18000 : 6000);
         
         for (let i = 0; i < numberOfParticles; i++) {
-            // Assign random depth layer
             let rand = Math.random();
             let layer = rand > 0.8 ? 2 : (rand > 0.4 ? 1 : 0);
             
@@ -139,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
             let dx = (Math.random() * 0.5) - 0.25;
             let dy = (Math.random() * 0.5) - 0.25;
             
-            // Background is whiter/dimmer, foreground takes the neon colors
             let color;
             if(layer === 0) color = 'rgba(255,255,255,0.1)';
             else if(layer === 2) color = Math.random() > 0.5 ? baseColor1 : baseColor2;
@@ -149,11 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Connect particles with lines to form a network mesh
     function connect() {
         let maxDistance = 120; // Maximum line length
         for (let a = 0; a < particlesArray.length; a++) {
-            // Only connect layers 1 and 2 (midground and foreground)
             if (particlesArray[a].layer === 0) continue; 
 
             for (let b = a; b < particlesArray.length; b++) {
@@ -164,10 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 let distance = Math.sqrt(dx * dx + dy * dy);
 
                 if (distance < maxDistance) {
-                    // Opacity scales with distance (closer = more solid)
                     let opacity = 1 - (distance / maxDistance);
                     
-                    // If near mouse, lines glow brighter
                     let mdx = mouse.x - particlesArray[a].x;
                     let mdy = mouse.y - particlesArray[a].y;
                     let mDist = Math.sqrt(mdx * mdx + mdy * mdy);
@@ -192,7 +171,6 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(animateParticles);
         ctx.clearRect(0, 0, innerWidth, innerHeight);
         
-        // Decay mouse velocity slowly so the vortex fades instead of snapping off
         mouse.vx *= 0.9;
         mouse.vy *= 0.9;
 
@@ -206,3 +184,4 @@ document.addEventListener("DOMContentLoaded", () => {
     initParticles();
     animateParticles();
 });
+
