@@ -140,4 +140,13 @@
 
 ## Aşama 25: Mehmet Akif Akkoç için Tooltip (Resim Baloncuğu)
 - [x] Mehmet Akif Akkoç ismini 18 HTML dosyasının tamamında `mehmet-akif-akkoc.jpg` destekli tooltip ile güncelle
-- [x] Üç kişilik geliştirici ekibinin tamamı için interaktif ve jilet gibi net imzaları tamamla
+## Aşama 26: "The Amazing Cursor" (God-Tier Estetik)
+- [x] Standart imleci tamamen iptal eden ve modern `mix-blend-mode: difference` (renk tersleme) efektli yeni motoru kur
+- [x] Nokta tabanlı tasarımdan vazgeçip, esnek ve sıvımsı tek bir "Spot Işığı" parçasına geçiş yap
+- [x] Hover anında %35 yuvarlatılmış kare formuna bükülme ve 45 derece dönme efektlerini uygula
+
+## Aşama 27: İmleç Fizik ve Uyumluluk Düzeltmeleri
+- [x] Sayfa yüklendiğinde/yenilendiğinde imlecin merkezden "uçma" (snap) hatasını farenin ilk konumunu anlık yakalayarak düzelt
+- [x] Sayfa yenilendikten sonra fare hareket etmese bile hover durumunun korunmasını sağlayan `elementFromPoint` kontrolünü ekle
+- [x] Hybrid cihazlarda (Laptop + Touch) imlecin görünmemesine neden olan cihaz algılama mantığını `pointer: fine` ile revize et
+- [x] Tüm sistemin 18 HTML dosyasında jilet gibi akıcı ve hatasız çalıştığını doğrula

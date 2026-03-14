@@ -14,20 +14,7 @@
 </head>
 
 <body>
-
-  <!-- Manyetik İmleç -->
-  <div class="cursor-dot" data-cursor-dot></div>
-  <div class="cursor-outline" data-cursor-outline></div>
-
-
-
-
-
-
-
-
-
-  <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
+<canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
 
 
 
@@ -143,100 +130,7 @@
 <script src="../../assets/js/particles.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   <script>VanillaTilt.init(document.querySelectorAll(".card-tilt"), { max: 5, speed: 400, glare: true, "max-glare": 0.2 });</script>
-
-  <!-- Özel Manyetik İmleç (Custom Magnetic Cursor) -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      if(window.customCursorInitialized) return;
-      window.customCursorInitialized = true;
-
-      const cursorDot = document.querySelector("[data-cursor-dot]");
-      const cursorOutline = document.querySelector("[data-cursor-outline]");
-      if(!cursorDot || !cursorOutline) return;
-
-      let mouseX = 0, mouseY = 0;
-      let outlineX = 0, outlineY = 0;
-      let firstMove = false;
-
-      cursorDot.style.opacity = "0";
-      cursorOutline.style.opacity = "0";
-      cursorDot.style.transition = "none";
-      cursorOutline.style.transition = "none";
-
-      window.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        
-        if (!firstMove) {
-          outlineX = mouseX;
-          outlineY = mouseY;
-          document.documentElement.style.setProperty('--mouse-x', mouseX + 'px');
-          document.documentElement.style.setProperty('--mouse-y', mouseY + 'px');
-          document.documentElement.style.setProperty('--outline-x', outlineX + 'px');
-          document.documentElement.style.setProperty('--outline-y', outlineY + 'px');
-          
-          requestAnimationFrame(() => {
-            cursorDot.style.opacity = "1";
-            cursorOutline.style.opacity = "1";
-            cursorDot.style.transition = "opacity 0.2s";
-            cursorOutline.style.transition = "width 0.3s, height 0.3s, border-color 0.3s, border-radius 0.3s, opacity 0.3s";
-          });
-          firstMove = true;
-        }
-
-        document.documentElement.style.setProperty('--mouse-x', mouseX + 'px');
-        document.documentElement.style.setProperty('--mouse-y', mouseY + 'px');
-      });
-
-      const renderCursor = () => {
-        if (firstMove) {
-            outlineX += (mouseX - outlineX) * 0.15;
-            outlineY += (mouseY - outlineY) * 0.15;
-            document.documentElement.style.setProperty('--outline-x', outlineX + 'px');
-            document.documentElement.style.setProperty('--outline-y', outlineY + 'px');
-        }
-        requestAnimationFrame(renderCursor);
-      };
-      requestAnimationFrame(renderCursor);
-
-      const interactiveElements = document.querySelectorAll("a, button, .gallery-list-item");
-      interactiveElements.forEach(attachCursorEvents);
-      
-      const observer = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-          mutation.addedNodes.forEach(node => {
-            if(node.nodeType === 1) {
-              const links = node.querySelectorAll ? node.querySelectorAll("a, button, .gallery-list-item") : [];
-              if(node.matches && node.matches("a, button, .gallery-list-item")) attachCursorEvents(node);
-              links.forEach(attachCursorEvents);
-            }
-          });
-        });
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-
-      function attachCursorEvents(link) {
-        link.addEventListener("mouseenter", () => {
-          cursorOutline.classList.add("hover-active");
-          cursorDot.classList.add("hover-active");
-        });
-        link.addEventListener("mouseleave", () => {
-          cursorOutline.classList.remove("hover-active");
-          cursorDot.classList.remove("hover-active");
-        });
-      }
-
-      if (window.innerWidth < 768) {
-        document.querySelectorAll("[data-tilt]").forEach(el => {
-           if (el.vanillaTilt) el.vanillaTilt.destroy();
-           el.removeAttribute("data-tilt");
-        });
-      }
-    });
-  </script>
-
-
-  <script>
+<script>
     document.addEventListener("DOMContentLoaded", () => {
       const currentPath = window.location.pathname.split("/").pop() || "index.html";
       document.querySelectorAll(".navbar ul li a").forEach(link => {
@@ -244,6 +138,103 @@
         if (linkPath === currentPath) link.classList.add("active");
         if (window.location.hash && link.getAttribute("href").includes(window.location.hash)) link.classList.add("active");
       });
+    });
+  </script>
+
+  <!-- The Amazing Cursor -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if(window.amazingCursorInitialized) return;
+      window.amazingCursorInitialized = true;
+
+      // Hybrid cihazlarda (örneğin laptoplarda) dokunmatik ekran olsa da 
+      // fareyi gizlememesi için sadece (pointer: fine) kontrolü yapıyoruz.
+      const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+      if (!hasFinePointer) return;
+
+      const cursorDot = document.createElement('div');
+      cursorDot.id = 'cursor-dot';
+      
+      const cursorCircleOuter = document.createElement('div');
+      cursorCircleOuter.id = 'cursor-circle-outer';
+      const cursorCircleInner = document.createElement('div');
+      cursorCircleInner.id = 'cursor-circle-inner';
+      cursorCircleOuter.appendChild(cursorCircleInner);
+
+      document.body.appendChild(cursorDot);
+      document.body.appendChild(cursorCircleOuter);
+
+      let mouseX = 0;
+      let mouseY = 0;
+      let circleX = 0;
+      let circleY = 0;
+      let isVisible = false;
+      let firstMove = false;
+
+      const evaluateHoverState = (target) => {
+        if (!target) return;
+        const interactiveElement = target.closest('a, button, [onclick], input, select, textarea, .gallery-list-item');
+        if (interactiveElement || window.getComputedStyle(target).cursor === 'pointer') {
+            document.body.classList.add('cursor-hover');
+        } else {
+            document.body.classList.remove('cursor-hover');
+        }
+      };
+
+      window.addEventListener('mousemove', (e) => {
+        if (!firstMove) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            circleX = e.clientX;
+            circleY = e.clientY;
+            firstMove = true;
+            cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
+            evaluateHoverState(document.elementFromPoint(mouseX, mouseY));
+        }
+        
+        if (!isVisible) {
+          document.body.classList.add('cursor-visible');
+          isVisible = true;
+        }
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      });
+
+      const updateCircle = () => {
+        if (isVisible && firstMove) {
+          circleX += (mouseX - circleX) * 0.15;
+          circleY += (mouseY - circleY) * 0.15;
+          cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
+        }
+        requestAnimationFrame(updateCircle);
+      };
+      requestAnimationFrame(updateCircle);
+
+      document.body.addEventListener('mouseover', (e) => evaluateHoverState(e.target));
+      document.body.addEventListener('mouseout', (e) => {
+          evaluateHoverState(e.relatedTarget);
+      });
+
+      window.addEventListener('mousedown', () => {
+          document.body.classList.add('cursor-active');
+      });
+      
+      window.addEventListener('mouseup', (e) => {
+          document.body.classList.remove('cursor-active');
+          evaluateHoverState(e.target);
+      });
+
+      document.addEventListener('mouseleave', () => {
+        document.body.classList.remove('cursor-visible');
+        isVisible = false;
+      });
+      document.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-visible');
+        isVisible = true;
+      });
+      
     });
   </script>
 

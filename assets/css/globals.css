@@ -249,67 +249,92 @@ body {
 }
 
 /* ═══════════════════════════════════════
-   CUSTOM MAGNETIC CURSOR
+   GOD TIER ESTETİK - THE AMAZING CURSOR
    ═══════════════════════════════════════ */
-.cursor-dot {
-    width: 6px;
-    height: 6px;
-    background-color: var(--accent);
-    box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
-    transition: opacity 0.2s;
+@media (pointer: fine) {
+    body {
+        cursor: none; /* Standart imleci tamamen gizler */
+    }
+    *, *::before, *::after {
+        cursor: none !important;
+    }
 }
 
-.cursor-outline {
-    width: 36px;
-    height: 36px;
-    border: 1px solid rgba(14, 165, 233, 0.5);
-    box-shadow: 0 0 15px rgba(14, 165, 233, 0.2), inset 0 0 10px rgba(14, 165, 233, 0.1);
-    transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
-                height 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
-                border-color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
-                border-radius 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+/* Noktayı (dot) tamamen SİLDİK. O devrin estetiği bitti. */
+#cursor-dot {
+    display: none !important;
 }
 
-.cursor-dot, .cursor-outline {
+/* Sadece takip eden Ana Halka var, sıvımsı ve esnek bir yapıya sahip */
+#cursor-circle-outer {
     position: fixed;
     top: 0;
     left: 0;
-    border-radius: 50%;
-    z-index: 99999;
+    z-index: 999999;
     pointer-events: none;
-    mix-blend-mode: screen;
-    will-change: transform; /* Hint for layer promotion */
+    will-change: transform;
+    /* Dış kapsayıcı sadece konumu tutar, transformu JS verir. */
+    /* Karışım modu "difference" ile arkasındaki her şeyin rengini tersine çevirir (siyahsa beyaz yapar, beyazsa siyah, renkliyse tamamlayıcısına) */
+    mix-blend-mode: difference;
 }
 
-.cursor-dot {
-    transform: translate3d(var(--mouse-x, -100px), var(--mouse-y, -100px), 0) translate(-50%, -50%);
+#cursor-circle-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Küçücük bir ana gövde */
+    width: 14px;
+    height: 14px;
+    background-color: #ffffff; /* Sapsarı/Beyaz saf ışık */
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transform-origin: center center;
+    /* Aşırı tatlı bir yaylanma katsayısı */
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), 
+                width 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+                height 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+                border-radius 0.4s ease;
+    will-change: transform, width, height, border-radius;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
-.cursor-outline {
-    transform: translate3d(var(--outline-x, -100px), var(--outline-y, -100px), 0) translate(-50%, -50%);
+/* 
+  EĞER KULLANICI HAREKET ETMİYORSA KENDİNİ GÖSTERİR 
+*/
+body.cursor-visible #cursor-circle-outer {
+    opacity: 1;
 }
 
-/* Hovering over links - "Tech Scanner" Effect */
-.cursor-outline.hover-active {
-    width: 36px;
-    height: 36px;
-    border: 2px dashed var(--accent-2); /* Changes to a neon pink dashed border */
-    border-radius: 8px; /* Morphs from a circle to a rounded square */
-    background-color: rgba(244, 63, 94, 0.05);
-    box-shadow: 0 0 20px rgba(244, 63, 94, 0.4), inset 0 0 15px rgba(244, 63, 94, 0.2);
-    animation: rotateCursor 4s linear infinite; /* Slowly rotates */
+/*
+  ASIL BÜYÜ BURADA: HOVER EFEKTİ!
+  Sadece şişip büyümüyor. Yatay bir "hap" veya dev bir spot ışığı şeklini alıp
+  içine aldığı metnin rengini BEYAZ/SİYAHA çeviriyor!
+*/
+body.cursor-hover #cursor-circle-inner {
+    /* Dev bir spot ışığı gibi büyür */
+    width: 40px;
+    height: 40px;
+    /* Rengi tamamen beyaz yaparak alttaki metni tam siyah zıtlığına çeker */
+    background-color: #ffffff;
+    box-shadow: none; /* Gölgeyi sıfırla ki keskin, grafiksel bir obje olsun */
+    /* Biraz daha kareye yakın, gergin bir form (Squircle etkisi) */
+    border-radius: 35%;
+    /* Esneyerek (scale ile değil doğrudan width/height ile) büyür */
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                border-radius 0.5s ease-out,
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Hafif bir dönüş ekleyerek fütüristik bir "kilitlenme" hissi ver */
+    transform: translate(-50%, -50%) rotate(45deg);
 }
 
-/* Shrink the dot and change color */
-.cursor-dot.hover-active {
-    transform: translate3d(var(--mouse-x, -100px), var(--mouse-y, -100px), 0) translate(-50%, -50%); /* Removed scale(0.5) to keep it visible */
-    background-color: var(--accent-2);
-    box-shadow: 0 0 15px var(--accent-2);
-}
-
-@keyframes rotateCursor {
-    0% { transform: translate3d(var(--outline-x), var(--outline-y), 0) translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate3d(var(--outline-x), var(--outline-y), 0) translate(-50%, -50%) rotate(360deg); }
+/*
+  TIKLAMA ANI: Keskin ve güçlü bir tepki. 
+  Sıvı gibi içe çöker, sonra patlar.
+*/
+body.cursor-active #cursor-circle-inner {
+    transform: translate(-50%, -50%) scale(0.3) rotate(-45deg);
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* 📱 Mobile Performance Optimization */
