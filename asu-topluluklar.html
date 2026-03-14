@@ -471,9 +471,9 @@
     <div class="container">
         <div class="navbar">
             <div class="navbar-brand">
-        <span class="brand-text">Aksaray<br>Üniversitesi</span>
+        <span class="brand-text">Aksaray Üniversitesi</span>
         <a href="index.html"><img src="assets/images/asuymt-logo.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
-        <span class="brand-text">Yazılım Mühendisliği<br>Topluluğu</span>
+        <span class="brand-text">Yazılım Mühendisliği Topluluğu</span>
       </div>
             <ul>
                 <li><a href="index.html#hakkimizda">Hakkımızda</a></li>
@@ -935,9 +935,9 @@
             <div class="footlar">
                 <div class="foot">
                     <div class="navbar-brand">
-        <span class="brand-text">Aksaray<br>Üniversitesi</span>
-        <a href="index.html" title="ASÜ-YMT"><img src="./assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
-        <span class="brand-text">Yazılım Mühendisliği<br>Topluluğu</span>
+        <span class="brand-text">Aksaray Üniversitesi</span>
+        <a href="index.html"><img src="assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
+        <span class="brand-text">Yazılım Mühendisliği Topluluğu</span>
       </div>
                 </div>
                 <div class="foot">
@@ -1085,6 +1085,18 @@
         });
       }
 
+    });
+  </script>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const currentPath = window.location.pathname.split("/").pop() || "index.html";
+      document.querySelectorAll(".navbar ul li a").forEach(link => {
+        const linkPath = link.getAttribute("href").split("/").pop();
+        if (linkPath === currentPath) link.classList.add("active");
+        if (window.location.hash && link.getAttribute("href").includes(window.location.hash)) link.classList.add("active");
+      });
     });
   </script>
 
