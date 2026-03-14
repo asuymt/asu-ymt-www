@@ -41,9 +41,14 @@
 - [x] Emir Fetolmaz, Burak Arıkan, Mehmet Akif Akkoç için resimli akıllı tooltipler eklendi
 - [x] Tooltip resim netliği (`image-rendering`) ve derinlik efektleri artırıldı
 
-## 🎮 Oyunlar
-### Sudoku
-- [x] Modern ve dinamik Sudoku oyunu geliştirildi
+### Projeler
+- **Yazılım Mühendisliği Sözlüğü**:
+    - 150+ profesyonel teknik terim ve tanım.
+    - Alfabetik filtreleme ve anlık arama motoru.
+    - "Ocean Ember" temasıyla tam uyumlu glassmorphic arayüz.
+    - Mobil uyumlu (responsive) tasarım.
+- **YMT Sudoku**: 
+    - Modern ve dinamik Sudoku oyunu geliştirildi.
 - [x] Yüksek performanslı çözüm motoru ve web worker yapısı kuruldu
 - [x] Sayı seçici kaldırılarak doğrudan klavye etkileşimi sağlandı
 - [x] "Ocean Ember" temasıyla görsel uyum sağlandı

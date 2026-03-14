@@ -13,6 +13,8 @@
 ## ⚙️ Teknik Standartlar ve Araçlar
 - **İmleç Motoru:** Proje genelinde özel bir "Spot Işığı" imleci kullanılır. İmleç değişiklikleri için `inject_cursor.py` scripti kullanılmalı ve 18 HTML dosyasına birden enjekte edilmelidir.
 - **Dosya Yapısı:** Statik dosyalar `assets/` klasörü altında (js, css, images) tutulmalıdır.
+- **Gelişmiş Klasör Yapısı**: Alt sayfalar ve duyurular için standartlaştırılmış dizin yapısı.
+- **Yazılım Mühendisliği Sözlüğü**: Yayına alındı, 150+ terim içeriyor.
 - **Header/Footer:** Tüm sayfalarda header ve footer dinamik olarak yönetilmeli (todo listesinde planlandı).
 
 ## 📍 Son Çalışma Durumu (Current Focus)

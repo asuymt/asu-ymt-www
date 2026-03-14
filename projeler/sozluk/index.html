@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yazılım Mühendisliği Sözlüğü | ASÜ-YMT</title>
+    <link rel="icon" sizes="64x64" href="../../assets/images/Logo-64.png" type="image/png" />
+    <link rel="icon" type="image/x-icon" href="../../assets/images/asuymt-logo.png" />
+    <link rel="stylesheet" href="../../assets/css/globals.css" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/theme.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <style>
+        .dictionary-container {
+            max-width: 1200px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+            min-height: 80vh;
+        }
+
+        .search-section {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1.5rem 3rem 1.5rem 4rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .alphabet-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .letter-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+
+        .letter-btn:hover, .letter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .results-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .term-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .term-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .term-card h3 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .term-card .definition {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .term-card .category {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 5rem;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .results-section {
+                grid-template-columns: 1fr;
+            }
+            .search-section {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
+
+    <div class="container">
+        <div class="navbar">
+            <div class="navbar-brand">
+                <span class="brand-text">Aksaray Üniversitesi</span>
+                <a href="../../index.html"><img src="../../assets/images/asuymt-logo.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
+                <span class="brand-text">Yazılım Mühendisliği Topluluğu</span>
+            </div>
+            <ul>
+                <li><a href="../../index.html#hakkimizda">Hakkımızda</a></li>
+                <li><a href="../../duyurular.html">Duyurular</a></li>
+                <li><a href="../../etkinlikler.html">Etkinlikler</a></li>
+                <li><a href="../../egitimler.html">Eğitimler</a></li>
+                <li><a href="../../projeler.html">Projeler</a></li>
+                <li><a href="../../iletisim.html">İletişim</a></li>
+                <li><a href="../../galeri.html">Foto Galeri</a></li>
+                <li><a href="../../asu-topluluklar.html">ASÜ Toplulukları</a></li>
+            </ul>
+        </div>
+
+        <div class="dictionary-container">
+            <div class="search-section animate__animated animate__fadeInDown">
+                <h1>Yazılım Mühendisliği Sözlüğü</h1>
+                <p>Terimler, kavramlar ve teknoloji dünyasına dair her şey.</p>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="termSearch" placeholder="Bir terim arayın... (örn: API, Docker, Agile)">
+                </div>
+
+                <div class="alphabet-filter" id="alphabetFilter">
+                    <!-- JavaScript by alphabet buttons -->
+                </div>
+            </div>
+
+            <div class="results-section" id="resultsGrid">
+                <!-- JavaScript filtered cards -->
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footlar">
+                <div class="foot">
+                    <a href="../../index.html"><img src="../../assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
+                </div>
+                <div class="foot made-by">
+                    <h1>Made By</h1>
+                    <ul class="made-by-list">
+                        <li class="has-tooltip">
+                            Emir Fetolmaz
+                            <div class="tooltip-bubble"><img src="../../assets/images/emir-fetolmaz.jpg" alt="Emir Fetolmaz"></div>
+                        </li>
+                        <li class="has-tooltip">
+                            Burak Arıkan
+                            <div class="tooltip-bubble"><img src="../../assets/images/burak-arikan.jpg" alt="Burak Arıkan"></div>
+                        </li>
+                        <li class="has-tooltip">
+                            Mehmet Akif Akkoç
+                            <div class="tooltip-bubble"><img src="../../assets/images/mehmet-akif-akkoc.jpg" alt="Mehmet Akif Akkoç"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="foot" id="iletisim">
+                    <h1>İletişim</h1>
+                    <a href="https://github.com/asuymt" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+                    <a href="https://www.instagram.com/asuymt/" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                </div>
+            </div>
+            <p>© 2026 Tüm Hakları Saklıdır.</p>
+        </div>
+    </div>
+
+    <script src="../../assets/js/particles.js"></script>
+    <script src="./sozluk-data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const resultsGrid = document.getElementById('resultsGrid');
+            const searchInput = document.getElementById('termSearch');
+            const alphabetFilter = document.getElementById('alphabetFilter');
+            let activeLetter = null;
+
+            // Generate Alphabet Buttons (English alphabet for technical terms)
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+            alphabet.forEach(letter => {
+                const btn = document.createElement('button');
+                btn.className = 'letter-btn';
+                btn.textContent = letter;
+                btn.onclick = () => filterByLetter(letter, btn);
+                alphabetFilter.appendChild(btn);
+            });
+
+            function filterByLetter(letter, btn) {
+                if (activeLetter === letter) {
+                    activeLetter = null;
+                    btn.classList.remove('active');
+                    renderTerms(sozlukData);
+                } else {
+                    document.querySelectorAll('.letter-btn').forEach(b => b.classList.remove('active'));
+                    activeLetter = letter;
+                    btn.classList.add('active');
+                    searchInput.value = '';
+                    const filtered = sozlukData.filter(item => 
+                        item.term.toLowerCase().startsWith(letter.toLowerCase())
+                    );
+                    renderTerms(filtered);
+                }
+            }
+
+            function renderTerms(data) {
+                resultsGrid.innerHTML = '';
+                if (data.length === 0) {
+                    resultsGrid.innerHTML = '<div class="no-results">Aradığınız kritere uygun terim bulunamadı.</div>';
+                    return;
+                }
+
+                data.sort((a, b) => a.term.localeCompare(b.term, 'tr-TR')).forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'term-card animate__animated animate__fadeInUp';
+                    card.style.animationDelay = `${(index % 10) * 0.05}s`;
+                    card.innerHTML = `
+                        <span class="category">${item.category || 'Genel'}</span>
+                        <h3>${item.term}</h3>
+                        <p class="definition">${item.definition}</p>
+                    `;
+                    resultsGrid.appendChild(card);
+                });
+            }
+
+            searchInput.oninput = (e) => {
+                activeLetter = null;
+                document.querySelectorAll('.letter-btn').forEach(b => b.classList.remove('active'));
+                const query = e.target.value.toLowerCase();
+                const filtered = sozlukData.filter(item => 
+                    item.term.toLowerCase().includes(query) || 
+                    item.definition.toLowerCase().includes(query)
+                );
+                renderTerms(filtered);
+            };
+
+            // Initial Render
+            renderTerms(sozlukData);
+        });
+    </script>
+</body>
+</html>
