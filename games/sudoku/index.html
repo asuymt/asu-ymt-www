@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASUYMT | SUDOKU</title>
+    <link rel="stylesheet" href="sudokuStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="quantum-background">
+        <div class="geometric-layer"></div>
+    </div>
+
+    <header class="animate__animated animate__fadeInDown">
+        <h1>ASUYMT | SUDOKU <span id="tutorial-btn" title="Nasıl Oynanır?">?</span></h1>
+        <div class="quantum-dashboard">
+            <div class="dashboard-item">
+                <span class="dashboard-label">SÜRE</span>
+                <span id="timer">00:00</span>
+            </div>
+            <div class="dashboard-divider"></div>
+            <div class="dashboard-item">
+                <span class="dashboard-label">DÜZEY</span>
+                <span id="difficulty-display">BASIT</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="quantum-container">
+        <div class="side-panel left animate__animated animate__fadeInLeft">
+            <div class="panel-group">
+                <span class="panel-label">YAPILANDIRMA</span>
+                <div class="quantum-select-wrapper">
+                    <div class="quantum-select-trigger">Basit (9x9)</div>
+                    <div class="quantum-options">
+                        <div class="quantum-option selected" data-value="9">Basit (9x9)</div>
+                        <div class="quantum-option" data-value="12">Orta (12x12)</div>
+                        <div class="quantum-option" data-value="15">Zor (15x15)</div>
+                    </div>
+                    <select id="difficulty-selector">
+                        <option value="9">Basit (9x9)</option>
+                        <option value="12">Orta (12x12)</option>
+                        <option value="15">Zor (15x15)</option>
+                    </select>
+                </div>
+                <button id="start-btn" class="btn-quantum">BAŞLAT</button>
+            </div>
+        </div>
+
+        <section id="game-view" class="animate__animated animate__zoomIn">
+            <div id="board"></div>
+            
+            <div id="loading-overlay" class="modal-backdrop hidden">
+                <div class="spinner"></div>
+            </div>
+
+
+
+        </section>
+        <aside class="side-panel right animate__animated animate__fadeInRight">
+            <div class="quick-actions">
+                <button id="undo-btn" class="btn-round-premium undo" title="Geri Al">↩️</button>
+                <button id="redo-btn" class="btn-round-premium redo" title="İleri Al">↪️</button>
+                <button id="hint-btn" class="btn-round-premium hint" title="İpucu">💡<span id="hint-count">0/5</span></button>
+            </div>
+            <div class="credits-anchor">
+                <div class="credits-wrapper">
+                    <button class="credits-btn">YAPIMCILAR</button>
+                    <div class="credits-panel">
+                        <p>Emir Fetolmaz</p>
+                        <p>Mehmet Akif Akkoç</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <div id="tutorial-overlay" class="modal-backdrop hidden">
+        <div class="modal-content tutorial-content">
+            <span id="close-tut-x" title="Kapat">&times;</span>
+            <h2>OYUN MODLARI</h2>
+            <div class="tutorial-grid">
+                <div class="mod-item">
+                    <h3>🟢 Basit (9x9)</h3>
+                    <p>Standart Sudoku deneyimi. 9x9 grid, 3x3 blok yapısı. Yeni başlayanlar için ideal.</p>
+                </div>
+                <div class="mod-item">
+                    <h3>🟡 Orta (12x12)</h3>
+                    <p>Gelişmiş Sudoku. 12x12 grid, 4x4 genel blok yapısı. Sayı menzili 1-12 arasındadır.</p>
+                </div>
+                <div class="mod-item">
+                    <h3>🔴 Zor (15x15)</h3>
+                    <p>Usta işi Sudoku. 15x15 devasa grid, 5x5 genel blok yapısı. Sayı menzili 1-15 arasındadır.</p>
+                </div>
+            </div>
+            <button id="tutorial-close-btn" class="btn-quantum">ANLADIM</button>
+        </div>
+    </div>
+
+    <footer class="quantum-footer animate__animated animate__fadeInUp">
+        <p>MADE BY <span>ASUYMT</span></p>
+    </footer>
+
+    <input type="text" id="hidden-input" style="position: absolute; opacity: 0; pointer-events: none;">
+
+    <script src="sudokuScript.js?v=1.1"></script>
+</body>
+</html>
