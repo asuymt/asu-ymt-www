@@ -16,14 +16,12 @@
             --glass-border: rgba(255, 255, 255, 0.1);
             --neon-glow: 0 0 20px rgba(14, 165, 233, 0.3);
         }
-
         .roadmap-header {
             text-align: center;
             padding: 8rem 2rem 4rem;
             position: relative;
             z-index: 1;
         }
-
         .roadmap-header h1 {
             font-size: 4rem;
             font-weight: 800;
@@ -34,14 +32,12 @@
             margin-bottom: 1.5rem;
             letter-spacing: -2px;
         }
-
         .roadmap-header p {
             font-size: 1.5rem;
             color: var(--text-muted);
             max-width: 700px;
             margin: 0 auto;
         }
-
         .roadmap-selector {
             display: flex;
             justify-content: center;
@@ -49,7 +45,6 @@
             margin-bottom: 6rem;
             padding: 0 1rem;
         }
-
         .selector-btn {
             padding: 1.5rem 3rem;
             background: var(--glass-bg);
@@ -66,28 +61,24 @@
             gap: 1.2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
-
         .selector-btn:hover {
             transform: translateY(-10px) scale(1.05);
             border-color: var(--category-color);
             color: white;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
-
         .selector-btn.active {
             background: var(--category-color);
             border-color: var(--category-color);
             color: white;
             box-shadow: 0 15px 35px var(--glow-color);
         }
-
         .roadmap-timeline {
             max-width: 1200px;
             margin: 0 auto 10rem;
             position: relative;
             padding: 0 2rem;
         }
-
         .roadmap-timeline::before {
             content: '';
             position: absolute;
@@ -99,7 +90,6 @@
             transform: translateX(-50%);
             box-shadow: var(--neon-glow);
         }
-
         .timeline-item {
             display: flex;
             justify-content: flex-end;
@@ -108,13 +98,11 @@
             margin-bottom: 6rem;
             width: 100%;
         }
-
         .timeline-item:nth-child(even) {
             justify-content: flex-start;
             padding-right: 0;
             padding-left: 50%;
         }
-
         .timeline-dot {
             width: 32px;
             height: 32px;
@@ -129,7 +117,6 @@
             box-shadow: 0 0 15px var(--accent);
             transition: all 0.3s ease;
         }
-
         .timeline-item.completed .timeline-dot {
             background: var(--accent);
             color: white;
@@ -137,14 +124,12 @@
             align-items: center;
             justify-content: center;
         }
-
         .timeline-item.completed .timeline-dot::after {
             content: '\f00c';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             font-size: 0.8rem;
         }
-
         .timeline-content {
             width: 85%;
             background: var(--glass-bg);
@@ -157,7 +142,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .timeline-content::before {
             content: '';
             position: absolute;
@@ -168,18 +152,15 @@
             background: var(--accent);
             transition: height 0.5s ease;
         }
-
         .timeline-item:hover .timeline-content::before {
             height: 100%;
         }
-
         .timeline-item:hover .timeline-content {
             transform: translateY(-10px) scale(1.02);
             border-color: var(--accent);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
             background: rgba(255, 255, 255, 0.05);
         }
-
         .step-id {
             position: absolute;
             top: 1.5rem;
@@ -190,21 +171,18 @@
             color: white;
             user-select: none;
         }
-
         .timeline-content h3 {
             font-size: 2.4rem;
             margin-bottom: 1.2rem;
             font-weight: 800;
             color: white;
         }
-
         .timeline-content p {
             color: var(--text-secondary);
             font-size: 1.3rem;
             line-height: 1.7;
             margin-bottom: 0;
         }
-
         /* Responsive */
         @media (max-width: 900px) {
             .roadmap-timeline::before { left: 3rem; }
@@ -215,7 +193,6 @@
             .roadmap-header h1 { font-size: 3rem; }
             .selector-btn { padding: 1.2rem 2rem; font-size: 1.1rem; }
         }
-
         /* Animation Background */
         .glow-bg {
             position: fixed;
@@ -236,15 +213,13 @@
 <body>
     <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
     <div class="glow-bg" id="glowBg"></div>
-
     <div class="container">
-        <div id="header-placeholder"></div>
-
+        <!-- Dynamic Navbar Placeholder -->
+        <div class="navbar-placeholder"></div>
         <div class="roadmap-header animate__animated animate__fadeIn">
             <h1>Kariyer Haritaları</h1>
             <p>Sektör standartlarına göre hazırlanan, adım adım uzmanlık rehberleri.</p>
         </div>
-
         <div class="roadmap-selector animate__animated animate__fadeInUp">
             <button class="selector-btn active" onclick="loadRoadmap('frontend', this)" style="--category-color: #0ea5e9; --glow-color: rgba(14, 165, 233, 0.4)">
                 <i class="fas fa-code"></i> Frontend
@@ -256,18 +231,115 @@
                 <i class="fas fa-brain"></i> AI & Data
             </button>
         </div>
-
         <div class="roadmap-timeline" id="roadmapTimeline"></div>
-
         <div id="footer-placeholder"></div>
     </div>
-
     <script src="../../assets/js/particles.js"></script>
     <script src="./roadmap-data.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (window.amazingCursorInitialized) return;
+            window.amazingCursorInitialized = true;
+            const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+            if (!hasFinePointer) return;
+            document.body.classList.add("cursor-enabled");
+            const cursorDot = document.createElement("div");
+            cursorDot.id = "cursor-dot";
+            const cursorCircleOuter = document.createElement("div");
+            cursorCircleOuter.id = "cursor-circle-outer";
+            const cursorCircleInner = document.createElement("div");
+            cursorCircleInner.id = "cursor-circle-inner";
+            cursorCircleOuter.appendChild(cursorCircleInner);
+            document.body.appendChild(cursorDot);
+            document.body.appendChild(cursorCircleOuter);
+            const savedPos = (() => {
+                try { return sessionStorage.getItem("amazingCursorPos"); } catch (e) { return null; }
+            })();
+            if (savedPos) {
+                try {
+                    const pos = JSON.parse(savedPos);
+                    if (Number.isFinite(pos.x) && Number.isFinite(pos.y)) {
+                        mouseX = pos.x;
+                        mouseY = pos.y;
+                        circleX = pos.x;
+                        circleY = pos.y;
+                        firstMove = true;
+                        cursorCircleOuter.style.transform = "translate3d(" + circleX + "px, " + circleY + "px, 0)";
+                        cursorDot.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0) translate(-50%, -50%)";
+                        document.body.classList.add("cursor-visible");
+                        isVisible = true;
+                        evaluateHoverState(document.elementFromPoint(mouseX, mouseY));
+                    }
+                } catch (e) {}
+            }
+            let mouseX = 0;
+            let mouseY = 0;
+            let circleX = 0;
+            let circleY = 0;
+            let isVisible = false;
+            let firstMove = false;
+            const evaluateHoverState = (target) => {
+                if (!target) return;
+                const interactiveElement = target.closest("a, button, [onclick], input, select, textarea, .gallery-list-item");
+                if (interactiveElement || window.getComputedStyle(target).cursor === "pointer") {
+                    document.body.classList.add("cursor-hover");
+                } else {
+                    document.body.classList.remove("cursor-hover");
+                }
+            };
+            window.addEventListener("mousemove", (e) => {
+                if (!firstMove) {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    try { sessionStorage.setItem("amazingCursorPos", JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
+                    circleX = e.clientX;
+                    circleY = e.clientY;
+                    firstMove = true;
+                    cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
+                    evaluateHoverState(document.elementFromPoint(mouseX, mouseY));
+                }
+                if (!isVisible) {
+                    document.body.classList.add("cursor-visible");
+                    isVisible = true;
+                }
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                try { sessionStorage.setItem("amazingCursorPos", JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
+                cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+            });
+            const updateCircle = () => {
+                if (isVisible && firstMove) {
+                    circleX += (mouseX - circleX) * 0.15;
+                    circleY += (mouseY - circleY) * 0.15;
+                    cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
+                }
+                requestAnimationFrame(updateCircle);
+            };
+            requestAnimationFrame(updateCircle);
+            document.body.addEventListener("mouseover", (e) => evaluateHoverState(e.target));
+            document.body.addEventListener("mouseout", (e) => {
+                evaluateHoverState(e.relatedTarget);
+            });
+            window.addEventListener("mousedown", () => {
+                document.body.classList.add("cursor-active");
+            });
+            window.addEventListener("mouseup", (e) => {
+                document.body.classList.remove("cursor-active");
+                evaluateHoverState(e.target);
+            });
+            document.addEventListener("mouseleave", () => {
+                document.body.classList.remove("cursor-visible");
+                isVisible = false;
+            });
+            document.addEventListener("mouseenter", () => {
+                document.body.classList.add("cursor-visible");
+                isVisible = true;
+            });
+        });
+    </script>
     <script src="../../assets/js/headerfooter.js"></script>
     <script>
         let currentType = 'frontend';
-
         function loadRoadmap(type, btn) {
             currentType = type;
             if (btn) {
@@ -278,17 +350,13 @@
             const timeline = document.getElementById('roadmapTimeline');
             const root = document.documentElement;
             const glowBg = document.getElementById('glowBg');
-            
             root.style.setProperty('--accent', data.color);
             glowBg.style.background = `radial-gradient(circle, ${data.color} 0%, transparent 70%)`;
-            
             timeline.innerHTML = '';
-            
             data.steps.forEach((step, index) => {
                 const item = document.createElement('div');
                 item.className = `timeline-item animate__animated animate__fadeInUp`;
                 item.style.animationDelay = `${index * 0.1}s`;
-                
                 item.innerHTML = `
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
@@ -300,7 +368,6 @@
                 timeline.appendChild(item);
             });
         }
-
         document.addEventListener('DOMContentLoaded', () => loadRoadmap('frontend'));
     </script>
 </body>

@@ -227,10 +227,19 @@ body {
     padding: 0 5%;
 }
 
-@media (min-width: 768px) {
-    body {
-        padding: 0;
-    }
+/* --- LOGO-CENTERED NAVBAR PLACEHOLDER --- */
+.navbar-placeholder {
+    height: 180px !important;
+    width: 100%;
+    display: block;
+    contain: strict;
+}
+
+@media (max-width: 1200px) {
+    .navbar-placeholder { height: 160px !important; }
+}
+@media (max-width: 820px) {
+    .navbar-placeholder { height: 120px !important; }
 }
 
 @media (pointer: fine) {
@@ -382,12 +391,11 @@ h6 {
     font-weight: var(--weight-bold);
     line-height: var(--leading-tight);
     color: var(--text-primary);
-    letter-spacing: var(--tracking-tight);
+    letter-spacing: -0.01em;
 }
 
 h1 {
     font-size: var(--text-5xl);
-    letter-spacing: var(--tracking-tighter);
 }
 
 h2 {
@@ -434,10 +442,7 @@ ol {
 }
 
 img,
-picture,
-video,
-canvas,
-svg {
+picture, video, canvas, svg {
     display: block;
     max-width: 100%;
     height: auto;

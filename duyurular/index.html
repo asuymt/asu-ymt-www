@@ -1,389 +1,172 @@
 <!doctype html>
-
 <html lang="tr">
-
 <head>
-
   <meta charset="UTF-8" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Duyurular | ASÜ-YMT</title>
-
   <link rel="icon" sizes="64x64" href="../assets/images/Logo-64.png" type="image/png" />
-
   <link rel="icon" type="image/x-icon" href="./images/asuymt-logo.png" />
-
   <link rel="stylesheet" href="../assets/css/globals.css" />
-
   <link rel="stylesheet" href="../assets/css/style.css" />
-
   <link rel="stylesheet" href="../assets/css/theme.css" />
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 </head>
-
 <body>
-
 <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
-
   <div class="container">
-
-    <div class="navbar">
-
-      <div class="navbar-brand">
-
-        <span class="brand-text">Aksaray Üniversitesi</span>
-
-        <a href="../"><img src="../assets/images/asuymt-logo.png" alt="Yazılım Mühendisliği Topluluğu" /></a>
-
-        <span class="brand-text">Yazılım Mühendisliği Topluluğu</span>
-
-      </div>
-
-      <ul>
-
-        <li><a href="index.html#hakkimizda">Hakkımızda</a></li>
-
-        <li><a href="../duyurular/">Duyurular</a></li>
-
-        <li><a href="../etkinlikler/">Etkinlikler</a></li>
-
-        <li><a href="../egitimler/">Eğitimler</a></li>
-
-        <li><a href="../projeler/">Projeler</a></li>
-
-        <li><a href="../iletisim/">İletişim</a></li>
-
-        <li><a href="../galeri/">Foto Galeri</a></li>
-
-        <li><a href="../asu-topluluklar/">ASÜ Toplulukları</a>
-
-        </li>
-
-      </ul>
-
-    </div>
-
+    <!-- Dynamic Navbar Placeholder -->
+    <div class="navbar-placeholder"></div>
     <div class="box-2" style="margin-top: 5rem">
-
       <h1>Duyurular</h1>
-
       <div class="cardlar" style="flex-wrap: wrap">
-
       </div>
-
     </div>
-
     <div class="footer">
-
       <div class="footlar">
-
         <div class="foot">
-
           <a href="../"><img src="../assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
-
         </div>
-
         <div class="foot made-by">
-
           <h1>Made By</h1>
-
           <ul class="made-by-list">
-
                         <li class="has-tooltip">
-
               Emir Fetolmaz
-
               <div class="tooltip-bubble">
-
                 <img src="../assets/images/emir-fetolmaz.jpg" alt="Emir Fetolmaz">
-
               </div>
-
             </li>
-
                         <li class="has-tooltip">
-
               Burak Arıkan
-
               <div class="tooltip-bubble">
-
                 <img src="../assets/images/burak-arikan.jpg" alt="Burak Arıkan">
-
               </div>
-
             </li>
-
                         <li class="has-tooltip">
-
               Mehmet Akif Akkoç
-
               <div class="tooltip-bubble">
-
                 <img src="../assets/images/mehmet-akif-akkoc.jpg" alt="Mehmet Akif Akkoç">
-
               </div>
-
             </li>
-
           </ul>
-
         </div>
-
         <div class="foot" id="iletisim">
-
           <h1>İletişim</h1>
-
           <a href="https://github.com/asuymt" title="GitHub" target="_blank" rel="noopener noreferrer"><i
-
               class="fa-brands fa-github"></i> GitHub</a>
-
           <a href="https://www.instagram.com/asuymt/" title="Instagram" target="_blank" rel="noopener noreferrer"><i
-
               class="fa-brands fa-instagram"></i> Instagram</a>
-
         </div>
-
       </div>
-
       <p>© 2026 Tüm Hakları Saklıdır.</p>
-
     </div>
-
   </div>
-
 <script src="../assets/js/particles.js"></script>
-
+<script src="../assets/js/duyuru-data.js"></script>
+<script src="../assets/js/duyuru-motoru.js"></script>
 <script>
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-      const currentPath = window.location.pathname.split("/").pop() || "index.html";
-
-      document.querySelectorAll(".navbar ul li a").forEach(link => {
-
-        const linkPath = link.getAttribute("href").split("/").pop();
-
-        if (linkPath === currentPath) link.classList.add("active");
-
-        if (window.location.hash && link.getAttribute("href").includes(window.location.hash)) link.classList.add("active");
-
-      });
-
-    });
-
-  </script>
-
-  </script>
-
-  <script>
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-      if(window.amazingCursorInitialized) return;
-
-      window.amazingCursorInitialized = true;
-
-      const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-
-      if (!hasFinePointer) return;
-      document.body.classList.add('cursor-enabled');
-
-      const cursorDot = document.createElement('div');
-
-      cursorDot.id = 'cursor-dot';
-
-      const cursorCircleOuter = document.createElement('div');
-
-      cursorCircleOuter.id = 'cursor-circle-outer';
-
-      const cursorCircleInner = document.createElement('div');
-
-      cursorCircleInner.id = 'cursor-circle-inner';
-
-      cursorCircleOuter.appendChild(cursorCircleInner);
-
-      document.body.appendChild(cursorDot);
-
-      document.body.appendChild(cursorCircleOuter);
-
-      const savedPos = (() => {
-
-        try { return sessionStorage.getItem('amazingCursorPos'); } catch (e) { return null; }
-
-      })();
-
-      if (savedPos) {
-
-        try {
-
-          const pos = JSON.parse(savedPos);
-
-          if (Number.isFinite(pos.x) && Number.isFinite(pos.y)) {
-
-            mouseX = pos.x;
-
-            mouseY = pos.y;
-
-            circleX = pos.x;
-
-            circleY = pos.y;
-
-            firstMove = true;
-
-            cursorCircleOuter.style.transform = "translate3d(" + circleX + "px, " + circleY + "px, 0)";
-
-            cursorDot.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0) translate(-50%, -50%)";
-
-            document.body.classList.add('cursor-visible');
-
-            isVisible = true;
-
-            evaluateHoverState(document.elementFromPoint(mouseX, mouseY));
-
-          }
-
-        } catch (e) {}
-
-      }
-
-      let mouseX = 0;
-
-      let mouseY = 0;
-
-      let circleX = 0;
-
-      let circleY = 0;
-
-      let isVisible = false;
-
-      let firstMove = false;
-
-      const evaluateHoverState = (target) => {
-
-        if (!target) return;
-
-        const interactiveElement = target.closest('a, button, [onclick], input, select, textarea, .gallery-list-item');
-
-        if (interactiveElement || window.getComputedStyle(target).cursor === 'pointer') {
-
-            document.body.classList.add('cursor-hover');
-
-        } else {
-
-            document.body.classList.remove('cursor-hover');
-
-        }
-
-      };
-
-      window.addEventListener('mousemove', (e) => {
-
-        if (!firstMove) {
-
-            mouseX = e.clientX;
-
-            mouseY = e.clientY;
-        try { sessionStorage.setItem('amazingCursorPos', JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
-
-            circleX = e.clientX;
-
-            circleY = e.clientY;
-
-            firstMove = true;
-
-            cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
-
-            evaluateHoverState(document.elementFromPoint(mouseX, mouseY));
-
-        }
-
-        if (!isVisible) {
-
-          document.body.classList.add('cursor-visible');
-
+  document.addEventListener("DOMContentLoaded", () => {
+    if (window.amazingCursorInitialized) return;
+    window.amazingCursorInitialized = true;
+    const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+    if (!hasFinePointer) return;
+    document.body.classList.add("cursor-enabled");
+    const cursorDot = document.createElement("div");
+    cursorDot.id = "cursor-dot";
+    const cursorCircleOuter = document.createElement("div");
+    cursorCircleOuter.id = "cursor-circle-outer";
+    const cursorCircleInner = document.createElement("div");
+    cursorCircleInner.id = "cursor-circle-inner";
+    cursorCircleOuter.appendChild(cursorCircleInner);
+    document.body.appendChild(cursorDot);
+    document.body.appendChild(cursorCircleOuter);
+    const savedPos = (() => {
+      try { return sessionStorage.getItem("amazingCursorPos"); } catch (e) { return null; }
+    })();
+    if (savedPos) {
+      try {
+        const pos = JSON.parse(savedPos);
+        if (Number.isFinite(pos.x) && Number.isFinite(pos.y)) {
+          mouseX = pos.x;
+          mouseY = pos.y;
+          circleX = pos.x;
+          circleY = pos.y;
+          firstMove = true;
+          cursorCircleOuter.style.transform = "translate3d(" + circleX + "px, " + circleY + "px, 0)";
+          cursorDot.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0) translate(-50%, -50%)";
+          document.body.classList.add("cursor-visible");
           isVisible = true;
-
+          evaluateHoverState(document.elementFromPoint(mouseX, mouseY));
         }
-
+      } catch (e) {}
+    }
+    let mouseX = 0;
+    let mouseY = 0;
+    let circleX = 0;
+    let circleY = 0;
+    let isVisible = false;
+    let firstMove = false;
+    const evaluateHoverState = (target) => {
+      if (!target) return;
+      const interactiveElement = target.closest("a, button, [onclick], input, select, textarea, .gallery-list-item");
+      if (interactiveElement || window.getComputedStyle(target).cursor === "pointer") {
+        document.body.classList.add("cursor-hover");
+      } else {
+        document.body.classList.remove("cursor-hover");
+      }
+    };
+    window.addEventListener("mousemove", (e) => {
+      if (!firstMove) {
         mouseX = e.clientX;
-
         mouseY = e.clientY;
-        try { sessionStorage.setItem('amazingCursorPos', JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
-
-        cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-
-      });
-
-      const updateCircle = () => {
-
-        if (isVisible && firstMove) {
-
-          circleX += (mouseX - circleX) * 0.15;
-
-          circleY += (mouseY - circleY) * 0.15;
-
-          cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
-
-        }
-
-        requestAnimationFrame(updateCircle);
-
-      };
-
-      requestAnimationFrame(updateCircle);
-
-      document.body.addEventListener('mouseover', (e) => evaluateHoverState(e.target));
-
-      document.body.addEventListener('mouseout', (e) => {
-
-          evaluateHoverState(e.relatedTarget);
-
-      });
-
-      window.addEventListener('mousedown', () => {
-
-          document.body.classList.add('cursor-active');
-
-      });
-
-      window.addEventListener('mouseup', (e) => {
-
-          document.body.classList.remove('cursor-active');
-
-          evaluateHoverState(e.target);
-
-      });
-
-      document.addEventListener('mouseleave', () => {
-
-        document.body.classList.remove('cursor-visible');
-
-        isVisible = false;
-
-      });
-
-      document.addEventListener('mouseenter', () => {
-
-        document.body.classList.add('cursor-visible');
-
+        try { sessionStorage.setItem("amazingCursorPos", JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
+        circleX = e.clientX;
+        circleY = e.clientY;
+        firstMove = true;
+        cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
+        evaluateHoverState(document.elementFromPoint(mouseX, mouseY));
+      }
+      if (!isVisible) {
+        document.body.classList.add("cursor-visible");
         isVisible = true;
-
-      });
-
+      }
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      try { sessionStorage.setItem("amazingCursorPos", JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
+      cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
     });
-
-  </script>
-
+    const updateCircle = () => {
+      if (isVisible && firstMove) {
+        circleX += (mouseX - circleX) * 0.15;
+        circleY += (mouseY - circleY) * 0.15;
+        cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
+      }
+      requestAnimationFrame(updateCircle);
+    };
+    requestAnimationFrame(updateCircle);
+    document.body.addEventListener("mouseover", (e) => evaluateHoverState(e.target));
+    document.body.addEventListener("mouseout", (e) => {
+      evaluateHoverState(e.relatedTarget);
+    });
+    window.addEventListener("mousedown", () => {
+      document.body.classList.add("cursor-active");
+    });
+    window.addEventListener("mouseup", (e) => {
+      document.body.classList.remove("cursor-active");
+      evaluateHoverState(e.target);
+    });
+    document.addEventListener("mouseleave", () => {
+      document.body.classList.remove("cursor-visible");
+      isVisible = false;
+    });
+    document.addEventListener("mouseenter", () => {
+      document.body.classList.add("cursor-visible");
+      isVisible = true;
+    });
+  });
+</script>
 <script src="../assets/js/headerfooter.js"></script>
 </body>
-
 </html>
