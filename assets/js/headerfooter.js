@@ -91,17 +91,35 @@
                 flex-direction: column;
                 align-items: center;
                 gap: 0.8rem;
-                padding: 1.2rem 3rem;
+                padding: 1.2rem 3.2rem;
                 width: max-content;
                 max-width: 95%;
                 margin: 0 auto;
-                border-radius: 40px;
-                background: rgba(10, 15, 25, 0.7);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-                transition: all 0.3s ease;
+                border-radius: 999px;
+                background: linear-gradient(135deg, rgba(12, 16, 28, 0.75), rgba(10, 15, 25, 0.5));
+                backdrop-filter: blur(18px) saturate(140%);
+                -webkit-backdrop-filter: blur(18px) saturate(140%);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                box-shadow:
+                    0 18px 40px rgba(0, 0, 0, 0.45),
+                    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+                transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+            }
+            .navbar::before {
+                content: "";
+                position: absolute;
+                inset: 1px;
+                border-radius: inherit;
+                background: linear-gradient(120deg, rgba(14, 165, 233, 0.12), rgba(255, 255, 255, 0.04), rgba(14, 165, 233, 0.12));
+                opacity: 0.7;
+                pointer-events: none;
+                z-index: -1;
+            }
+            .navbar:hover {
+                transform: translateY(-2px);
+                box-shadow:
+                    0 24px 60px rgba(0, 0, 0, 0.5),
+                    0 0 0 1px rgba(14, 165, 233, 0.2) inset;
             }
             .navbar-brand {
                 display: grid;
@@ -122,27 +140,29 @@
                 text-align: left;
             }
             .navbar-brand img {
-                width: 100px;
+                width: 96px;
                 height: auto;
-                transition: transform 0.3s ease;
+                transition: transform 0.35s ease, filter 0.35s ease;
+                filter: drop-shadow(0 8px 18px rgba(14, 165, 233, 0.35));
             }
             .navbar-brand img:hover {
-                transform: scale(1.1);
+                transform: translateY(-2px) scale(1.08);
+                filter: drop-shadow(0 12px 24px rgba(14, 165, 233, 0.45));
             }
             .brand-text {
                 font-family: 'Outfit', sans-serif;
-                font-size: 1.5rem;
+                font-size: 1.45rem;
                 font-weight: 800;
                 color: #fff;
                 text-transform: uppercase;
-                letter-spacing: 2px;
+                letter-spacing: 1.6px;
                 pointer-events: none;
                 white-space: nowrap;
-                text-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+                text-shadow: 0 0 24px rgba(14, 165, 233, 0.35);
             }
             .nav-menu {
                 display: flex;
-                gap: 0.5rem;
+                gap: 0.35rem;
                 list-style: none;
                 align-items: center;
                 justify-content: center;
@@ -151,18 +171,41 @@
                 color: rgba(255,255,255,0.8);
                 text-decoration: none;
                 font-weight: 700;
-                font-size: 1.2rem;
-                padding: 0.6rem 1.4rem;
-                border-radius: 100px;
-                transition: all 0.2s ease;
+                font-size: 1.15rem;
+                padding: 0.65rem 1.4rem;
+                border-radius: 999px;
+                position: relative;
+                transition: color 0.2s ease, background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
             }
-            .nav-menu a:hover, .nav-menu a.active {
+            .nav-menu a::after {
+                content: "";
+                position: absolute;
+                left: 16%;
+                right: 16%;
+                bottom: 6px;
+                height: 2px;
+                border-radius: 999px;
+                background: linear-gradient(90deg, rgba(14, 165, 233, 0), rgba(14, 165, 233, 0.8), rgba(14, 165, 233, 0));
+                transform: scaleX(0);
+                transform-origin: center;
+                transition: transform 0.25s ease;
+            }
+            .nav-menu a:hover {
                 color: #fff;
-                background: rgba(14, 165, 233, 0.2);
-                box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+                background: rgba(14, 165, 233, 0.18);
+                box-shadow: 0 8px 24px rgba(14, 165, 233, 0.18);
+                transform: translateY(-1px);
+            }
+            .nav-menu a:hover::after {
+                transform: scaleX(1);
             }
             .nav-menu a.active {
-                color: var(--accent, #0ea5e9);
+                color: #ffffff;
+                background: rgba(14, 165, 233, 0.28);
+                box-shadow: 0 10px 26px rgba(14, 165, 233, 0.25);
+            }
+            .nav-menu a.active::after {
+                transform: scaleX(1);
             }
             @media (max-width: 1200px) {
                 .brand-text { font-size: 1.1rem; gap: 1.5rem; }
