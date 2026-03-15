@@ -154,10 +154,36 @@
   letter-spacing: -0.03em;
   background: linear-gradient(300deg, #ffffff, var(--accent), var(--accent-dark), #ffffff);
   background-size: 300% 300%;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
   animation: liquidGradient 8s ease infinite;
+}
+
+/* --- Cinematic Bokeh Background --- */
+.gallery-bokeh-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.bokeh-item {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: drift 20s infinite alternate ease-in-out;
+}
+
+.bokeh-1 { width: 40vw; height: 40vw; background: var(--accent); top: -10%; left: -10%; animation-duration: 25s; }
+.bokeh-2 { width: 35vw; height: 35vw; background: #6d28d9; bottom: -5%; right: -5%; animation-duration: 30s; animation-delay: -5s; }
+.bokeh-3 { width: 25vw; height: 25vw; background: #0ea5e9; top: 40%; right: 10%; animation-duration: 22s; animation-delay: -10s; }
+
+@keyframes drift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(100px, 50px) scale(1.2); }
 }
 
 .cardlar {
@@ -794,110 +820,333 @@
 }
 
 .gallery-list-view {
+  background: rgba(10, 15, 25, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
   display: flex;
   flex-direction: column;
-  max-width: 1000px;
-  margin: 0 auto;
-  background: rgba(10, 15, 25, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  backdrop-filter: blur(20px);
+}
+
+/* --- Gallery Controls --- */
+.gallery-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.view-toggle-btn {
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.view-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.view-toggle-btn.active {
+    background: var(--accent-subtle);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* --- Gallery Grid View --- */
+.gallery-grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: none; /* Default hidden */
+}
+
+.gallery-grid-view.active {
+    display: grid;
+}
+
+.gallery-list-view.hidden {
+    display: none;
+}
+
+.gallery-card {
+    position: relative;
+    border-radius: 28px;
+    /* Removed overflow: hidden to allow background blur to bleed out if desired, 
+       but we want the frame to be contained, so we'll use a wrapper approach if needed.
+       Actually, let's keep it for now but add a wrapper in the HTML if needed.
+       Wait, let's do it via pseudo-elements without changing HTML. */
+    overflow: visible; 
+    aspect-ratio: 4 / 3;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    background: transparent;
+    z-index: 1;
+}
+
+.gallery-card::before {
+    content: "";
+    position: absolute;
+    inset: -15px;
+    background-image: inherit; /* This won't work easily without JS or specific CSS. 
+                                  Let's use a simpler approach: a soft glow. */
+    background: var(--accent-glow);
+    filter: blur(40px);
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: -1;
+    border-radius: 40px;
+}
+
+.gallery-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(15, 20, 30, 0.8);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.gallery-card:hover {
+    transform: translateY(-12px) scale(1.03);
+}
+
+.gallery-card:hover::before {
+    opacity: 0.6;
+    transform: scale(1.1);
+}
+
+.gallery-card:hover .gallery-card-inner {
+    border-color: var(--accent);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 20px var(--accent-glow);
+}
+
+.gallery-card:hover img {
+    transform: scale(1.12) rotate(1.5deg);
+}
+
+.gallery-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(3, 12, 23, 0.9), transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.gallery-card:hover .gallery-card-overlay {
+    opacity: 1;
+}
+
+.gallery-card-title {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    transform: translateY(10px);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.gallery-card:hover .gallery-card-title {
+    transform: translateY(0);
+}
+
+.gallery-card-meta {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateY(10px);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0.05s;
+}
+
+.gallery-card:hover .gallery-card-meta {
+    transform: translateY(0);
+}
+
+.gallery-card-tag {
+    background: var(--accent-subtle);
+    color: var(--accent);
+    padding: 0.2rem 0.8rem;
+    border-radius: 99px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* --- Compact Gallery Logic --- */
+.gallery-grid-view, .gallery-list-view {
+    transition: all 0.4s ease;
+    width: 100%;
+}
+
+.gallery-grid-view.hidden, .gallery-list-view.hidden {
+    display: none;
+}
+
+.gallery-grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 280px)); /* Capped size */
+    justify-content: center; /* Center them if few */
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+}
+
+.gallery-card {
+    position: relative;
+    width: 100%;
+    max-width: 280px; /* Force normal size */
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.gallery-card-inner {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #030c17;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+.gallery-card:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+
+.gallery-card:hover .gallery-card-inner {
+    border-color: var(--accent);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 20px var(--accent-glow);
+}
+
+.gallery-card:hover img {
+    transform: scale(1.1);
+}
+
+/* List View Styles - RESTORED */
+.gallery-list-view {
+    background: rgba(10, 15, 25, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    max-width: 1200px;
+    margin: 2rem auto;
 }
 
 .gallery-list-header {
-  display: grid;
-  grid-template-columns: 50px 3fr 2fr 2fr 1fr;
-  padding: 1.2rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--text-muted);
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  align-items: center;
+    display: grid;
+    grid-template-columns: 80px 2fr 1.5fr 1fr 100px;
+    padding: 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
 }
 
 .gallery-list-item {
-  display: grid;
-  grid-template-columns: 50px 3fr 2fr 2fr 1fr;
-  padding: 1rem 2rem;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  transition: background 0.2s;
-  cursor: pointer;
-  color: var(--text-secondary);
-  font-size: 1.4rem;
+    display: grid;
+    grid-template-columns: 80px 2fr 1.5fr 1fr 100px;
+    padding: 1.2rem 2rem;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    color: var(--text-secondary);
 }
 
 .gallery-list-item:hover {
-  background: rgba(14, 165, 233, 0.1);
-}
-
-.gallery-list-item:last-child {
-  border-bottom: none;
-}
-
-.list-col-icon {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
 }
 
 .list-col-icon img {
-  width: 30px;
-  height: 30px;
-  object-fit: cover;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 45px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .list-col-name {
-  color: var(--text-primary);
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.list-col-name i {
-  color: #60a5fa;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
 .list-col-size {
-  text-align: right;
+    text-align: right;
+    font-family: monospace;
 }
 
+/* --- Lightbox Base Styles - RESTORED --- */
 .gallery-lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 10000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .gallery-lightbox.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-.gallery-lightbox.closing {
-  opacity: 0;
+    display: flex;
 }
 
 .lightbox-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 12, 18, 0.85);
-
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 12, 23, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1;
 }
 
 .gallery-lightbox::before {
@@ -948,24 +1197,28 @@
 @keyframes lightboxZoomIn {
   0% {
     opacity: 0;
-    transform: scale(0.7) translateY(30px);
+    transform: scale(0.2) rotate(-5deg);
+    filter: blur(20px);
   }
-
+  60% {
+    transform: scale(1.05) rotate(0deg);
+    filter: blur(0);
+  }
   100% {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: scale(1);
   }
 }
 
 @keyframes lightboxZoomOut {
   0% {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: scale(1);
   }
-
   100% {
     opacity: 0;
-    transform: scale(0.7) translateY(30px);
+    transform: scale(0.2) rotate(5deg);
+    filter: blur(20px);
   }
 }
 
@@ -998,6 +1251,20 @@
   border-radius: 16px;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: zoom-in;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 5;
+}
+
+.lightbox-content img.zoomed {
+  transform: scale(2.0); /* Extreme zoom for Sultan */
+  cursor: zoom-out;
+}
+
+.gallery-lightbox.is-zoomed .lightbox-info,
+.gallery-lightbox.is-zoomed .lightbox-nav {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .lightbox-info {
@@ -2076,6 +2343,7 @@
   color: var(--text-primary);
   background: linear-gradient(to right, #ffffff, var(--accent), var(--accent-dark));
   background-size: 200% auto;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shine 4s linear infinite;

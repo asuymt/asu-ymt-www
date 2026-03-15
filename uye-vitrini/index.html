@@ -5,9 +5,9 @@
   <link rel="icon" href="/assets/images/asuymt-logo.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Üye Vitrini | ASÜ-YMT</title>
-    <link rel="stylesheet" href="../../assets/css/globals.css" />
-    <link rel="stylesheet" href="../../assets/css/style.css" />
-    <link rel="stylesheet" href="../../assets/css/theme.css" />
+    <link rel="stylesheet" href="../assets/css/globals.css" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/theme.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     <style>
@@ -160,27 +160,29 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(1, 10, 31, 0.95);
-            backdrop-filter: blur(15px);
+            background: rgba(4, 6, 10, 0.98);
+            backdrop-filter: blur(25px) saturate(0%);
             z-index: 10000;
             display: none;
             align-items: center;
             justify-content: center;
+            transition: all 0.5s ease;
         }
 
         .modal-content {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
+            background: rgba(15, 15, 20, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 4rem;
             border-radius: 40px;
             max-width: 600px;
             width: 90%;
             text-align: center;
             position: relative;
-            animation: modalIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: modalIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             display: flex;
             flex-direction: column;
             align-items: center;
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
         }
 
         @keyframes modalIn {
@@ -193,31 +195,62 @@
             height: 150px;
             border-radius: 40px;
             margin-bottom: 2rem;
-            border: 4px solid var(--accent);
+            border: 3px solid rgba(255, 255, 255, 0.15);
             object-fit: cover;
             object-position: center;
             display: block;
             margin-left: auto;
             margin-right: auto;
+            filter: grayscale(1) contrast(1.1) brightness(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transition: filter 0.5s ease;
+        }
+        
+        .modal-img:hover {
+            filter: grayscale(0) contrast(1) brightness(1);
         }
 
         .modal-bio {
-            font-size: 1.3rem;
-            line-height: 1.7;
-            color: var(--text-primary);
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.75);
             margin: 2rem 0;
+            font-weight: 400;
+            max-width: 500px;
+        }
+
+        .modal-role {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
         }
 
         .close-modal {
             position: absolute;
-            top: 2rem;
-            right: 2rem;
+            top: 2.5rem;
+            right: 2.5rem;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 2.5rem;
             cursor: pointer;
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        .close-modal:hover { color: white; }
+        .close-modal:hover { 
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
 
         .member-meta h2 {
             font-size: 2.1rem;
@@ -438,7 +471,7 @@
     <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
     
     <div class="container">
-        <div id="header-placeholder"></div>
+        <div class="navbar-placeholder"></div>
 
         <div class="showcase-container">
             <div class="showcase-header animate__animated animate__fadeIn">
@@ -454,7 +487,7 @@
                 <span class="close-modal" id="closeModal">&times;</span>
                 <img id="modalImg" class="modal-img" src="" alt="">
                 <h2 id="modalName"></h2>
-                <span id="modalRole" style="color: var(--accent); font-weight: 700;"></span>
+                <span id="modalRole" class="modal-role"></span>
                 <p id="modalBio" class="modal-bio"></p>
                 <div class="card-actions" style="justify-content: center;">
                     <a id="modalGithub" href="#" target="_blank" class="github-btn" style="opacity: 1; font-size: 2rem;">
@@ -471,7 +504,7 @@
         </div>
 
         <!-- Projects Modal -->
-        <div id="projectsModal" class="modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(1, 10, 31, 0.95); backdrop-filter: blur(15px); z-index: 10001; display: none; align-items: center; justify-content: center;">
+        <div id="projectsModal" class="modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(4, 6, 10, 0.98); backdrop-filter: blur(25px) saturate(0%); z-index: 10001; display: none; align-items: center; justify-content: center;">
             <div class="modal-content" style="max-width: 500px;">
                 <span class="close-modal" id="closeProjects">&times;</span>
                 <h2 style="color: white; font-size: 2.5rem; margin-bottom: 0.5rem;">Projeler</h2>
@@ -480,12 +513,12 @@
             </div>
         </div>
 
-        <div id="footer-placeholder"></div>
+        <div class="footer"></div>
     </div>
 
-    <script src="../../assets/js/particles.js"></script>
+    <script src="../assets/js/particles.js"></script>
     <script src="./showcase-data.js"></script>
-    <script src="../../assets/js/headerfooter.js"></script>
+    <script src="../assets/js/headerfooter.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.getElementById('showcaseGrid');
@@ -618,3 +651,6 @@
     </script>
 </body>
 </html>
+
+
+

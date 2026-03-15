@@ -15,6 +15,11 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+    <div class="gallery-bokeh-container">
+        <div class="bokeh-item bokeh-1"></div>
+        <div class="bokeh-item bokeh-2"></div>
+        <div class="bokeh-item bokeh-3"></div>
+    </div>
 <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
     <div class="container">
     <!-- Dynamic Navbar Placeholder -->
@@ -22,7 +27,16 @@
     <div class="box-2" style="margin-top: 5rem">
       <h1>Foto Galeri</h1>
       <p class="galeri-subtitle">Etkinliklerimizden ve organizasyonlarımızdan kareler 📸</p>
-      <div class="gallery-list-view" id="galleryGrid">
+      <div class="gallery-controls animate__animated animate__fadeIn">
+        <button class="view-toggle-btn active" id="btnListView" onclick="setGalleryView('list')">
+          <i class="fas fa-list"></i> Liste
+        </button>
+        <button class="view-toggle-btn" id="btnGridView" onclick="setGalleryView('grid')">
+          <i class="fas fa-th-large"></i> Izgara
+        </button>
+      </div>
+
+      <div class="gallery-list-view" id="galleryList">
         <div class="gallery-list-header">
           <div class="list-col-icon"></div>
           <div class="list-col-name">Ad</div>
@@ -64,6 +78,74 @@
           <div class="list-col-date">05.02.2026 11:20</div>
           <div class="list-col-type">PNG Dosyası</div>
           <div class="list-col-size">1.8 MB</div>
+        </div>
+      </div>
+
+      <div class="gallery-grid-view hidden" id="galleryGrid">
+        <div class="gallery-card animate__animated animate__fadeInUp" onclick="openLightbox(0)">
+          <div class="gallery-card-inner">
+            <img src="../assets/images/ASU-YMT-1.png" alt="Asu ymt 1" />
+            <div class="gallery-card-overlay">
+              <span class="gallery-card-tag">Ekip</span>
+              <h3 class="gallery-card-title">ASU-YMT Ekip</h3>
+              <div class="gallery-card-meta">
+                <span><i class="far fa-calendar-alt"></i> 10.03.2026</span>
+                <span><i class="fas fa-hdd"></i> 2.4 MB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s" onclick="openLightbox(1)">
+          <div class="gallery-card-inner">
+            <img src="../assets/images/ana_sayfa.jpeg" alt="Ana sayfa" />
+            <div class="gallery-card-overlay">
+              <span class="gallery-card-tag">Etkinlik</span>
+              <h3 class="gallery-card-title">Topluluğumuz Kapak</h3>
+              <div class="gallery-card-meta">
+                <span><i class="far fa-calendar-alt"></i> 12.03.2026</span>
+                <span><i class="fas fa-hdd"></i> 3.1 MB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card animate__animated animate__fadeInUp" style="animation-delay: 0.15s" onclick="openLightbox(2)">
+          <div class="gallery-card-inner">
+            <img src="../assets/images/asuymt-logo.png" alt="Asuymt logo" />
+            <div class="gallery-card-overlay">
+              <span class="gallery-card-tag">Logo</span>
+              <h3 class="gallery-card-title">ASU YMT Logo Orijinal</h3>
+              <div class="gallery-card-meta">
+                <span><i class="far fa-calendar-alt"></i> 01.01.2026</span>
+                <span><i class="fas fa-hdd"></i> 1.2 MB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s" onclick="openLightbox(3)">
+          <div class="gallery-card-inner">
+            <img src="../assets/images/ymt-logo.jpg" alt="Ymt logo" />
+            <div class="gallery-card-overlay">
+              <span class="gallery-card-tag">Arşiv</span>
+              <h3 class="gallery-card-title">Eski YMT Logo</h3>
+              <div class="gallery-card-meta">
+                <span><i class="far fa-calendar-alt"></i> 15.11.2025</span>
+                <span><i class="fas fa-hdd"></i> 845 KB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card animate__animated animate__fadeInUp" style="animation-delay: 0.25s" onclick="openLightbox(4)">
+          <div class="gallery-card-inner">
+            <img src="../assets/images/ymt_border.png" alt="Ymt border" />
+            <div class="gallery-card-overlay">
+              <span class="gallery-card-tag">Asset</span>
+              <h3 class="gallery-card-title">Tasarım Çerçeve</h3>
+              <div class="gallery-card-meta">
+                <span><i class="far fa-calendar-alt"></i> 05.02.2026</span>
+                <span><i class="fas fa-hdd"></i> 1.8 MB</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -135,42 +217,88 @@
     const prevBtn = document.getElementById("lightboxPrev");
     const nextBtn = document.getElementById("lightboxNext");
     const backdrop = document.getElementById("lightboxBackdrop");
+    const galleryList = document.getElementById("galleryList");
+    const galleryGrid = document.getElementById("galleryGrid");
+    const btnList = document.getElementById("btnListView");
+    const btnGrid = document.getElementById("btnGridView");
     const galleryItems = document.querySelectorAll(".gallery-list-item");
+    const gridCards = document.querySelectorAll(".gallery-card");
+
+    // --- Stabilized Interaction Logic ---
+    function setGalleryView(view) {
+        if (view === 'grid') {
+            galleryList.classList.add('hidden');
+            galleryGrid.classList.remove('hidden');
+            btnGrid.classList.add('active');
+            btnList.classList.remove('active');
+            localStorage.setItem('galleryView', 'grid');
+        } else {
+            galleryList.classList.remove('hidden');
+            galleryGrid.classList.add('hidden');
+            btnList.classList.add('active');
+            btnGrid.classList.remove('active');
+            localStorage.setItem('galleryView', 'list');
+        }
+    }
+
+    // Auto-restore view preference
+    const savedView = localStorage.getItem('galleryView');
+    setGalleryView(savedView === 'list' ? 'list' : 'grid');
+
+
     let currentIndex = 0;
     function openLightbox(index) {
       if (index < 0 || index >= galleryItems.length) return;
       currentIndex = index;
+      
       const targetItem = galleryItems[currentIndex];
-      const imgEl = targetItem.querySelector(".list-col-icon img");
-      const nameEl = targetItem.querySelector(".list-col-name");
+      const imgEl = targetItem.querySelector(".list-col-icon img") || gridCards[currentIndex].querySelector("img");
+      const nameEl = targetItem.querySelector(".list-col-name") || gridCards[currentIndex].querySelector(".gallery-card-title");
+      
       if (!imgEl) return;
       lightboxImg.src = imgEl.src;
       lightboxCaption.textContent = nameEl ? nameEl.textContent : "";
       lightboxCounter.textContent = `${currentIndex + 1} / ${galleryItems.length}`;
-      lightbox.style.visibility = "visible";
-      lightbox.style.opacity = "1";
+      
+      lightbox.classList.add("active");
       document.body.style.overflow = "hidden";
     }
+
+    lightboxImg.addEventListener("click", (e) => {
+        e.stopPropagation();
+        lightboxImg.classList.toggle("zoomed");
+        lightbox.classList.toggle("is-zoomed");
+    });
+
     function closeLightbox() {
-      lightbox.style.opacity = "0";
+      lightbox.classList.add("closing");
       setTimeout(() => {
-        lightbox.style.visibility = "hidden";
+        lightbox.classList.remove("active");
+        lightbox.classList.remove("closing");
+        lightbox.classList.remove("is-zoomed");
+        lightboxImg.classList.remove("zoomed");
         lightboxImg.src = "";
       }, 350);
       document.body.style.overflow = "auto";
     }
+
     function showNext() {
+      lightbox.classList.remove("is-zoomed");
+      lightboxImg.classList.remove("zoomed");
       openLightbox((currentIndex + 1) % galleryItems.length);
     }
     function showPrev() {
+      lightbox.classList.remove("is-zoomed");
+      lightboxImg.classList.remove("zoomed");
       openLightbox((currentIndex - 1 + galleryItems.length) % galleryItems.length);
     }
+
     closeBtn.addEventListener("click", closeLightbox);
     backdrop.addEventListener("click", closeLightbox);
     nextBtn.addEventListener("click", showNext);
     prevBtn.addEventListener("click", showPrev);
     document.addEventListener("keydown", (e) => {
-      if (lightbox.style.visibility === "visible") {
+      if (lightbox.classList.contains("active")) {
         if (e.key === "Escape") closeLightbox();
         if (e.key === "ArrowRight") showNext();
         if (e.key === "ArrowLeft") showPrev();
@@ -188,107 +316,10 @@
       });
     });
   </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      if(window.amazingCursorInitialized) return;
-      window.amazingCursorInitialized = true;
-      const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-      if (!hasFinePointer) return;
-      document.body.classList.add('cursor-enabled');
-      const cursorDot = document.createElement('div');
-      cursorDot.id = 'cursor-dot';
-      const cursorCircleOuter = document.createElement('div');
-      cursorCircleOuter.id = 'cursor-circle-outer';
-      const cursorCircleInner = document.createElement('div');
-      cursorCircleInner.id = 'cursor-circle-inner';
-      cursorCircleOuter.appendChild(cursorCircleInner);
-      document.body.appendChild(cursorDot);
-      document.body.appendChild(cursorCircleOuter);
-      const savedPos = (() => {
-        try { return sessionStorage.getItem('amazingCursorPos'); } catch (e) { return null; }
-      })();
-      if (savedPos) {
-        try {
-          const pos = JSON.parse(savedPos);
-          if (Number.isFinite(pos.x) && Number.isFinite(pos.y)) {
-            mouseX = pos.x;
-            mouseY = pos.y;
-            circleX = pos.x;
-            circleY = pos.y;
-            firstMove = true;
-            cursorCircleOuter.style.transform = "translate3d(" + circleX + "px, " + circleY + "px, 0)";
-            cursorDot.style.transform = "translate3d(" + mouseX + "px, " + mouseY + "px, 0) translate(-50%, -50%)";
-            document.body.classList.add('cursor-visible');
-            isVisible = true;
-            evaluateHoverState(document.elementFromPoint(mouseX, mouseY));
-          }
-        } catch (e) {}
-      }
-      let mouseX = 0;
-      let mouseY = 0;
-      let circleX = 0;
-      let circleY = 0;
-      let isVisible = false;
-      let firstMove = false;
-      const evaluateHoverState = (target) => {
-        if (!target) return;
-        const interactiveElement = target.closest('a, button, [onclick], input, select, textarea, .gallery-list-item');
-        if (interactiveElement || window.getComputedStyle(target).cursor === 'pointer') {
-            document.body.classList.add('cursor-hover');
-        } else {
-            document.body.classList.remove('cursor-hover');
-        }
-      };
-      window.addEventListener('mousemove', (e) => {
-        if (!firstMove) {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        try { sessionStorage.setItem('amazingCursorPos', JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
-            circleX = e.clientX;
-            circleY = e.clientY;
-            firstMove = true;
-            cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
-            evaluateHoverState(document.elementFromPoint(mouseX, mouseY));
-        }
-        if (!isVisible) {
-          document.body.classList.add('cursor-visible');
-          isVisible = true;
-        }
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        try { sessionStorage.setItem('amazingCursorPos', JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
-        cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-      });
-      const updateCircle = () => {
-        if (isVisible && firstMove) {
-          circleX += (mouseX - circleX) * 0.15;
-          circleY += (mouseY - circleY) * 0.15;
-          cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
-        }
-        requestAnimationFrame(updateCircle);
-      };
-      requestAnimationFrame(updateCircle);
-      document.body.addEventListener('mouseover', (e) => evaluateHoverState(e.target));
-      document.body.addEventListener('mouseout', (e) => {
-          evaluateHoverState(e.relatedTarget);
-      });
-      window.addEventListener('mousedown', () => {
-          document.body.classList.add('cursor-active');
-      });
-      window.addEventListener('mouseup', (e) => {
-          document.body.classList.remove('cursor-active');
-          evaluateHoverState(e.target);
-      });
-      document.addEventListener('mouseleave', () => {
-        document.body.classList.remove('cursor-visible');
-        isVisible = false;
-      });
-      document.addEventListener('mouseenter', () => {
-        document.body.classList.add('cursor-visible');
-        isVisible = true;
-      });
-    });
-  </script>
+  
 <script src="../assets/js/headerfooter.js"></script>
 </body>
 </html>
+
+
+

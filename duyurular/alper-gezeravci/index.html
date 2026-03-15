@@ -116,51 +116,11 @@
     });
   </script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      if(window.amazingCursorInitialized) return;
-      window.amazingCursorInitialized = true;
-      const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-      if (!hasFinePointer) return;
-      document.body.classList.add('cursor-enabled');
-      const cursorDot = document.createElement('div');
-      cursorDot.id = 'cursor-dot';
-      const cursorCircleOuter = document.createElement('div');
-      cursorCircleOuter.id = 'cursor-circle-outer';
-      const cursorCircleInner = document.createElement('div');
-      cursorCircleInner.id = 'cursor-circle-inner';
-      cursorCircleOuter.appendChild(cursorCircleInner);
-      document.body.appendChild(cursorDot);
-      document.body.appendChild(cursorCircleOuter);
-      let mouseX = 0, mouseY = 0, circleX = 0, circleY = 0, isVisible = false, firstMove = false;
-      const evaluateHoverState = (target) => {
-        if (!target) return;
-        const interactiveElement = target.closest('a, button, [onclick], input, select, textarea');
-        if (interactiveElement || window.getComputedStyle(target).cursor === 'pointer') {
-            document.body.classList.add('cursor-hover');
-        } else {
-            document.body.classList.remove('cursor-hover');
-        }
-      };
-      window.addEventListener('mousemove', (e) => {
-        if (!firstMove) { mouseX = e.clientX; mouseY = e.clientY; circleX = e.clientX; circleY = e.clientY; firstMove = true; }
-        if (!isVisible) { document.body.classList.add('cursor-visible'); isVisible = true; }
-        mouseX = e.clientX; mouseY = e.clientY;
-        cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-      });
-      const updateCircle = () => {
-        if (isVisible && firstMove) {
-          circleX += (mouseX - circleX) * 0.15;
-          circleY += (mouseY - circleY) * 0.15;
-          cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
-        }
-        requestAnimationFrame(updateCircle);
-      };
-      requestAnimationFrame(updateCircle);
-      document.body.addEventListener('mouseover', (e) => evaluateHoverState(e.target));
-    });
-  </script>
+  
 <script src="../../assets/js/headerfooter.js"></script>
 </body>
 </html>
+
+
+
 

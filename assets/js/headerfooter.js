@@ -11,6 +11,86 @@
         return "";
     };
 
+    const initCursor = (prefix) => {
+        if(window.amazingCursorInitialized) return;
+        window.amazingCursorInitialized = true;
+        
+        const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+        if (!hasFinePointer) return;
+
+        document.body.classList.add('cursor-enabled');
+        const cursorDot = document.createElement('div');
+        cursorDot.id = 'cursor-dot';
+        const cursorCircleOuter = document.createElement('div');
+        cursorCircleOuter.id = 'cursor-circle-outer';
+        const cursorCircleInner = document.createElement('div');
+        cursorCircleInner.id = 'cursor-circle-inner';
+        cursorCircleOuter.appendChild(cursorCircleInner);
+        document.body.appendChild(cursorDot);
+        document.body.appendChild(cursorCircleOuter);
+
+        const savedPos = (() => {
+            try { return sessionStorage.getItem('amazingCursorPos'); } catch (e) { return null; }
+        })();
+
+        let mouseX = 0, mouseY = 0, circleX = 0, circleY = 0, isVisible = false, firstMove = false;
+
+        if (savedPos) {
+            try {
+                const pos = JSON.parse(savedPos);
+                if (Number.isFinite(pos.x) && Number.isFinite(pos.y)) {
+                    mouseX = pos.x; mouseY = pos.y; circleX = pos.x; circleY = pos.y;
+                    firstMove = true;
+                    cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
+                    cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+                    document.body.classList.add('cursor-visible');
+                    isVisible = true;
+                }
+            } catch (e) {}
+        }
+
+        function evaluateHoverState(target) {
+            if (!target) return;
+            const interactiveElement = target.closest('a, button, [onclick], input, select, textarea, .gallery-list-item');
+            if (interactiveElement || window.getComputedStyle(target).cursor === 'pointer') {
+                document.body.classList.add('cursor-hover');
+            } else {
+                document.body.classList.remove('cursor-hover');
+            }
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            if (!firstMove) {
+                mouseX = e.clientX; mouseY = e.clientY; circleX = e.clientX; circleY = e.clientY;
+                firstMove = true;
+                cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
+                evaluateHoverState(document.elementFromPoint(mouseX, mouseY));
+            }
+            if (!isVisible) { document.body.classList.add('cursor-visible'); isVisible = true; }
+            mouseX = e.clientX; mouseY = e.clientY;
+            try { sessionStorage.setItem('amazingCursorPos', JSON.stringify({ x: mouseX, y: mouseY })); } catch (e) {}
+            cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+        });
+
+        const updateCircle = () => {
+            if (isVisible && firstMove) {
+                // Modified tracking to be less "smooth" (0.35 instead of 0.15)
+                circleX += (mouseX - circleX) * 0.35;
+                circleY += (mouseY - circleY) * 0.35;
+                cursorCircleOuter.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
+            }
+            requestAnimationFrame(updateCircle);
+        };
+        requestAnimationFrame(updateCircle);
+
+        document.body.addEventListener('mouseover', (e) => evaluateHoverState(e.target));
+        document.body.addEventListener('mouseout', (e) => evaluateHoverState(e.relatedTarget));
+        window.addEventListener('mousedown', () => document.body.classList.add('cursor-active'));
+        window.addEventListener('mouseup', (e) => { document.body.classList.remove('cursor-active'); evaluateHoverState(e.target); });
+        document.addEventListener('mouseleave', () => { document.body.classList.remove('cursor-visible'); isVisible = false; });
+        document.addEventListener('mouseenter', () => { document.body.classList.add('cursor-visible'); isVisible = true; });
+    };
+
     const inject = () => {
         const prefix = findPrefix();
         const headerHTML = `
@@ -26,6 +106,7 @@
             <li><a href="${prefix}duyurular/index.html">Duyurular</a></li>
             <li><a href="${prefix}etkinlikler/index.html">Etkinlikler</a></li>
             <li><a href="${prefix}egitimler/index.html">Eğitimler</a></li>
+            <li><a href="${prefix}uye-vitrini/index.html">Yönetim Kadrosu</a></li>
             <li><a href="${prefix}projeler/index.html">Projeler</a></li>
             <li><a href="${prefix}projeler/roadmap/index.html">Yol Haritası</a></li>
             <li><a href="${prefix}galeri/index.html">Foto Galeri</a></li>
@@ -82,143 +163,6 @@
             else container.insertAdjacentHTML('beforeend', footerHTML);
         }
 
-        // --- Original Centered Styles ---
-        const navStyle = document.createElement('style');
-        navStyle.textContent = `
-            .navbar {
-                position: sticky;
-                top: 1.5rem;
-                z-index: 10000;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 0.8rem;
-                padding: 1.2rem 3.2rem;
-                width: max-content;
-                max-width: 95%;
-                margin: 0 auto;
-                border-radius: 999px;
-                background: linear-gradient(135deg, rgba(12, 16, 28, 0.75), rgba(10, 15, 25, 0.5));
-                backdrop-filter: blur(18px) saturate(140%);
-                -webkit-backdrop-filter: blur(18px) saturate(140%);
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                box-shadow:
-                    0 18px 40px rgba(0, 0, 0, 0.45),
-                    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
-                transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
-            }
-            .navbar::before {
-                content: "";
-                position: absolute;
-                inset: 1px;
-                border-radius: inherit;
-                background: linear-gradient(120deg, rgba(14, 165, 233, 0.12), rgba(255, 255, 255, 0.04), rgba(14, 165, 233, 0.12));
-                opacity: 0.7;
-                pointer-events: none;
-                z-index: -1;
-            }
-            .navbar:hover {
-                transform: translateY(-2px);
-                box-shadow:
-                    0 24px 60px rgba(0, 0, 0, 0.5),
-                    0 0 0 1px rgba(14, 165, 233, 0.2) inset;
-            }
-            .navbar-brand {
-                display: grid;
-                grid-template-columns: 1fr auto 1fr;
-                align-items: center;
-                gap: 2.5rem;
-                width: 100%;
-            }
-            .navbar-brand a {
-                justify-self: center;
-            }
-            .navbar-brand .brand-text:first-child {
-                justify-self: end;
-                text-align: right;
-            }
-            .navbar-brand .brand-text:last-child {
-                justify-self: start;
-                text-align: left;
-            }
-            .navbar-brand img {
-                width: 96px;
-                height: auto;
-                transition: transform 0.35s ease, filter 0.35s ease;
-                filter: drop-shadow(0 8px 18px rgba(14, 165, 233, 0.35));
-            }
-            .navbar-brand img:hover {
-                transform: translateY(-2px) scale(1.08);
-                filter: drop-shadow(0 12px 24px rgba(14, 165, 233, 0.45));
-            }
-            .brand-text {
-                font-family: 'Outfit', sans-serif;
-                font-size: 1.45rem;
-                font-weight: 800;
-                color: #fff;
-                text-transform: uppercase;
-                letter-spacing: 1.6px;
-                pointer-events: none;
-                white-space: nowrap;
-                text-shadow: 0 0 24px rgba(14, 165, 233, 0.35);
-            }
-            .nav-menu {
-                display: flex;
-                gap: 0.35rem;
-                list-style: none;
-                align-items: center;
-                justify-content: center;
-            }
-            .nav-menu a {
-                color: rgba(255,255,255,0.8);
-                text-decoration: none;
-                font-weight: 700;
-                font-size: 1.15rem;
-                padding: 0.65rem 1.4rem;
-                border-radius: 999px;
-                position: relative;
-                transition: color 0.2s ease, background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
-            }
-            .nav-menu a::after {
-                content: "";
-                position: absolute;
-                left: 16%;
-                right: 16%;
-                bottom: 6px;
-                height: 2px;
-                border-radius: 999px;
-                background: linear-gradient(90deg, rgba(14, 165, 233, 0), rgba(14, 165, 233, 0.8), rgba(14, 165, 233, 0));
-                transform: scaleX(0);
-                transform-origin: center;
-                transition: transform 0.25s ease;
-            }
-            .nav-menu a:hover {
-                color: #fff;
-                background: rgba(14, 165, 233, 0.18);
-                box-shadow: 0 8px 24px rgba(14, 165, 233, 0.18);
-                transform: translateY(-1px);
-            }
-            .nav-menu a:hover::after {
-                transform: scaleX(1);
-            }
-            .nav-menu a.active {
-                color: #ffffff;
-                background: rgba(14, 165, 233, 0.28);
-                box-shadow: 0 10px 26px rgba(14, 165, 233, 0.25);
-            }
-            .nav-menu a.active::after {
-                transform: scaleX(1);
-            }
-            @media (max-width: 1200px) {
-                .brand-text { font-size: 1.1rem; gap: 1.5rem; }
-                .navbar img { width: 80px; }
-            }
-            @media (max-width: 820px) {
-                .brand-text { display: none; }
-            }
-        `;
-        document.head.appendChild(navStyle);
-
         // --- Active Link Logic ---
         const currentPath = window.location.pathname;
         document.querySelectorAll(".nav-menu a").forEach(link => {
@@ -227,6 +171,8 @@
                 link.classList.add("active");
             }
         });
+
+        initCursor(prefix);
     };
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);

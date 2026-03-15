@@ -4,7 +4,7 @@ const showcaseData = [
         id: 1,
         name: "Burak Arıkan",
         role: "VALORANT RADIANT PLAYER",
-        image: "../../assets/images/burak-arikan.jpg",
+        image: "../assets/images/burak-arikan.jpg",
         projects: [
             { title: "Kendine Özgü Websitesi", tech: ["HTML/ ", "CSS/ ", "JS"], link: "#" },
         ],
@@ -18,7 +18,7 @@ const showcaseData = [
         id: 2,
         name: "Emir Fetolmaz",
         role: "Sosyal Medya Direktörü",
-        image: "../../assets/images/emir-fetolmaz.jpg",
+        image: "../assets/images/emir-fetolmaz.jpg",
         projects: [
             { title: "Online Zikirmatik Projesi", tech: ["HTML / CSS / ", "JavaScript -","MongoDB -" ,"Node.js"], link: "https://global-zhikr.onrender.com/" },
             { title: "Kişisel Websitesi", tech: ["HTML -", "CSS -", "JavaScript -","MongoDB -","Node.js"], link: "https://fetolmaz.com.tr" },
@@ -34,7 +34,7 @@ const showcaseData = [
         id: 3,
         name: "Mehmet Akif Akkoç",
         role: "Topluluk Başkanı",
-        image: "../../assets/images/mehmet-akif-akkoc.jpg",
+        image: "../assets/images/mehmet-akif-akkoc.jpg",
         projects: [
         ],
         github: "https://github.com/Mefamex",
@@ -47,10 +47,10 @@ const showcaseData = [
         id: 4,
         name: "Hakan Uluçar",
         role: "Başkan Yardımcısı",
-        image: "../../assets/images/asuymt-logo.png",
+        image: "../assets/images/asuymt-logo.png",
         projects: [
             { title: "YMT Sudoku", tech: ["JS", "Logic"], link: "/games/sudoku/index.html" },
-            { title: "Sözlük & Roadmap", tech: ["UI", "UX"], link: "../../projeler/sozluk/index.html" }
+            { title: "Sözlük & Roadmap", tech: ["UI", "UX"], link: "../projeler/sozluk/index.html" }
         ],
         github: "https://github.com/asuymt",
         instagram: "",
@@ -61,7 +61,7 @@ const showcaseData = [
         id: 5,
         name: "Recep Beydüz",
         role: "Saha Operasyoncusu", 
-        image: "../../assets/images/recep-beyduz.jpg",
+        image: "../assets/images/recep-beyduz.jpg",
         projects: [
             { title: "Mentorluk & Rehberlik", tech: ["Akademi", "Koordinasyon"], link: "#" }
         ],
