@@ -44,7 +44,7 @@ const showcaseData = [
         role: "Topluluk Projesi",
         image: "../../assets/images/asuymt-logo.png",
         projects: [
-            { title: "YMT Sudoku", tech: ["JS", "Logic"], link: "../../projeler/games/sudoku/index.html" },
+            { title: "YMT Sudoku", tech: ["JS", "Logic"], link: "/games/sudoku/index.html" },
             { title: "Sözlük & Roadmap", tech: ["UI", "UX"], link: "../../projeler/sozluk/index.html" }
         ],
         github: "https://github.com/asuymt",
