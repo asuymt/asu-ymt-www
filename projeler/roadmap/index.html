@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kariyer Yol Haritası | ASÜ-YMT</title>
+    <link rel="icon" sizes="64x64" href="../../assets/images/Logo-64.png" type="image/png" />
+    <link rel="stylesheet" href="../../assets/css/globals.css" />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/theme.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --neon-glow: 0 0 20px rgba(14, 165, 233, 0.3);
+        }
+
+        .roadmap-header {
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .roadmap-header h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--accent, #0ea5e9));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .roadmap-header p {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .roadmap-selector {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 6rem;
+            padding: 0 1rem;
+        }
+
+        .selector-btn {
+            padding: 1.5rem 3rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .selector-btn:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: var(--category-color);
+            color: white;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .selector-btn.active {
+            background: var(--category-color);
+            border-color: var(--category-color);
+            color: white;
+            box-shadow: 0 15px 35px var(--glow-color);
+        }
+
+        .roadmap-timeline {
+            max-width: 1200px;
+            margin: 0 auto 10rem;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .roadmap-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, transparent, var(--accent), var(--accent), transparent);
+            transform: translateX(-50%);
+            box-shadow: var(--neon-glow);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 6rem;
+            width: 100%;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+
+        .timeline-dot {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-body);
+            border: 4px solid var(--accent);
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 40px;
+            transform: translateX(-50%);
+            z-index: 10;
+            box-shadow: 0 0 15px var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item.completed .timeline-dot {
+            background: var(--accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-item.completed .timeline-dot::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.8rem;
+        }
+
+        .timeline-content {
+            width: 85%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 3.5rem;
+            border-radius: 30px;
+            margin: 0 3rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 0;
+            background: var(--accent);
+            transition: height 0.5s ease;
+        }
+
+        .timeline-item:hover .timeline-content::before {
+            height: 100%;
+        }
+
+        .timeline-item:hover .timeline-content {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--accent);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .step-id {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 4rem;
+            font-weight: 900;
+            opacity: 0.05;
+            color: white;
+            user-select: none;
+        }
+
+        .timeline-content h3 {
+            font-size: 2.4rem;
+            margin-bottom: 1.2rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .roadmap-timeline::before { left: 3rem; }
+            .timeline-item { justify-content: flex-start !important; padding-left: 5rem !important; padding-right: 0 !important; }
+            .timeline-dot { left: 3rem; }
+            .timeline-content { width: 100%; margin: 0; padding: 2.5rem; }
+            .timeline-content h3 { font-size: 1.8rem; }
+            .roadmap-header h1 { font-size: 3rem; }
+            .selector-btn { padding: 1.2rem 2rem; font-size: 1.1rem; }
+        }
+
+        /* Animation Background */
+        .glow-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            opacity: 0.1;
+            filter: blur(100px);
+            z-index: -2;
+            pointer-events: none;
+            transition: background 1s ease;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
+    <div class="glow-bg" id="glowBg"></div>
+
+    <div class="container">
+        <div id="header-placeholder"></div>
+
+        <div class="roadmap-header animate__animated animate__fadeIn">
+            <h1>Kariyer Haritaları</h1>
+            <p>Sektör standartlarına göre hazırlanan, adım adım uzmanlık rehberleri.</p>
+        </div>
+
+        <div class="roadmap-selector animate__animated animate__fadeInUp">
+            <button class="selector-btn active" onclick="loadRoadmap('frontend', this)" style="--category-color: #0ea5e9; --glow-color: rgba(14, 165, 233, 0.4)">
+                <i class="fas fa-code"></i> Frontend
+            </button>
+            <button class="selector-btn" onclick="loadRoadmap('backend', this)" style="--category-color: #f43f5e; --glow-color: rgba(244, 63, 94, 0.4)">
+                <i class="fas fa-server"></i> Backend
+            </button>
+            <button class="selector-btn" onclick="loadRoadmap('ai', this)" style="--category-color: #8b5cf6; --glow-color: rgba(139, 92, 246, 0.4)">
+                <i class="fas fa-brain"></i> AI & Data
+            </button>
+        </div>
+
+        <div class="roadmap-timeline" id="roadmapTimeline"></div>
+
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <script src="../../assets/js/particles.js"></script>
+    <script src="./roadmap-data.js"></script>
+    <script src="../../assets/js/headerfooter.js"></script>
+    <script>
+        let currentType = 'frontend';
+
+        function loadRoadmap(type, btn) {
+            currentType = type;
+            if (btn) {
+                document.querySelectorAll('.selector-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            const data = roadmapData[type];
+            const timeline = document.getElementById('roadmapTimeline');
+            const root = document.documentElement;
+            const glowBg = document.getElementById('glowBg');
+            
+            root.style.setProperty('--accent', data.color);
+            glowBg.style.background = `radial-gradient(circle, ${data.color} 0%, transparent 70%)`;
+            
+            timeline.innerHTML = '';
+            
+            data.steps.forEach((step, index) => {
+                const item = document.createElement('div');
+                item.className = `timeline-item animate__animated animate__fadeInUp`;
+                item.style.animationDelay = `${index * 0.1}s`;
+                
+                item.innerHTML = `
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="step-id">${step.id}</span>
+                        <h3>${step.title}</h3>
+                        <p>${step.desc}</p>
+                    </div>
+                `;
+                timeline.appendChild(item);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => loadRoadmap('frontend'));
+    </script>
+</body>
+</html>
