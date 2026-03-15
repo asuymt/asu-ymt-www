@@ -1,29 +1,34 @@
 const showcaseData = [
+    
     {
         id: 1,
+        name: "Burak Arıkan",
+        role: "VALORANT RADIANT PLAYER",
+        image: "../../assets/images/burak-arikan.jpg",
+        projects: [
+            { title: "Kendine Özgü Websitesi", tech: ["HTML/ ", "CSS/ ", "JS"], link: "#" },
+        ],
+        github: "https://github.com/burakarikan17",
+        instagram: "https://www.instagram.com/burakarikan17/",
+        linkedin: "",
+        highlight: "Backend mimarisi ve sistem optimizasyonu.",
+        bio: "Valorant'ta aimi direkt kafaya kayan bir arkadaşımız. Nam-ı diğer yok edici. Onu gördüğünüz an öldünüz demektir. Yazılım Mühendisliği öğrencisi. İyi bir insan, alkolü sigarası yok."
+    },
+    {
+        id: 2,
         name: "Emir Fetolmaz",
         role: "Sosyal Medya Direktörü",
         image: "../../assets/images/emir-fetolmaz.jpg",
         projects: [
-            { title: "ASÜ-YMT Website", tech: ["HTML", "CSS", "JS"], link: "#" },
-            { title: "Portfolio 2024", tech: ["React", "Three.js"], link: "#" }
+            { title: "Online Zikirmatik Projesi", tech: ["HTML / CSS / ", "JavaScript -","MongoDB -" ,"Node.js"], link: "https://global-zhikr.onrender.com/" },
+            { title: "Kişisel Websitesi", tech: ["HTML -", "CSS -", "JavaScript -","MongoDB -","Node.js"], link: "https://fetolmaz.com.tr" },
+            { title: "YMT Sudoku", tech: ["HTML / CSS / ", "JavaScript -","MongoDB -" ,"Node.js"], link: "" }
         ],
-        github: "https://github.com/emirfetolmaz",
+        github: "https://github.com/fierpell",
+        instagram: "https://www.instagram.com/emir.fetolmaz/",
+        linkedin: "",
         highlight: "Interactive UI uzmanı ve Sosyal Medya Direktörü.",
-        bio: "Aksaray Üniversitesi Yazılım Mühendisliği öğrencisi. Frontend teknolojileri ve kullanıcı deneyimi (UX) üzerine odaklanıyor. Topluluğun dijital varlığını ve sosyal medya stratejilerini yönetiyor."
-    },
-    {
-        id: 2,
-        name: "Burak Arıkan",
-        role: "Full Stack Developer",
-        image: "../../assets/images/burak-arikan.jpg",
-        projects: [
-            { title: "E-Ticaret Paneli", tech: ["Node.js", "MongoDB"], link: "#" },
-            { title: "YMT Discord Bot", tech: ["Discord.js"], link: "#" }
-        ],
-        github: "https://github.com/burakarikan",
-        highlight: "Backend mimarisi ve sistem optimizasyonu.",
-        bio: "Sistem mimarisi ve veritabanı yönetimi konusunda uzmanlaşan bir Full Stack geliştirici. YMT projelerinin mutfağında teknik altyapıyı koordine ediyor."
+        bio: "UX ve UI profesyoneli bir uzman. Dindar. Kimseye zararı olmayan, iyi kalpli bir Mümin."
     },
     {
         id: 3,
@@ -31,23 +36,40 @@ const showcaseData = [
         role: "Topluluk Başkanı",
         image: "../../assets/images/mehmet-akif-akkoc.jpg",
         projects: [
-            { title: "Algoritma Analiz Aracı", tech: ["C++", "Qt"], link: "#" },
-            { title: "Oyun Motoru Taslağı", tech: ["OpenGL"], link: "#" }
         ],
-        github: "https://github.com/mehmetakif",
+        github: "https://github.com/Mefamex",
+        instagram: "https://www.instagram.com/mefamex/",
+        linkedin: "",
         highlight: "Topluluk Başkanı ve algoritma tutkunu.",
-        bio: "Yazılım Mühendisliği Topluluğu Başkanı. Algoritma tasarımı ve sistem programlama konularına ilgi duyuyor. Topluluğun vizyonu ve akademik iş birliklerini yönetiyor."
+        bio: "Bu da topluluğun başkanı. Onu yurtta genelde sırtında logosuyla görürsünüz. Çiğköfteyi çok sever. Geçenlerde Recep'in 1000₺'sını çalmış. Olayın detaylarını bilmiyoruz ama Recep'in çok sinirlendiği söyleniyor. Yazılım Mühendisliği öğrencisi."
     },
     {
         id: 4,
-        name: "YMT Ekibi",
-        role: "Topluluk Projesi",
+        name: "Hakan Uluçar",
+        role: "Başkan Yardımcısı",
         image: "../../assets/images/asuymt-logo.png",
         projects: [
             { title: "YMT Sudoku", tech: ["JS", "Logic"], link: "/games/sudoku/index.html" },
             { title: "Sözlük & Roadmap", tech: ["UI", "UX"], link: "../../projeler/sozluk/index.html" }
         ],
         github: "https://github.com/asuymt",
+        instagram: "",
+        linkedin: "",
         highlight: "Birlikte geliştiriyor, birlikte öğreniyoruz."
-    }
-];
+    },
+    {
+        id: 5,
+        name: "Recep Beydüz",
+        role: "Saha Operasyoncusu", 
+        image: "../../assets/images/recep-beyduz.jpg",
+        projects: [
+            { title: "Mentorluk & Rehberlik", tech: ["Akademi", "Koordinasyon"], link: "#" }
+        ],
+        github: "",
+        instagram: "",
+        linkedin: "",
+        highlight: "Topluluğun akademik vizyonunu ve rehberliğini destekler."
+        
+    },];
+
+

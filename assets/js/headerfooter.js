@@ -43,19 +43,19 @@
               <h1>Yapımcılar</h1>
               <ul class="made-by-list">
                 <li class="has-tooltip">
-                  Emir Fetolmaz
+                  Emir Fetolmaz (%90)
                   <div class="tooltip-bubble">
                     <img src="${prefix}assets/images/emir-fetolmaz.jpg" alt="Emir Fetolmaz">
                   </div>
                 </li>
                 <li class="has-tooltip">
-                  Burak Arıkan
+                  Burak Arıkan (%4)
                   <div class="tooltip-bubble">
                     <img src="${prefix}assets/images/burak-arikan.jpg" alt="Burak Arıkan">
                   </div>
                 </li>
                 <li class="has-tooltip">
-                  Mehmet Akif Akkoç
+                  Mehmet Akif Akkoç (%6)
                   <div class="tooltip-bubble">
                     <img src="${prefix}assets/images/mehmet-akif-akkoc.jpg" alt="Mehmet Akif Akkoç">
                   </div>
@@ -77,7 +77,9 @@
             if (placeholder) placeholder.outerHTML = headerHTML;
             else if (!document.querySelector('.navbar')) container.insertAdjacentHTML('afterbegin', headerHTML);
 
-            if (!document.querySelector('.footer')) container.insertAdjacentHTML('beforeend', footerHTML);
+            const existingFooter = document.querySelector('.footer');
+            if (existingFooter) existingFooter.outerHTML = footerHTML;
+            else container.insertAdjacentHTML('beforeend', footerHTML);
         }
 
         // --- Original Centered Styles ---

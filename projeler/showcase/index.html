@@ -35,35 +35,110 @@
 
         .showcase-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            grid-template-columns: repeat(5, minmax(200px, 1fr));
             gap: 2.5rem;
         }
 
         .member-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 3rem;
+            background: rgba(6, 14, 24, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px);
+            border-radius: 26px;
+            padding: 2rem 2rem 2.4rem;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
+            background: none;
+            height: 440px;
+        }
+
+        .member-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: var(--card-image);
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(1) contrast(1.05) brightness(0.9);
+            z-index: 0;
+        }
+
+        .member-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(4, 8, 16, 0.2), rgba(4, 8, 16, 0.92)),
+                linear-gradient(90deg, rgba(14, 165, 233, 0.25), rgba(14, 165, 233, 0) 40%);
+            border-top: 2px solid rgba(14, 165, 233, 0.65);
+            border-radius: 22px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .member-card > * {
+            position: relative;
+            z-index: 1;
         }
 
         .member-card:hover {
-            transform: translateY(-15px) scale(1.02);
             border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.05);
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .member-card.featured {
+            position: relative;
+            top: -28px;
+            margin-bottom: 28px;
+            border-color: rgba(14, 165, 233, 0.45);
+            box-shadow: 0 30px 70px rgba(14, 165, 233, 0.2);
+            z-index: 2;
+        }
+
+        /* Peak-in-the-middle layout for 5 cards */
+        .showcase-grid .member-card:nth-child(1),
+        .showcase-grid .member-card:nth-child(5) {
+            transform: none;
+            top: 30px;
+            position: relative;
+        }
+        .showcase-grid .member-card:nth-child(2),
+        .showcase-grid .member-card:nth-child(4) {
+            transform: none;
+            top: 8px;
+            position: relative;
+        }
+        .showcase-grid .member-card:nth-child(4) {
+            top: 12px;
+        }
+        .showcase-grid .member-card:nth-child(3) {
+            transform: none;
+            top: -10px;
+            position: relative;
+        }
+
+        @media (max-width: 1200px) {
+            .showcase-grid .member-card {
+                height: 440px;
+                transform: none;
+            }
+        }
+
+        .member-card:hover::before {
+            filter: grayscale(0.9) contrast(1.1) brightness(1);
         }
 
         .member-info {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1rem;
+            position: relative;
+            flex-direction: column;
+            text-align: center;
+            margin-top: 0.6rem;
         }
 
         .member-img {
@@ -77,10 +152,6 @@
             transition: all 0.3s ease;
         }
 
-        .member-img:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 0 30px var(--accent);
-        }
 
         /* Bio Modal Styles */
         #bioModal {
@@ -107,6 +178,9 @@
             text-align: center;
             position: relative;
             animation: modalIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         @keyframes modalIn {
@@ -120,6 +194,11 @@
             border-radius: 40px;
             margin-bottom: 2rem;
             border: 4px solid var(--accent);
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .modal-bio {
@@ -141,30 +220,40 @@
         .close-modal:hover { color: white; }
 
         .member-meta h2 {
-            font-size: 2rem;
+            font-size: 2.1rem;
             color: white;
             margin-bottom: 0.3rem;
+            letter-spacing: -0.7px;
         }
 
         .member-meta span {
-            color: var(--accent);
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2.1px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.85rem;
+            border-radius: 999px;
+            display: inline-block;
         }
 
         .member-highlight {
-            font-size: 1.2rem;
+            font-size: 0.98rem;
             color: var(--text-secondary);
-            line-height: 1.6;
-            font-style: italic;
-            opacity: 0.8;
-            padding-left: 1rem;
-            border-left: 3px solid var(--accent);
+            line-height: 1.7;
+            font-style: normal;
+            opacity: 0.9;
+            padding: 0.9rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
         }
 
-        .projects-trigger-btn {
+
+        .projects-trigger-btn,
+        .bio-trigger-btn {
             width: 100%;
             padding: 1.2rem;
             background: rgba(14, 165, 233, 0.1);
@@ -179,12 +268,79 @@
             justify-content: center;
             gap: 1rem;
             margin-top: 1rem;
+            letter-spacing: 0.2px;
         }
 
-        .projects-trigger-btn:hover {
+        .projects-trigger-btn:hover,
+        .bio-trigger-btn:hover {
             background: var(--accent);
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(14, 165, 233, 0.2);
+        }
+
+        .card-cta-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+
+        .card-cta-group .projects-trigger-btn,
+        .card-cta-group .bio-trigger-btn {
+            margin-top: 0;
+            padding: 1rem 0.9rem;
+            font-size: 0.95rem;
+            width: 70%;
+            max-width: 260px;
+        }
+
+        .card-cta-group .projects-trigger-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .card-cta-group .projects-trigger-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .card-cta-group .projects-trigger-btn,
+        .card-cta-group .bio-trigger-btn {
+            border-radius: 14px;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1.6px;
+        }
+
+        .bio-trigger-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bio-trigger-btn::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+            transform: translateX(-120%);
+            transition: transform 0.5s ease;
+        }
+
+        .bio-trigger-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.45);
+        }
+
+        .bio-trigger-btn:hover::after {
+            transform: translateX(120%);
+        }
+
+        .bio-trigger-btn i {
+            font-size: 1.1rem;
         }
 
         /* Project Modal Specifics */
@@ -217,9 +373,11 @@
         }
 
         .card-actions {
-            margin-top: auto;
+            margin-top: 0.2rem;
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
+            gap: 0.9rem;
+            padding-top: 0;
         }
 
         .github-btn {
@@ -227,22 +385,33 @@
             font-size: 1.5rem;
             transition: all 0.3s;
             opacity: 0.6;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 12px rgba(14, 165, 233, 0.15);
         }
 
         .github-btn:hover {
             opacity: 1;
-            color: var(--accent);
-            transform: rotate(15deg) scale(1.2);
+            color: white;
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.55);
+            box-shadow: 0 10px 22px rgba(255, 255, 255, 0.15);
         }
 
         .decoration-glow {
             position: absolute;
-            top: -20%;
-            right: -20%;
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-            opacity: 0.05;
+            top: -25%;
+            right: -25%;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, transparent 70%);
+            opacity: 0.08;
             pointer-events: none;
             transition: opacity 0.5s;
         }
@@ -251,10 +420,17 @@
             opacity: 0.15;
         }
 
+        @media (max-width: 1200px) {
+            .showcase-grid { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+        }
+
         @media (max-width: 768px) {
             .showcase-header h1 { font-size: 3rem; }
             .showcase-grid { grid-template-columns: 1fr; }
             .member-card { padding: 2rem; }
+            .card-cta-group { width: 100%; }
+            .card-cta-group .projects-trigger-btn,
+            .card-cta-group .bio-trigger-btn { width: 100%; max-width: none; }
         }
     </style>
 </head>
@@ -266,8 +442,7 @@
 
         <div class="showcase-container">
             <div class="showcase-header animate__animated animate__fadeIn">
-                <h1>Üye Vitrini</h1>
-                <p>Topluluğumuzdaki yetenekli yazılımcıların geliştirdiği projeler ve başarı hikayeleri.</p>
+                <h1>Yönetim Kadrosu</h1>
             </div>
 
             <div class="showcase-grid" id="showcaseGrid"></div>
@@ -284,6 +459,12 @@
                 <div class="card-actions" style="justify-content: center;">
                     <a id="modalGithub" href="#" target="_blank" class="github-btn" style="opacity: 1; font-size: 2rem;">
                         <i class="fab fa-github"></i>
+                    </a>
+                    <a id="modalInstagram" href="#" target="_blank" class="github-btn" style="opacity: 1; font-size: 2rem; margin-left: 1rem;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a id="modalLinkedin" href="#" target="_blank" class="github-btn" style="opacity: 1; font-size: 2rem; margin-left: 1rem;">
+                        <i class="fab fa-linkedin-in"></i>
                     </a>
                 </div>
             </div>
@@ -308,11 +489,22 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.getElementById('showcaseGrid');
-            
-            showcaseData.forEach((member, index) => {
+            const members = [...showcaseData];
+            const featuredIndex = members.findIndex(m => (m.role || "").toLowerCase().includes("başkan"));
+            if (featuredIndex >= 0) {
+                const [featured] = members.splice(featuredIndex, 1);
+                const insertAt = Math.max(1, Math.floor(members.length / 2));
+                members.splice(insertAt, 0, featured);
+            }
+
+            members.forEach((member, index) => {
                 const card = document.createElement('div');
                 card.className = 'member-card animate__animated animate__fadeInUp';
                 card.style.animationDelay = `${index * 0.1}s`;
+                card.style.setProperty('--card-image', `url('${member.image}')`);
+                if ((member.role || "").toLowerCase().includes("başkan")) {
+                    card.classList.add('featured');
+                }
                 
                 const projectsHtml = member.projects.map(p => `
                     <a href="${p.link}" class="project-mini-item">
@@ -326,25 +518,36 @@
                 card.innerHTML = `
                     <div class="decoration-glow"></div>
                     <div class="member-info">
-                        <img src="${member.image}" class="member-img" alt="${member.name}" onclick="openBio(${member.id})">
                         <div class="member-meta">
                             <h2>${member.name}</h2>
                             <span>${member.role}</span>
                         </div>
                     </div>
                     
-                    <div class="member-highlight">
-                        "${member.highlight}"
+
+                    <div class="card-cta-group">
+                        <button class="projects-trigger-btn" onclick="openProjects(${member.id})">
+                            Projeler
+                        </button>
+
+                        ${member.bio ? `
+                        <button class="bio-trigger-btn" onclick="openBio(${member.id})">
+                            Otobiyografi
+                        </button>` : `<div></div>`}
                     </div>
-
-                    <button class="projects-trigger-btn" onclick="openProjects(${member.id})">
-                        <i class="fas fa-rocket"></i> Öne Çıkan Projeler
-                    </button>
-
                     <div class="card-actions">
+                        ${member.github ? `
                         <a href="${member.github}" target="_blank" class="github-btn" title="GitHub">
                             <i class="fab fa-github"></i>
-                        </a>
+                        </a>` : ''}
+                        ${member.instagram ? `
+                        <a href="${member.instagram}" target="_blank" class="github-btn" title="Instagram" style="margin-left: 0.75rem;">
+                            <i class="fab fa-instagram"></i>
+                        </a>` : ''}
+                        ${member.linkedin ? `
+                        <a href="${member.linkedin}" target="_blank" class="github-btn" title="LinkedIn" style="margin-left: 0.75rem;">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>` : ''}
                     </div>
                 `;
                 grid.appendChild(card);
@@ -364,7 +567,15 @@
                 document.getElementById('modalName').textContent = member.name;
                 document.getElementById('modalRole').textContent = member.role;
                 document.getElementById('modalBio').textContent = member.bio;
-                document.getElementById('modalGithub').href = member.github;
+                const modalGithub = document.getElementById('modalGithub');
+                const modalInstagram = document.getElementById('modalInstagram');
+                const modalLinkedin = document.getElementById('modalLinkedin');
+                modalGithub.href = member.github || "#";
+                modalGithub.style.display = member.github ? "inline-block" : "none";
+                modalInstagram.href = member.instagram || "#";
+                modalInstagram.style.display = member.instagram ? "inline-block" : "none";
+                modalLinkedin.href = member.linkedin || "#";
+                modalLinkedin.style.display = member.linkedin ? "inline-block" : "none";
                 
                 bioModal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
@@ -407,4 +618,3 @@
     </script>
 </body>
 </html>
-
