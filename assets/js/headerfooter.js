@@ -106,7 +106,7 @@
             <li><a href="${prefix}duyurular/index.html">Duyurular</a></li>
             <li><a href="${prefix}etkinlikler/index.html">Etkinlikler</a></li>
             <li><a href="${prefix}egitimler/index.html">Eğitimler</a></li>
-            <li><a href="${prefix}uye-vitrini/index.html">Yönetim Kadrosu</a></li>
+            <li><a href="${prefix}yonetim-kadrosu/index.html">Yönetim Kadrosu</a></li>
             <li><a href="${prefix}projeler/index.html">Projeler</a></li>
             <li><a href="${prefix}projeler/roadmap/index.html">Yol Haritası</a></li>
             <li><a href="${prefix}galeri/index.html">Foto Galeri</a></li>
