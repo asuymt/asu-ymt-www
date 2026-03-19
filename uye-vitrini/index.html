@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
   <link rel="icon" href="/assets/images/asuymt-logo.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Üye Vitrini | ASÜ-YMT</title>
+    <title>Yönetim Kadrosu | ASÜ-YMT</title>
     <link rel="stylesheet" href="../assets/css/globals.css" />
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="stylesheet" href="../assets/css/theme.css" />
@@ -45,7 +45,6 @@
             backdrop-filter: blur(16px);
             border-radius: 26px;
             padding: 2rem 2rem 2.4rem;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
             display: flex;
@@ -53,6 +52,31 @@
             gap: 1.5rem;
             background: none;
             height: 440px;
+            /* Scroll reveal */
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .member-card.card-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Border sweep - yukarıdan aşağıya mavi border animasyonu */
+        .member-card .border-sweep {
+            position: absolute;
+            inset: -3px;
+            border-radius: 28px;
+            pointer-events: none;
+            z-index: 2;
+            border: 5px solid #ffffff;
+            clip-path: inset(0 0 100% 0);
+            transition: clip-path 0.5s ease;
+        }
+
+        .member-card:hover .border-sweep {
+            clip-path: inset(0 0 0 0);
         }
 
         .member-card::before {
@@ -85,36 +109,33 @@
         }
 
         .member-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4), 0 0 30px rgba(14, 165, 233, 0.15);
         }
 
         .member-card.featured {
             position: relative;
-            top: -28px;
-            margin-bottom: 28px;
-            border-color: rgba(14, 165, 233, 0.45);
-            box-shadow: 0 30px 70px rgba(14, 165, 233, 0.2);
-            z-index: 2;
+            top: -35px !important;
+            margin-bottom: 35px;
+            margin-top: -15px;
+            border-color: rgba(14, 165, 233, 0.6) !important;
+            box-shadow: 0 35px 80px rgba(14, 165, 233, 0.4);
+            z-index: 10;
         }
 
-        /* Peak-in-the-middle layout for 5 cards */
-        .showcase-grid .member-card:nth-child(1),
-        .showcase-grid .member-card:nth-child(5) {
+        /* Peak-in-the-middle layout for 5 cards per row */
+        .showcase-grid .member-card:nth-child(5n+1),
+        .showcase-grid .member-card:nth-child(5n+5) {
             transform: none;
-            top: 30px;
+            top: 25px;
             position: relative;
         }
-        .showcase-grid .member-card:nth-child(2),
-        .showcase-grid .member-card:nth-child(4) {
+        .showcase-grid .member-card:nth-child(5n+2),
+        .showcase-grid .member-card:nth-child(5n+4) {
             transform: none;
             top: 8px;
             position: relative;
         }
-        .showcase-grid .member-card:nth-child(4) {
-            top: 12px;
-        }
-        .showcase-grid .member-card:nth-child(3) {
+        .showcase-grid .member-card:nth-child(5n+3) {
             transform: none;
             top: -10px;
             position: relative;
@@ -526,16 +547,15 @@
             const featuredIndex = members.findIndex(m => (m.role || "").toLowerCase().includes("başkan"));
             if (featuredIndex >= 0) {
                 const [featured] = members.splice(featuredIndex, 1);
-                const insertAt = Math.max(1, Math.floor(members.length / 2));
+                const insertAt = 2; // Always place at index 2 (3rd position) for middle of first row
                 members.splice(insertAt, 0, featured);
             }
 
             members.forEach((member, index) => {
                 const card = document.createElement('div');
-                card.className = 'member-card animate__animated animate__fadeInUp';
-                card.style.animationDelay = `${index * 0.1}s`;
+                card.className = 'member-card';
                 card.style.setProperty('--card-image', `url('${member.image}')`);
-                if ((member.role || "").toLowerCase().includes("başkan")) {
+                if ((member.role || "").toLowerCase() === "topluluk başkanı") {
                     card.classList.add('featured');
                 }
                 
@@ -549,11 +569,16 @@
                 `).join('');
 
                 card.innerHTML = `
+                    <div class="border-sweep"></div>
                     <div class="decoration-glow"></div>
                     <div class="member-info">
                         <div class="member-meta">
                             <h2>${member.name}</h2>
-                            <span>${member.role}</span>
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                <span>${member.role}</span>
+                                ${member.role2 ? `<span>${member.role2}</span>` : ''}
+                                ${member.role3 ? `<span>${member.role3}</span>` : ''}
+                            </div>
                         </div>
                     </div>
                     
@@ -583,8 +608,26 @@
                         </a>` : ''}
                     </div>
                 `;
+
                 grid.appendChild(card);
             });
+
+            // Scroll ile kartları göster/gizle
+            const cards = document.querySelectorAll('.member-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('card-visible');
+                    } else {
+                        entry.target.classList.remove('card-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            cards.forEach(card => observer.observe(card));
 
             // Modal Logic
             const bioModal = document.getElementById('bioModal');
@@ -598,7 +641,31 @@
                 
                 document.getElementById('modalImg').src = member.image;
                 document.getElementById('modalName').textContent = member.name;
-                document.getElementById('modalRole').textContent = member.role;
+                
+                // Modal rol kısmını güncelle (baloncuk stili)
+                const modalRole = document.getElementById('modalRole');
+                const badgeStyle = `
+                    display: inline-block;
+                    color: rgba(255, 255, 255, 0.9);
+                    font-weight: 700;
+                    font-size: 0.85rem;
+                    text-transform: uppercase;
+                    letter-spacing: 2.1px;
+                    background: rgba(255, 255, 255, 0.08);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    padding: 0.3rem 0.85rem;
+                    border-radius: 999px;
+                `;
+                let rolesHtml = `<span style="${badgeStyle}">${member.role}</span>`;
+                if(member.role2) rolesHtml += `<span style="${badgeStyle}">${member.role2}</span>`;
+                if(member.role3) rolesHtml += `<span style="${badgeStyle}">${member.role3}</span>`;
+                modalRole.innerHTML = rolesHtml;
+                modalRole.style.display = 'flex';
+                modalRole.style.flexDirection = 'column';
+                modalRole.style.alignItems = 'center';
+                modalRole.style.gap = '0.5rem';
+                modalRole.style.marginTop = '1rem';
+                
                 document.getElementById('modalBio').textContent = member.bio;
                 const modalGithub = document.getElementById('modalGithub');
                 const modalInstagram = document.getElementById('modalInstagram');

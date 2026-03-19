@@ -172,6 +172,46 @@
             }
         });
 
+        // --- Global Scroll Reveal ---
+        const revealSelector = [
+            '.section-header', '.showcase-header',
+            'h1', '.glass-card', '.box-2',
+            '.gallery-list-item', '.duyuru-card',
+            '.etkinlik-card', '.egitim-card',
+            '.proje-card', '.contact-form',
+            '.timeline-item', '.roadmap-item',
+            '.card-duyuru', '.subpage-glass-card',
+            '.card-tilt', '.cardlar > *',
+            '.search-section', '.results-section'
+        ].join(', ');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                } else {
+                    entry.target.classList.remove('revealed');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        function applyScrollReveal(root) {
+            const targets = (root || document).querySelectorAll(revealSelector);
+            targets.forEach(el => {
+                if (el.closest('.navbar') || el.closest('.footer')) return;
+                if (el.classList.contains('scroll-reveal')) return; // zaten uygulanmış
+                el.classList.add('scroll-reveal');
+                revealObserver.observe(el);
+            });
+        }
+
+        // Şu anki elementlere uygula
+        applyScrollReveal();
+
+        // Sonradan eklenen elementleri de yakala (duyuru-motoru, etkinlik-motoru vb.)
+        const domWatcher = new MutationObserver(() => applyScrollReveal());
+        domWatcher.observe(document.body, { childList: true, subtree: true });
+
         initCursor(prefix);
     };
 
