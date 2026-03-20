@@ -441,15 +441,101 @@ body.cursor-active #cursor-circle-inner {
         display: none !important;
     }
 
-    .glass-card, .navbar, .box-2, .gallery-list-view {
+    /* --- MOBILE PERF: Kill ALL backdrop-filter (GPU compositing killer) --- */
+    .glass-card, .navbar, .box-2, .gallery-list-view,
+    .card, .card-duyuru, .card-featured, .project-card,
+    .contact-form, .subpage-glass-card, .org-modal-content,
+    .lightbox-backdrop, .lightbox-close, .lightbox-nav,
+    .lightbox-info, .org-modal-close, .org-hover-overlay span,
+    .form-group input, .form-group textarea,
+    .org-modal-text h4, .btn-secondary {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
-        background: rgba(10, 15, 25, 0.95) !important;
     }
 
+    /* Solid fallback backgrounds for frosted-glass elements */
+    .glass-card, .navbar, .box-2, .gallery-list-view {
+        background: rgba(10, 15, 25, 0.95) !important;
+    }
+    .card, .card-duyuru, .project-card, .subpage-glass-card {
+        background: rgba(10, 15, 25, 0.92) !important;
+    }
+    .contact-form {
+        background: rgba(10, 15, 25, 0.90) !important;
+    }
+    .org-modal-content {
+        background: rgba(15, 20, 30, 0.95) !important;
+    }
+
+    /* --- MOBILE PERF: Stop star drift animations (constant GPU repaint) --- */
     body::before, body::after {
-        animation-duration: 300s !important;
-        opacity: 0.3 !important;
+        animation: none !important;
+        opacity: 0.15 !important;
+    }
+
+    /* --- MOBILE PERF: Kill heavy glow/shimmer/flame animations --- */
+    .card-featured::before {
+        animation: none !important;
+    }
+    .card-featured::after {
+        animation: none !important;
+    }
+    .org-modal.active .org-modal-content::after {
+        animation: none !important;
+        display: none !important;
+    }
+    .org-modal-body::before,
+    .org-modal-body::after {
+        animation: none !important;
+        filter: blur(40px) !important;
+    }
+    .gallery-lightbox::before,
+    .gallery-lightbox::after {
+        display: none !important;
+    }
+
+    /* --- MOBILE PERF: Disable heavy hover transforms (no hover on touch) --- */
+    .card:hover,
+    .card-duyuru:hover,
+    .project-card:hover,
+    .gallery-card:hover,
+    .org-card:hover {
+        transform: none !important;
+    }
+
+    /* --- MOBILE: Layout containment for cards --- */
+    .card, .card-duyuru, .project-card, .gallery-card {
+        contain: content;
+    }
+
+    /* --- MOBILE: Touch optimization --- */
+    a, button, [onclick], input, select, textarea,
+    .nav-menu a, .gallery-list-item, .gallery-card,
+    .org-card, .lightbox-nav, .lightbox-close {
+        touch-action: manipulation;
+    }
+
+    /* Ensure minimum tap target size */
+    .nav-menu a {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+/* --- ACCESSIBILITY: Respect user motion preferences --- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    body::before, body::after {
+        animation: none !important;
+    }
+    .scroll-reveal {
+        opacity: 1 !important;
+        transition: none !important;
     }
 }
 

@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/assets/images/asuymt-logo.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YMT Quiz — Yazılım Bilgi Yarışması | ASÜ-YMT</title>
+  <meta name="description" content="Yazılım mühendisliği bilgini test et! Algoritmalar, veri yapıları, web teknolojileri ve daha fazlası." />
+  <link rel="stylesheet" href="../../assets/css/globals.css" />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/theme.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+/* ── Quiz Page Styles ── */
+.quiz-container {
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.quiz-header h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #ffffff, var(--accent), var(--accent-dark));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.quiz-header p {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Category Selection */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.category-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(14, 165, 233, 0.08), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.category-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(14, 165, 233, 0.4);
+  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
+}
+
+.category-card:hover::before {
+  opacity: 1;
+}
+
+.category-card i {
+  font-size: 3rem;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+  display: block;
+}
+
+.category-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.category-card span {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Quiz Panel */
+.quiz-panel {
+  display: none;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.quiz-panel.active {
+  display: block;
+}
+
+/* Progress Bar */
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+
+.progress-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #38bdf8);
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 0%;
+}
+
+.progress-text {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  white-space: nowrap;
+  min-width: 50px;
+  text-align: right;
+}
+
+/* Question */
+.question-text {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* Options */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.option-btn {
+  width: 100%;
+  text-align: left;
+  padding: 1.4rem 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-sans);
+}
+
+.option-btn .option-letter {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.option-btn:hover {
+  border-color: rgba(14, 165, 233, 0.5);
+  background: rgba(14, 165, 233, 0.06);
+  transform: translateX(6px);
+}
+
+.option-btn:hover .option-letter {
+  background: var(--accent);
+  color: #fff;
+}
+
+.option-btn.correct {
+  border-color: rgba(34, 197, 94, 0.6);
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.option-btn.correct .option-letter {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #fff;
+}
+
+.option-btn.wrong {
+  border-color: rgba(239, 68, 68, 0.6);
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.option-btn.wrong .option-letter {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+}
+
+.option-btn.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Explanation */
+.explanation {
+  display: none;
+  padding: 1.5rem 2rem;
+  background: rgba(14, 165, 233, 0.06);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 14px;
+  margin-bottom: 2rem;
+  font-size: 1.3rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.explanation.visible {
+  display: block;
+}
+
+.explanation i {
+  color: var(--accent);
+  margin-right: 0.5rem;
+}
+
+/* Next Button */
+.next-btn {
+  display: none;
+  margin-left: auto;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-sans);
+}
+
+.next-btn.visible {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.next-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+
+/* Results Panel */
+.results-panel {
+  display: none;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.results-panel.active {
+  display: block;
+}
+
+.results-score {
+  font-size: 8rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.results-score.great {
+  background: linear-gradient(135deg, #22c55e, #38bdf8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.results-score.good {
+  background: linear-gradient(135deg, #fb923c, #38bdf8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.results-score.poor {
+  background: linear-gradient(135deg, #ef4444, #fb923c);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.results-label {
+  font-size: 1.6rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.results-message {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 3rem;
+}
+
+.results-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-item .stat-num {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: block;
+}
+
+.stat-item .stat-label {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.restart-btn {
+  padding: 1.2rem 3rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-sans);
+}
+
+.restart-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+
+/* Timer */
+.quiz-timer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.quiz-timer i {
+  color: var(--accent);
+}
+
+.quiz-timer.warning {
+  color: #fb923c;
+}
+
+.quiz-timer.danger {
+  color: #ef4444;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .quiz-panel {
+    padding: 2rem 1.5rem;
+  }
+  .quiz-header h1 {
+    font-size: 2.5rem;
+  }
+  .question-text {
+    font-size: 1.6rem;
+  }
+  .option-btn {
+    padding: 1.1rem 1.4rem;
+    font-size: 1.25rem;
+  }
+  .results-score {
+    font-size: 5rem;
+  }
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+<canvas id="particleCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; pointer-events:none;"></canvas>
+  <div class="container">
+    <!-- Dynamic Navbar Placeholder -->
+    <div class="navbar-placeholder"></div>
+
+    <div class="quiz-container">
+      <div class="quiz-header">
+        <h1><i class="fas fa-code"></i> YMT Quiz</h1>
+        <p>Yazılım mühendisliği bilgini test et! Kategori seç ve başla.</p>
+      </div>
+
+      <!-- Category Selection -->
+      <div id="categorySelect" class="category-grid">
+        <div class="category-card" onclick="startQuiz('algorithms')">
+          <i class="fas fa-sitemap"></i>
+          <h3>Algoritmalar</h3>
+          <span>10 Soru</span>
+        </div>
+        <div class="category-card" onclick="startQuiz('web')">
+          <i class="fas fa-globe"></i>
+          <h3>Web Teknolojileri</h3>
+          <span>10 Soru</span>
+        </div>
+        <div class="category-card" onclick="startQuiz('database')">
+          <i class="fas fa-database"></i>
+          <h3>Veritabanı</h3>
+          <span>10 Soru</span>
+        </div>
+        <div class="category-card" onclick="startQuiz('general')">
+          <i class="fas fa-laptop-code"></i>
+          <h3>Genel Yazılım</h3>
+          <span>10 Soru</span>
+        </div>
+      </div>
+
+      <!-- Quiz Panel -->
+      <div id="quizPanel" class="quiz-panel">
+        <div class="quiz-timer" id="timer">
+          <i class="fas fa-stopwatch"></i>
+          <span id="timerText">00:00</span>
+        </div>
+        <div class="quiz-progress">
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <span class="progress-text" id="progressText">1/10</span>
+        </div>
+        <div class="question-text" id="questionText"></div>
+        <div class="options-list" id="optionsList"></div>
+        <div class="explanation" id="explanation"></div>
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+          Sonraki <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Results Panel -->
+      <div id="resultsPanel" class="results-panel">
+        <div class="results-score" id="resultsScore"></div>
+        <div class="results-label">Doğru Cevap</div>
+        <div class="results-message" id="resultsMessage"></div>
+        <div class="results-stats">
+          <div class="stat-item">
+            <span class="stat-num" id="statCorrect">0</span>
+            <span class="stat-label">Doğru</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num" id="statWrong">0</span>
+            <span class="stat-label">Yanlış</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num" id="statTime">0s</span>
+            <span class="stat-label">Süre</span>
+          </div>
+        </div>
+        <button class="restart-btn" onclick="restartQuiz()">
+          <i class="fas fa-redo"></i> Tekrar Oyna
+        </button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footlar">
+        <div class="foot">
+          <a href="../../index.html"><img src="../../assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
+        </div>
+        <div class="foot" id="iletisim">
+          <h1>İletişim</h1>
+          <a href="https://github.com/asuymt" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+          <a href="https://www.instagram.com/asuymt/" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        </div>
+      </div>
+      <p>© 2026 Tüm Hakları Saklıdır.</p>
+    </div>
+  </div>
+
+<script src="../../assets/js/particles.js"></script>
+<script src="../../assets/js/headerfooter.js"></script>
+<script>
+// ── Question Bank ──
+const questionBank = {
+  algorithms: [
+    { q: "Binary Search'ün zaman karmaşıklığı nedir?", options: ["O(n)", "O(log n)", "O(n²)", "O(1)"], answer: 1, explanation: "Binary Search, her adımda arama alanını yarıya indirdiği için O(log n) karmaşıklığa sahiptir." },
+    { q: "Hangi sıralama algoritması en kötü durumda O(n log n) karmaşıklığa sahiptir?", options: ["Bubble Sort", "Quick Sort", "Merge Sort", "Selection Sort"], answer: 2, explanation: "Merge Sort, böl-ve-fethet yaklaşımı ile her durumda O(n log n) karmaşıklık sağlar." },
+    { q: "Stack veri yapısı hangi prensibi kullanır?", options: ["FIFO", "LIFO", "LILO", "Priority"], answer: 1, explanation: "Stack, Last-In-First-Out (LIFO) prensibini kullanır — son eklenen eleman ilk çıkar." },
+    { q: "Bir bağlı listede (linked list) ortadaki elemanı bulmak için en iyi zaman karmaşıklığı nedir?", options: ["O(1)", "O(log n)", "O(n)", "O(n²)"], answer: 2, explanation: "Bağlı listede random erişim olmadığı için ortadaki elemanı bulmak O(n) sürer." },
+    { q: "Hangi veri yapısı BFS (genişlik öncelikli arama) için kullanılır?", options: ["Stack", "Queue", "Heap", "Tree"], answer: 1, explanation: "BFS, komşu düğümleri sırayla ziyaret etmek için Queue (kuyruk) kullanır." },
+    { q: "Hash Table'da ortalama arama zamanı nedir?", options: ["O(n)", "O(log n)", "O(1)", "O(n log n)"], answer: 2, explanation: "İyi bir hash fonksiyonu ile çakışma az olduğunda ortalama arama O(1)'dir." },
+    { q: "Dijkstra algoritması ne için kullanılır?", options: ["Sıralama", "En kısa yol bulma", "Arama", "Sıkıştırma"], answer: 1, explanation: "Dijkstra, ağırlıklı graflarda tek kaynaklı en kısa yol bulmak için kullanılır." },
+    { q: "Recursive bir fonksiyon hangi durumda stack overflow hatası verir?", options: ["Base case tanımlanmışsa", "Tüm elemanlar işlenmişse", "Base case yoksa/ulaşılmıyorsa", "Return değeri varsa"], answer: 2, explanation: "Base case olmadan fonksiyon kendini sonsuz kez çağırarak stack'i doldurur." },
+    { q: "Big-O notasyonunda f(n) = 3n² + 5n + 100 ifadesi nasıl yazılır?", options: ["O(3n²)", "O(n² + n)", "O(n²)", "O(100)"], answer: 2, explanation: "Big-O'da sadece baskın terim kalır, sabitler atılır: O(n²)." },
+    { q: "Hangi yapı 'key-value' çifti mantığı ile çalışır?", options: ["Array", "Stack", "HashMap", "LinkedList"], answer: 2, explanation: "HashMap, anahtar-değer çiftleri ile veri depolar ve hızlı erişim sağlar." }
+  ],
+  web: [
+    { q: "HTML'de semantik etiket olan hangisidir?", options: ["<div>", "<span>", "<article>", "<b>"], answer: 2, explanation: "<article> semantik bir etikettir ve bağımsız içerik bloklarını temsil eder." },
+    { q: "CSS'de 'flexbox' ile dikey ortalama yapmak için hangi özellik kullanılır?", options: ["text-align: center", "align-items: center", "float: center", "vertical-align: middle"], answer: 1, explanation: "Flexbox container'da align-items: center, çapraz eksende (dikey) ortalama yapar." },
+    { q: "JavaScript'te 'const' ile tanımlanan değişken hakkında hangisi doğrudur?", options: ["Değeri değiştirilebilir", "Tekrar atanamaz", "Hoisting yapılmaz", "Sadece string tutar"], answer: 1, explanation: "const ile tanımlanan değişkenin referansı değiştirilemez, tekrar atanamaz." },
+    { q: "HTTP 404 durum kodu ne anlama gelir?", options: ["Sunucu hatası", "Yetkilendirme gerekli", "Kaynak bulunamadı", "Başarılı"], answer: 2, explanation: "404, istenen kaynağın sunucuda bulunamadığını belirtir — 'Not Found'." },
+    { q: "React'te component'ler arası veri aktarımı için ne kullanılır?", options: ["querySelector", "props", "innerHTML", "localStorage"], answer: 1, explanation: "Props (properties), React'te üst component'ten alt component'e veri aktarır." },
+    { q: "'async/await' ne için kullanılır?", options: ["CSS animasyonları", "Asenkron işlemleri yönetme", "DOM manipülasyonu", "Veri tipleri dönüştürme"], answer: 1, explanation: "async/await, Promise tabanlı asenkron kodu senkron gibi yazmayı sağlar." },
+    { q: "CSS Grid'de 'grid-template-columns: repeat(3, 1fr)' ne yapar?", options: ["3 satır oluşturur", "3 eşit sütun oluşturur", "3 px genişlik verir", "Tekrar eden içerik ekler"], answer: 1, explanation: "repeat(3, 1fr) ifadesi, eşit genişlikte 3 sütun oluşturur." },
+    { q: "localStorage ile sessionStorage arasındaki fark nedir?", options: ["Boyut farkı", "localStorage tarayıcı kapansa da kalır", "sessionStorage daha hızlıdır", "Fark yoktur"], answer: 1, explanation: "localStorage kalıcıdır, sessionStorage ise sekme/pencere kapandığında silinir." },
+    { q: "CORS (Cross-Origin Resource Sharing) ne işe yarar?", options: ["Şifreleme", "Farklı domain'ler arası kaynak paylaşımına izin verme", "Cache yönetimi", "URL yönlendirme"], answer: 1, explanation: "CORS, tarayıcının farklı kaynaklardan güvenli veri alışverişine izin verme mekanizmasıdır." },
+    { q: "Hangisi bir JavaScript framework/kütüphanesi DEĞİLDİR?", options: ["Vue.js", "Angular", "Django", "Svelte"], answer: 2, explanation: "Django bir Python web framework'üdür, JavaScript değil." }
+  ],
+  database: [
+    { q: "SQL'de birden fazla tabloyu birleştirmek için hangi komut kullanılır?", options: ["MERGE", "UNION", "JOIN", "COMBINE"], answer: 2, explanation: "JOIN, iki veya daha fazla tabloyu ortak sütunlara göre birleştirir." },
+    { q: "NoSQL veritabanı hangisidir?", options: ["PostgreSQL", "MySQL", "MongoDB", "Oracle"], answer: 2, explanation: "MongoDB, doküman tabanlı bir NoSQL veritabanıdır ve JSON benzeri BSON formatında veri saklar." },
+    { q: "ACID prensibinde 'A' neyi temsil eder?", options: ["Authentication", "Atomicity", "Availability", "Authorization"], answer: 1, explanation: "Atomicity (Bölünmezlik): Bir işlemdeki tüm adımlar ya hep birlikte gerçekleşir ya da hiçbiri." },
+    { q: "PRIMARY KEY hakkında hangisi doğrudur?", options: ["Boş olabilir", "Tekrarlayan değerler içerebilir", "Benzersiz ve boş olamaz", "Sadece sayısal olmalıdır"], answer: 2, explanation: "Primary Key, tablodaki her satırı benzersiz şekilde tanımlar ve NULL olamaz." },
+    { q: "Normalizasyonun amacı nedir?", options: ["Hız artırma", "Veri tekrarını azaltma", "Tablo silme", "Index oluşturma"], answer: 1, explanation: "Normalizasyon, veri tekrarını (redundancy) azaltarak veritabanı tutarlılığını artırır." },
+    { q: "Hangisi bir aggregate (toplama) fonksiyonudur?", options: ["SELECT", "WHERE", "COUNT", "FROM"], answer: 2, explanation: "COUNT(), SUM(), AVG(), MIN(), MAX() SQL'deki aggregate fonksiyonlarıdır." },
+    { q: "INDEX ne işe yarar?", options: ["Veri siler", "Sorgu performansını artırır", "Tablo oluşturur", "Backup alır"], answer: 1, explanation: "Index, sorgularda arama hızını artıran bir veri yapısıdır (genellikle B-tree)." },
+    { q: "Stored Procedure nedir?", options: ["Otomatik backup", "Veritabanında saklanan SQL program bloğu", "Tablo türü", "Bağlantı protokolü"], answer: 1, explanation: "Stored Procedure, veritabanı sunucusunda saklanan ve çağrılabilen SQL kod bloğudur." },
+    { q: "Hangisi bir ilişkisel veritabanı yönetim sistemidir (RDBMS)?", options: ["Redis", "Cassandra", "PostgreSQL", "Neo4j"], answer: 2, explanation: "PostgreSQL, güçlü özelliklere sahip açık kaynaklı bir RDBMS'dir." },
+    { q: "SQL Injection saldırısına karşı en etkili koruma nedir?", options: ["Input uzunluğu sınırlama", "Prepared Statements kullanma", "HTTPS kullanma", "Veritabanını şifreleme"], answer: 1, explanation: "Prepared Statements (parametreli sorgular), kullanıcı girdisini SQL kodundan ayırarak enjeksiyonu engeller." }
+  ],
+  general: [
+    { q: "Git'te 'branch' ne amaçla kullanılır?", options: ["Dosya silme", "Paralel geliştirme", "Commit geri alma", "Repository klonlama"], answer: 1, explanation: "Branch'ler, ana koddan bağımsız paralel geliştirme yapma imkânı sağlar." },
+    { q: "OOP'de 'Encapsulation' ne anlama gelir?", options: ["Kalıtım", "Çok biçimlilik", "Veriyi dış erişimden gizleme", "Soyutlama"], answer: 2, explanation: "Encapsulation, verileri ve metodları bir kapsül içinde saklayarak dış erişimi kontrol eder." },
+    { q: "REST API'de veri göndermek için hangi HTTP metodu kullanılır?", options: ["GET", "DELETE", "POST", "OPTIONS"], answer: 2, explanation: "POST metodu, sunucuya yeni veri göndermek (create) için kullanılır." },
+    { q: "Docker ne işe yarar?", options: ["Kod editörü", "Versiyon kontrol", "Uygulamaları container'larda çalıştırma", "Veritabanı yönetimi"], answer: 2, explanation: "Docker, uygulamaları bağımlılıklarıyla birlikte container'larda paketleyip çalıştırır." },
+    { q: "Agile metodolojisinde 'Sprint' nedir?", options: ["Test süreci", "Kısa süreli geliştirme döngüsü", "Deployment aşaması", "Toplantı türü"], answer: 1, explanation: "Sprint, genellikle 1-4 haftalık kısa süreli, hedef odaklı geliştirme döngüsüdür." },
+    { q: "TCP ile UDP arasındaki temel fark nedir?", options: ["TCP daha hızlıdır", "UDP güvenilir bağlantı sağlar", "TCP güvenilir, UDP hızlı ama güvenilmez", "Fark yoktur"], answer: 2, explanation: "TCP bağlantı kurar ve veri bütünlüğünü garanti eder; UDP bağlantısız ve daha hızlıdır." },
+    { q: "CI/CD açılımı nedir?", options: ["Code Integration / Code Deployment", "Continuous Integration / Continuous Delivery", "Central Intelligence / Central Database", "Common Interface / Common Data"], answer: 1, explanation: "CI/CD: Sürekli Entegrasyon ve Sürekli Teslimat — otomatik test ve deploy süreçleridir." },
+    { q: "SOLID prensiplerinde 'S' ne anlama gelir?", options: ["Separation of Concerns", "Single Responsibility", "Singleton Pattern", "System Design"], answer: 1, explanation: "Single Responsibility: Her sınıfın sadece bir sorumluluğu olmalıdır." },
+    { q: "Hangi lisans türü açık kaynak yazılımlarda en sık kullanılır?", options: ["Commercial", "MIT", "Proprietary", "Shareware"], answer: 1, explanation: "MIT lisansı, en yaygın açık kaynak lisanslarından biridir — minimum kısıtlama sağlar." },
+    { q: "DNS ne işe yarar?", options: ["Dosya transferi", "Domain adını IP adresine çevirme", "Veri şifreleme", "Ağ güvenliği"], answer: 1, explanation: "DNS (Domain Name System), alan adlarını (ör. google.com) IP adreslerine çevirir." }
+  ]
+};
+
+// ── Quiz State ──
+let currentCategory = '';
+let questions = [];
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+let startTime = 0;
+let timerInterval = null;
+
+function startQuiz(category) {
+  currentCategory = category;
+  questions = [...questionBank[category]].sort(() => Math.random() - 0.5);
+  currentIndex = 0;
+  score = 0;
+  answered = false;
+  startTime = Date.now();
+
+  document.getElementById('categorySelect').style.display = 'none';
+  document.getElementById('quizPanel').classList.add('active');
+  document.getElementById('resultsPanel').classList.remove('active');
+
+  // Start timer
+  clearInterval(timerInterval);
+  timerInterval = setInterval(updateTimer, 1000);
+
+  renderQuestion();
+}
+
+function updateTimer() {
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+  const secs = String(elapsed % 60).padStart(2, '0');
+  const timerEl = document.getElementById('timer');
+  document.getElementById('timerText').textContent = `${mins}:${secs}`;
+
+  timerEl.className = 'quiz-timer';
+  if (elapsed > 120) timerEl.classList.add('danger');
+  else if (elapsed > 60) timerEl.classList.add('warning');
+}
+
+function renderQuestion() {
+  const q = questions[currentIndex];
+  answered = false;
+
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('progressFill').style.width = `${((currentIndex) / questions.length) * 100}%`;
+  document.getElementById('progressText').textContent = `${currentIndex + 1}/${questions.length}`;
+
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span> ${opt}`;
+    btn.onclick = () => selectAnswer(i);
+    list.appendChild(btn);
+  });
+
+  document.getElementById('explanation').classList.remove('visible');
+  document.getElementById('nextBtn').classList.remove('visible');
+}
+
+function selectAnswer(index) {
+  if (answered) return;
+  answered = true;
+
+  const q = questions[currentIndex];
+  const btns = document.querySelectorAll('.option-btn');
+
+  btns.forEach((btn, i) => {
+    btn.classList.add('disabled');
+    if (i === q.answer) btn.classList.add('correct');
+    if (i === index && index !== q.answer) btn.classList.add('wrong');
+  });
+
+  if (index === q.answer) score++;
+
+  // Show explanation
+  const exp = document.getElementById('explanation');
+  exp.innerHTML = `<i class="fas fa-lightbulb"></i> ${q.explanation}`;
+  exp.classList.add('visible');
+
+  // Show next button
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.textContent = currentIndex < questions.length - 1 ? 'Sonraki ' : 'Sonuçları Gör ';
+  nextBtn.innerHTML += '<i class="fas fa-arrow-right"></i>';
+  nextBtn.classList.add('visible');
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= questions.length) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResults() {
+  clearInterval(timerInterval);
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+
+  document.getElementById('quizPanel').classList.remove('active');
+  document.getElementById('resultsPanel').classList.add('active');
+
+  const pct = Math.round((score / questions.length) * 100);
+  const scoreEl = document.getElementById('resultsScore');
+  scoreEl.textContent = `${pct}%`;
+  scoreEl.className = 'results-score ' + (pct >= 80 ? 'great' : pct >= 50 ? 'good' : 'poor');
+
+  const messages = {
+    great: '🎉 Harikasın! Yazılım bilgin üst düzey!',
+    good: '👍 Fena değil, ama geliştirebilirsin!',
+    poor: '📚 Biraz daha çalışman gerekiyor!'
+  };
+
+  document.getElementById('resultsMessage').textContent = messages[pct >= 80 ? 'great' : pct >= 50 ? 'good' : 'poor'];
+  document.getElementById('statCorrect').textContent = score;
+  document.getElementById('statWrong').textContent = questions.length - score;
+  document.getElementById('statTime').textContent = elapsed + 's';
+}
+
+function restartQuiz() {
+  document.getElementById('resultsPanel').classList.remove('active');
+  document.getElementById('quizPanel').classList.remove('active');
+  document.getElementById('categorySelect').style.display = '';
+}
+</script>
+</body>
+</html>

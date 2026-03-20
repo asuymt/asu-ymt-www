@@ -2,12 +2,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("particleCanvas");
     if (!canvas) return;
 
+    // --- MOBILE PERFORMANCE: Disable particles entirely on mobile ---
+    const isMobile = window.innerWidth < 768;
+    const isTablet = window.innerWidth >= 768 && window.innerWidth <= 1024;
+
+    if (isMobile) {
+        canvas.style.display = 'none';
+        return; // No particles on mobile — massive GPU savings
+    }
+
     const ctx = canvas.getContext("2d");
     let particlesArray = [];
 
     const baseColor1 = 'rgba(14, 165, 233, 0.7)';
     const baseColor2 = 'rgba(244, 63, 94, 0.6)';
     const repulseRadius = 200;
+    const enableConnect = !isTablet; // Disable O(n²) connect lines on tablet
 
     let mouse = {
         x: undefined,
@@ -37,10 +47,14 @@ document.addEventListener("DOMContentLoaded", () => {
         mouse.vy = 0;
     });
 
+    let resizeTimeout;
     window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        initParticles();
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }, 200);
     });
 
     canvas.width = window.innerWidth;
@@ -108,8 +122,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function initParticles() {
         particlesArray = [];
-        const isMobile = window.innerWidth < 768;
-        let numberOfParticles = (canvas.height * canvas.width) / (isMobile ? 18000 : 6000);
+        // Tablet: 50% fewer particles; Desktop: normal
+        const divisor = isTablet ? 12000 : 6000;
+        let numberOfParticles = (canvas.height * canvas.width) / divisor;
 
         for (let i = 0; i < numberOfParticles; i++) {
             let rand = Math.random();
@@ -176,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
             particlesArray[i].update();
         }
 
-        connect();
+        if (enableConnect) connect();
     }
 
     initParticles();

@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="assets/css/globals.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/theme.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -23,10 +23,10 @@
     <div class="kapak">
       <div class="blur-layer"></div>
       <div class="kapak-text">
-        <h1 class="animate__animated animate__fadeInDown">
+        <h1>
           Yazılımın geleceği burada başlıyor.
         </h1>
-        <p class="animate__animated animate__fadeInUp">
+        <p>
           Yazılım Mühendisliği Topluluğu, gelişmek ve geliştirmek isteyenlerin
           bir araya geldiği bir platformdur. Bilgi paylaşımı, projeler ve
           kariyer odaklı etkinliklerle yanındayız.
@@ -45,17 +45,17 @@
     <div class="box-2">
       <h1>İstatistiklerimiz</h1>
       <div class="cardlar">
-        <div class="card card-tilt animate__animated animate__fadeInUp" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" data-tilt-speed="400" data-tilt-max="15">
+        <div class="card card-tilt">
           <i class="fa-regular fa-circle-user"></i>
           <h1 class="counter" data-target="123">0</h1>
           <p>Üye Sayımız</p>
         </div>
-        <div class="card card-tilt animate__animated animate__fadeInUp" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" data-tilt-speed="400" data-tilt-max="15" style="animation-delay: 0.1s">
+        <div class="card card-tilt">
           <i class="fa-regular fa-clock"></i>
           <h1 class="counter" data-target="60">0</h1>
           <p>Toplam Etkinlik Saatimiz</p>
         </div>
-        <div class="card card-tilt animate__animated animate__fadeInUp" data-tilt data-tilt-glare data-tilt-max-glare="0.5" data-tilt-scale="1.05" data-tilt-speed="400" data-tilt-max="15" style="animation-delay: 0.2s">
+        <div class="card card-tilt">
           <i class="fa-regular fas fa-trophy"></i>
           <h1 class="counter" data-target="10">0</h1>
           <p>Etkinlik Sayımız</p>
@@ -65,7 +65,7 @@
     <div class="footer">
       <div class="footlar">
         <div class="foot">
-          <a href="index.html"><img src="assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" /></a>
+          <a href="index.html"><img src="assets/images/asuymt-logo.png" alt="ASÜ YMT Logo" decoding="async" /></a>
         </div>
         <div class="foot made-by">
           <h1>Made By</h1>
@@ -73,19 +73,19 @@
                         <li class="has-tooltip">
               Emir Fetolmaz
               <div class="tooltip-bubble">
-                <img src="assets/images/emir-fetolmaz.jpg" alt="Emir Fetolmaz">
+                <img src="assets/images/emir-fetolmaz.jpg" alt="Emir Fetolmaz" loading="lazy" decoding="async">
               </div>
             </li>
                         <li class="has-tooltip">
               Burak Arıkan
               <div class="tooltip-bubble">
-                <img src="assets/images/burak-arikan.jpg" alt="Burak Arıkan">
+                <img src="assets/images/burak-arikan.jpg" alt="Burak Arıkan" loading="lazy" decoding="async">
               </div>
             </li>
                         <li class="has-tooltip">
               Mehmet Akif Akkoç
               <div class="tooltip-bubble">
-                <img src="assets/images/mehmet-akif-akkoc.jpg" alt="Mehmet Akif Akkoç">
+                <img src="assets/images/mehmet-akif-akkoc.jpg" alt="Mehmet Akif Akkoç" loading="lazy" decoding="async">
               </div>
             </li>
           </ul>
@@ -101,16 +101,20 @@
       <p>© 2026 Tüm Hakları Saklıdır.</p>
     </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
-  <script src="https://unpkg.com/scrollreveal"></script>
   <script>
-    ScrollReveal().reveal('.animate__fadeInUp', {
-      delay: 200,
-      distance: '50px',
-      duration: 1000,
-      easing: 'cubic-bezier(0.5, 0, 0, 1)',
-      interval: 100
-    });
+    // Load vanilla-tilt only on desktop (pointer:fine) devices
+    if (window.matchMedia('(pointer: fine)').matches) {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js';
+      s.onload = () => {
+        document.querySelectorAll('.card-tilt').forEach(el => {
+          VanillaTilt.init(el, { max: 15, speed: 400, scale: 1.05, glare: true, 'max-glare': 0.5 });
+        });
+      };
+      document.body.appendChild(s);
+    }
+  </script>
+  <script>
     const counters = document.querySelectorAll('.counter');
     const speed = 200; // Sayma hızı bölücüsü
     const observer = new IntersectionObserver((entries, observer) => {

@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="../../assets/css/globals.css" />
     <link rel="stylesheet" href="../../assets/css/style.css" />
     <link rel="stylesheet" href="../../assets/css/theme.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     <style>
         .dictionary-container {
             max-width: 1200px;
@@ -348,7 +347,7 @@
         <div class="navbar-placeholder"></div>
 
         <div class="dictionary-container">
-            <div class="search-section animate__animated animate__fadeInDown">
+            <div class="search-section">
                 <button class="flashcard-toggle-btn" id="openFlashcards">
                     <i class="fas fa-layer-group"></i> Bilgi Kartı Modu
                 </button>
@@ -472,7 +471,7 @@
 
                 data.sort((a, b) => a.term.localeCompare(b.term, 'tr-TR')).forEach((item, index) => {
                     const card = document.createElement('div');
-                    card.className = 'term-card animate__animated animate__fadeInUp';
+                    card.className = 'term-card';
                     card.style.animationDelay = `${(index % 10) * 0.05}s`;
                     card.innerHTML = `
                         <span class="category">${item.category || 'Genel'}</span>

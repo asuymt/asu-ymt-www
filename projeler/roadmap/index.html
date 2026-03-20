@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="../../assets/css/globals.css" />
     <link rel="stylesheet" href="../../assets/css/style.css" />
     <link rel="stylesheet" href="../../assets/css/theme.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
     <style>
         :root {
             --glass-bg: rgba(255, 255, 255, 0.03);
@@ -216,11 +215,11 @@
     <div class="container">
         <!-- Dynamic Navbar Placeholder -->
         <div class="navbar-placeholder"></div>
-        <div class="roadmap-header animate__animated animate__fadeIn">
+        <div class="roadmap-header">
             <h1>Kariyer Haritaları</h1>
             <p>Sektör standartlarına göre hazırlanan, adım adım uzmanlık rehberleri.</p>
         </div>
-        <div class="roadmap-selector animate__animated animate__fadeInUp">
+        <div class="roadmap-selector">
             <button class="selector-btn active" onclick="loadRoadmap('frontend', this)" style="--category-color: #0ea5e9; --glow-color: rgba(14, 165, 233, 0.4)">
                 <i class="fas fa-code"></i> Frontend
             </button>
@@ -255,7 +254,7 @@
             timeline.innerHTML = '';
             data.steps.forEach((step, index) => {
                 const item = document.createElement('div');
-                item.className = `timeline-item animate__animated animate__fadeInUp`;
+                item.className = `timeline-item`;
                 item.style.animationDelay = `${index * 0.1}s`;
                 item.innerHTML = `
                     <div class="timeline-dot"></div>

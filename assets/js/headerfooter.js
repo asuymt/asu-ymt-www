@@ -126,19 +126,19 @@
                 <li class="has-tooltip">
                   Emir Fetolmaz (%90)
                   <div class="tooltip-bubble">
-                    <img src="${prefix}assets/images/emir-fetolmaz.jpg" alt="Emir Fetolmaz">
+                    <img src="${prefix}assets/images/emir-fetolmaz.jpg" alt="Emir Fetolmaz" loading="lazy" decoding="async">
                   </div>
                 </li>
                 <li class="has-tooltip">
                   Burak Arıkan (%4)
                   <div class="tooltip-bubble">
-                    <img src="${prefix}assets/images/burak-arikan.jpg" alt="Burak Arıkan">
+                    <img src="${prefix}assets/images/burak-arikan.jpg" alt="Burak Arıkan" loading="lazy" decoding="async">
                   </div>
                 </li>
                 <li class="has-tooltip">
                   Mehmet Akif Akkoç (%6)
                   <div class="tooltip-bubble">
-                    <img src="${prefix}assets/images/mehmet-akif-akkoc.jpg" alt="Mehmet Akif Akkoç">
+                    <img src="${prefix}assets/images/mehmet-akif-akkoc.jpg" alt="Mehmet Akif Akkoç" loading="lazy" decoding="async">
                   </div>
                 </li>
               </ul>
@@ -193,7 +193,7 @@
                     entry.target.classList.remove('revealed');
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
 
         function applyScrollReveal(root) {
             const targets = (root || document).querySelectorAll(revealSelector);
@@ -209,7 +209,12 @@
         applyScrollReveal();
 
         // Sonradan eklenen elementleri de yakala (duyuru-motoru, etkinlik-motoru vb.)
-        const domWatcher = new MutationObserver(() => applyScrollReveal());
+        // DEBOUNCED: Prevents DOM thrashing on rapid mutations
+        let mutationTimer = null;
+        const domWatcher = new MutationObserver(() => {
+            if (mutationTimer) clearTimeout(mutationTimer);
+            mutationTimer = setTimeout(() => applyScrollReveal(), 300);
+        });
         domWatcher.observe(document.body, { childList: true, subtree: true });
 
         initCursor(prefix);
@@ -218,3 +223,4 @@
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
     else inject();
 })();
+

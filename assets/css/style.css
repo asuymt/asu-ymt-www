@@ -34,7 +34,6 @@
     url(../images/ana_sayfa.jpeg);
   background-position: center;
   background-size: cover;
-  background-attachment: fixed;
   filter: blur(0px);
   z-index: 1;
   transform: scale(1.1);

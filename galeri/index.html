@@ -9,8 +9,7 @@
   <link rel="stylesheet" href="../assets/css/globals.css" />
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet" href="../assets/css/theme.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -27,7 +26,7 @@
     <div class="box-2" style="margin-top: 5rem">
       <h1>Foto Galeri</h1>
       <p class="galeri-subtitle">Etkinliklerimizden ve organizasyonlarımızdan kareler 📸</p>
-      <div class="gallery-controls animate__animated animate__fadeIn">
+      <div class="gallery-controls">
         <button class="view-toggle-btn active" id="btnListView" onclick="setGalleryView('list')">
           <i class="fas fa-list"></i> Liste
         </button>
@@ -44,35 +43,35 @@
           <div class="list-col-type">Tür</div>
           <div class="list-col-size">Boyut</div>
         </div>
-        <div class="gallery-list-item animate__animated animate__fadeInUp" style="animation-delay: 0.05s" onclick="openLightbox(0)">
+        <div class="gallery-list-item" style="animation-delay: 0.05s" onclick="openLightbox(0)">
           <div class="list-col-icon"><img src="../assets/images/ASU-YMT-1.png" alt="Asu ymt 1" loading="lazy" /></div>
           <div class="list-col-name">ASU-YMT_Ekip.png</div>
           <div class="list-col-date">10.03.2026 14:30</div>
           <div class="list-col-type">PNG Dosyası</div>
           <div class="list-col-size">2.4 MB</div>
         </div>
-        <div class="gallery-list-item animate__animated animate__fadeInUp" style="animation-delay: 0.1s" onclick="openLightbox(1)">
+        <div class="gallery-list-item" style="animation-delay: 0.1s" onclick="openLightbox(1)">
           <div class="list-col-icon"><img src="../assets/images/ana_sayfa.jpeg" alt="Ana sayfa" loading="lazy" /></div>
           <div class="list-col-name">Toplulugumuz_Kapak.jpeg</div>
           <div class="list-col-date">12.03.2026 09:15</div>
           <div class="list-col-type">JPEG Dosyası</div>
           <div class="list-col-size">3.1 MB</div>
         </div>
-        <div class="gallery-list-item animate__animated animate__fadeInUp" style="animation-delay: 0.15s" onclick="openLightbox(2)">
+        <div class="gallery-list-item" style="animation-delay: 0.15s" onclick="openLightbox(2)">
           <div class="list-col-icon"><img src="../assets/images/asuymt-logo.png" alt="Asuymt logo" loading="lazy" /></div>
           <div class="list-col-name">ASU_YMT_Logo_Orjinal.png</div>
           <div class="list-col-date">01.01.2026 10:00</div>
           <div class="list-col-type">PNG Dosyası</div>
           <div class="list-col-size">1.2 MB</div>
         </div>
-        <div class="gallery-list-item animate__animated animate__fadeInUp" style="animation-delay: 0.25s" onclick="openLightbox(3)">
+        <div class="gallery-list-item" style="animation-delay: 0.25s" onclick="openLightbox(3)">
           <div class="list-col-icon"><img src="../assets/images/ymt-logo.jpg" alt="Ymt logo" loading="lazy" /></div>
           <div class="list-col-name">eski_ymt_logo_arsiv.jpg</div>
           <div class="list-col-date">15.11.2025 16:45</div>
           <div class="list-col-type">JPG Dosyası</div>
           <div class="list-col-size">845 KB</div>
         </div>
-        <div class="gallery-list-item animate__animated animate__fadeInUp" style="animation-delay: 0.3s" onclick="openLightbox(4)">
+        <div class="gallery-list-item" style="animation-delay: 0.3s" onclick="openLightbox(4)">
           <div class="list-col-icon"><img src="../assets/images/ymt_border.png" alt="Ymt border" loading="lazy" /></div>
           <div class="list-col-name">Tasarim_Cerceve_Asset.png</div>
           <div class="list-col-date">05.02.2026 11:20</div>
@@ -82,7 +81,7 @@
       </div>
 
       <div class="gallery-grid-view hidden" id="galleryGrid">
-        <div class="gallery-card animate__animated animate__fadeInUp" onclick="openLightbox(0)">
+        <div class="gallery-card" onclick="openLightbox(0)">
           <div class="gallery-card-inner">
             <img src="../assets/images/ASU-YMT-1.png" alt="Asu ymt 1" />
             <div class="gallery-card-overlay">
@@ -95,7 +94,7 @@
             </div>
           </div>
         </div>
-        <div class="gallery-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s" onclick="openLightbox(1)">
+        <div class="gallery-card" style="animation-delay: 0.1s" onclick="openLightbox(1)">
           <div class="gallery-card-inner">
             <img src="../assets/images/ana_sayfa.jpeg" alt="Ana sayfa" />
             <div class="gallery-card-overlay">
@@ -108,7 +107,7 @@
             </div>
           </div>
         </div>
-        <div class="gallery-card animate__animated animate__fadeInUp" style="animation-delay: 0.15s" onclick="openLightbox(2)">
+        <div class="gallery-card" style="animation-delay: 0.15s" onclick="openLightbox(2)">
           <div class="gallery-card-inner">
             <img src="../assets/images/asuymt-logo.png" alt="Asuymt logo" />
             <div class="gallery-card-overlay">
@@ -121,7 +120,7 @@
             </div>
           </div>
         </div>
-        <div class="gallery-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s" onclick="openLightbox(3)">
+        <div class="gallery-card" style="animation-delay: 0.2s" onclick="openLightbox(3)">
           <div class="gallery-card-inner">
             <img src="../assets/images/ymt-logo.jpg" alt="Ymt logo" />
             <div class="gallery-card-overlay">
@@ -134,7 +133,7 @@
             </div>
           </div>
         </div>
-        <div class="gallery-card animate__animated animate__fadeInUp" style="animation-delay: 0.25s" onclick="openLightbox(4)">
+        <div class="gallery-card" style="animation-delay: 0.25s" onclick="openLightbox(4)">
           <div class="gallery-card-inner">
             <img src="../assets/images/ymt_border.png" alt="Ymt border" />
             <div class="gallery-card-overlay">
@@ -207,7 +206,6 @@
       <p>© 2026 Tüm Hakları Saklıdır.</p>
     </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   <script>
     const lightbox = document.getElementById("galleryLightbox");
     const lightboxImg = document.getElementById("lightboxImg");
