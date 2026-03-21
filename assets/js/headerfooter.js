@@ -195,25 +195,79 @@
             });
         }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
 
-        function applyScrollReveal(root) {
-            const targets = (root || document).querySelectorAll(revealSelector);
-            targets.forEach(el => {
-                if (el.closest('.navbar') || el.closest('.footer')) return;
-                if (el.classList.contains('scroll-reveal')) return; // zaten uygulanmış
-                el.classList.add('scroll-reveal');
-                revealObserver.observe(el);
-            });
+        // --- Global Premium Hover (Tilt) ---
+        const initGlobalTilt = () => {
+            if (window.tiltInitialized) return;
+            const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+            if (!hasFinePointer) return;
+
+            const tiltTargets = document.querySelectorAll('.tilt-ready');
+            if (tiltTargets.length === 0) return;
+
+            const tiltScriptUrl = 'https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js';
+            
+            const initTilt = () => {
+                window.tiltInitialized = true;
+                const targets = document.querySelectorAll('.tilt-ready');
+                targets.forEach(el => {
+                    if (el.vanillaTilt) return;
+                    VanillaTilt.init(el, { 
+                        max: 12, 
+                        speed: 400, 
+                        scale: 1.05, 
+                        glare: true, 
+                        'max-glare': 0.4,
+                        perspective: 1000,
+                        gyroscope: false
+                    });
+                });
+            };
+
+            if (window.VanillaTilt) {
+                initTilt();
+            } else {
+                const s = document.createElement('script');
+                s.src = tiltScriptUrl;
+                s.onload = initTilt;
+                document.body.appendChild(s);
+            }
+        };
+
+        // Re-init tilt for dynamic cards
+        const reInitTilt = () => {
+            if (window.VanillaTilt) {
+                const targets = document.querySelectorAll('.tilt-ready');
+                targets.forEach(el => {
+                    if (!el.vanillaTilt) {
+                        VanillaTilt.init(el, { 
+                            max: 12, 
+                            speed: 400, 
+                            scale: 1.05, 
+                            glare: true, 
+                            'max-glare': 0.4,
+                            perspective: 1000,
+                            gyroscope: false
+                        });
+                    }
+                });
+            } else {
+                initGlobalTilt();
+            }
+        };
+
+        function applyGlobalEnhancements(root) {
+            applyScrollReveal(root);
+            reInitTilt();
         }
 
-        // Şu anki elementlere uygula
-        applyScrollReveal();
+        // --- Initial Call ---
+        applyGlobalEnhancements();
 
-        // Sonradan eklenen elementleri de yakala (duyuru-motoru, etkinlik-motoru vb.)
-        // DEBOUNCED: Prevents DOM thrashing on rapid mutations
+        // --- Mutation Observer for Dynamic Content ---
         let mutationTimer = null;
         const domWatcher = new MutationObserver(() => {
             if (mutationTimer) clearTimeout(mutationTimer);
-            mutationTimer = setTimeout(() => applyScrollReveal(), 300);
+            mutationTimer = setTimeout(() => applyGlobalEnhancements(), 300);
         });
         domWatcher.observe(document.body, { childList: true, subtree: true });
 

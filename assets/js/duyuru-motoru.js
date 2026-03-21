@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const cardHTML = `
-            <div class="card-duyuru animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
+            <div class="card-duyuru tilt-ready animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
                 <div class="card-header">
                     <span class="date">${duyuru.tarih}</span>
                     <span class="tag" style="${etiketStili}">${etiketMetni}</span>
