@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakım Modu | YMT</title>
+    <style>
+        /* Sayfa sıfırlama ve tam ekran yerleşimi */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0f172a; /* Modern koyu lacivert/siyah tonu */
+            color: #f8fafc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        .maintenance-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            /* Mobilde daha küçük, PC'de daha büyük görünmesi için responsive font */
+            font-size: clamp(1.2rem, 5vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border-left: 4px solid #38bdf8; /* YMT vurgusu için şık bir sol çizgi */
+            padding-left: 15px;
+            line-height: 1.2;
+        }
+
+        /* Arka plana çok hafif bir derinlik katmak istersen */
+        .bg-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(56, 189, 248, 0.1);
+            filter: blur(100px);
+            border-radius: 50%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <div class="maintenance-container">
+        <h1>GEÇİCİ OLARAK BAKIMDA | YMT</h1>
+    </div>
+</body>
+</html>
