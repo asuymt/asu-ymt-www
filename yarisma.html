@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilgi Yarışması - ASÜ-YMT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            height: 95vh;
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 30px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            padding: 0 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header {
+            position: relative;
+            text-align: center;
+            margin-bottom: 0px;
+            width: 100%;
+            overflow: visible;
+        }
+
+        .logo {
+            width: 100%;
+            height: calc(100% - 1rem);
+            object-fit: contain;
+            position: absolute;
+            top: 1rem;
+            z-index: -1;
+            text-align: center;
+        }
+
+        .header .logo {
+            width: 100vw;
+            height: 90vh;
+            margin: 0 auto;
+            left: 0;
+            top: 5vh;
+            position: fixed;
+        }
+
+        .community-name {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-name {
+            font-size: 1.5em;
+            color: #764ba2;
+            font-weight: 600;
+            margin-bottom: 10px;
+            position: absolute;
+            top: 9rem;
+            left: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #667eea;
+        }
+
+        .quiz-title {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            animation: fadeInDown 0.8s;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .progress-dot {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .progress-dot.easy {
+            border: 4px solid #4caf50;
+        }
+
+        .progress-dot.medium {
+            border: 4px solid #ff9800;
+        }
+
+        .progress-dot.hard {
+            border: 4px solid #f44336;
+        }
+
+        .progress-dot.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.2);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .progress-dot.correct {
+            background: #4caf50;
+            color: white;
+        }
+
+        .progress-dot.wrong {
+            background: #f44336;
+            color: white;
+        }
+
+        .question-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .question-number {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .question-text {
+            font-size: 3em;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: white;
+            color: #333;
+            border: 4px solid #0000006e;
+            padding: 30px;
+            font-size: 2.5em;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: #667eea;
+        }
+
+        .option-btn.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+            animation: correctAnim 0.6s;
+        }
+
+        .option-btn.wrong {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+            animation: wrongAnim 0.6s;
+        }
+
+        @keyframes correctAnim {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes wrongAnim {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
+        }
+
+        .start-screen,
+        .end-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #4b74a2 100%);
+            border-radius: 30px;
+            z-index: 10;
+        }
+
+        .start-screen.hidden,
+        .end-screen.hidden {
+            display: none;
+        }
+
+        .start-btn,
+        .restart-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 30px 80px;
+            font-size: 2.5em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+        }
+
+        .start-btn:hover,
+        .restart-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .start-title {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 1rem;
+        }
+
+        .start-subtitle {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 1rem;
+            padding: 25px;
+        }
+
+        .rules {
+            font-size: 1.5em;
+            text-align: center;
+            margin: 30px 50px;
+            line-height: 1.8;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 1rem;
+            padding: 25px;
+        }
+
+        .result-icon {
+            font-size: 8em;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .result-text {
+            font-size: 2em;
+            text-align: center;
+            margin: 0 50px;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .next-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 30px 60px;
+            font-size: 1.8em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            margin: 0 auto;
+            display: none;
+            right: -300px;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .next-btn.visible {
+            display: block;
+            position: absolute;
+            right: 3rem;
+            top: 18rem;
+            animation: slideInFromRight 0.5s ease-out forwards;
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                right: -300px;
+                opacity: 0;
+            }
+
+            to {
+                right: 3rem;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Başlangıç Ekranı -->
+        <div class="start-screen" id="startScreen">
+            <img src="logo.png" alt="Logo" class="logo">
+            <div class="start-subtitle">BAHAR ŞENLİĞİ</div>
+            <div class="start-title">🎯 BİLGİ YARIŞMASI 🎯</div>
+            <div class="rules"> 📋 <strong>KURALLAR:</strong><br> ✅ 3 Kolay + 2 Orta + 2 Zor Soru<br> 🎁 Hepsini Doğru Bilirseniz Ödül!<br> ❌ Bir Yanlış = Eleme <br> Toplam 130 Soru Havuzu</div>
+            <button class="start-btn" onclick="startQuiz()">BAŞLA! 🚀</button>
+        </div>
+        <!-- Bitiş Ekranı -->
+        <div class="end-screen hidden" id="endScreen">
+            <div class="result-icon" id="resultIcon"></div>
+            <div class="result-title" id="resultTitle"></div>
+            <div class="result-text" id="resultText"></div>
+            <button class="restart-btn" onclick="restartQuiz()">YENİDEN DENE 🔄</button>
+        </div>
+        <!-- Oyun Ekranı -->
+        <div class="header">
+            <img src="logo.png" alt="Logo" class="logo">
+            <div class="community-name">ASÜ YAZILIM MÜHENDİSLİĞİ TOPLULUĞU</div>
+            <div class="event-name">BAHAR ŞENLİĞİ</div>
+            <div class="quiz-title">BİLGİ YARIŞMASI</div>
+        </div>
+        <div class="progress-container" id="progressContainer"></div>
+        <div class="question-container">
+            <div class="question-box">
+                <div class="question-number" id="questionNumber"></div>
+                <div class="question-text" id="questionText"></div>
+            </div>
+            <div class="options-container" id="optionsContainer"></div>
+            <button class="next-btn" id="nextBtn" onclick="nextQuestion()">SONRAKİ SORU ➡️</button>
+        </div>
+    </div>
+    <script>
+        let questions =
+        {
+            "tips": "answers always is the first option",
+            "easy": [
+                {
+                    "question": "Bilgisayarda dosyaları kalıcı olarak saklamak için hangi donanım kullanılır?",
+                    "options": ["Hard Disk (Sabit Disk)", "RAM", "İşlemci", "Ekran Kartı", "Anakart"]
+                },
+                {
+                    "question": "İnternette gezinmek için kullanılan programa ne denir?",
+                    "options": ["Tarayıcı (Browser)", "İşletim Sistemi", "Antivirüs", "Ofis Programı", "Oyun Motoru"]
+                },
+                {
+                    "question": "Ctrl+C kısayolu ne işe yarar?",
+                    "options": ["Kopyala", "Yapıştır", "Kes", "Kaydet", "Geri Al"]
+                },
+                {
+                    "question": "Google, YouTube ve Gmail hangi şirketin ürünleridir?",
+                    "options": ["Google", "Microsoft", "Apple", "Amazon", "Meta"]
+                },
+                {
+                    "question": "Bilgisayarın beyni olarak adlandırılan donanım hangisidir?",
+                    "options": ["İşlemci (CPU)", "RAM", "Hard Disk", "Ekran Kartı", "Kasa"]
+                },
+                {
+                    "question": "WhatsApp, Instagram ve Facebook hangi şirkete aittir?",
+                    "options": ["Meta", "Google", "Apple", "Twitter", "TikTok"]
+                },
+                {
+                    "question": "WiFi'nin simgesi nedir?",
+                    "options": ["Dalga şeklinde çizgiler", "Ampul", "Kilit", "Yıldız", "Kalp"]
+                },
+                {
+                    "question": "Bilgisayarda geçici bellek görevi gören donanım hangisidir?",
+                    "options": ["RAM", "Hard Disk", "SSD", "USB", "CD"]
+                },
+                {
+                    "question": "'.com' uzantısı hangi tür web siteleri için kullanılır?",
+                    "options": ["Ticari siteler", "Eğitim siteleri", "Devlet siteleri", "Organizasyon siteleri", "Kişisel siteler"]
+                },
+                {
+                    "question": "PDF dosyalarını açmak için en yaygın kullanılan program hangisidir?",
+                    "options": ["Adobe Acrobat Reader", "Microsoft Word", "Notepad", "Excel", "PowerPoint"]
+                },
+                {
+                    "question": "Hangi tuş kombinasyonu ile yapıştırma işlemi yapılır?",
+                    "options": ["Ctrl+V", "Ctrl+C", "Ctrl+X", "Ctrl+Z", "Ctrl+S"]
+                },
+                {
+                    "question": "E-posta göndermek için '@' işaretinden önce ne yazılır?",
+                    "options": ["Kullanıcı adı", "Şifre", "Domain adı", "Port numarası", "IP adresi"]
+                },
+                {
+                    "question": "Windows işletim sistemini hangi şirket geliştirmiştir?",
+                    "options": ["Microsoft", "Apple", "Google", "IBM", "Linux Foundation"]
+                },
+                {
+                    "question": "Bilgisayar virüslerinden korunmak için hangi yazılım kullanılır?",
+                    "options": ["Antivirüs", "Browser", "Word", "Excel", "PowerPoint"]
+                },
+                {
+                    "question": "YouTube'da video izlerken hangi tuşa basarsanız video duraklat/oynat olur?",
+                    "options": ["Space (Boşluk)", "Enter", "Esc", "Tab", "Shift"]
+                },
+                {
+                    "question": "Hangi uygulama görüntülü görüşme yapmak için kullanılır?",
+                    "options": ["Zoom", "Notepad", "Paint", "Calculator", "File Explorer"]
+                },
+                {
+                    "question": "Masaüstü bilgisayarlarda görüntüyü göstermek için kullanılan aygıt hangisidir?",
+                    "options": ["Monitör", "Klavye", "Mouse", "Hoparlör", "Yazıcı"]
+                },
+                {
+                    "question": "Ses dosyaları için en yaygın kullanılan format hangisidir?",
+                    "options": ["MP3", "JPG", "PDF", "EXE", "DOC"]
+                },
+                {
+                    "question": "Bilgisayarda dosyaları bulmak için hangi kısayol kullanılır?",
+                    "options": ["Ctrl+F", "Ctrl+P", "Ctrl+O", "Ctrl+N", "Ctrl+D"]
+                },
+                {
+                    "question": "iPhone'u hangi şirket üretir?",
+                    "options": ["Apple", "Samsung", "Huawei", "Xiaomi", "Google"]
+                },
+                {
+                    "question": "Netflix ne tür bir hizmet sunar?",
+                    "options": ["Film ve dizi izleme platformu", "Sosyal medya", "E-ticaret sitesi", "Oyun platformu", "Müzik dinleme"]
+                },
+                {
+                    "question": "Resim dosyaları için yaygın kullanılan format hangisidir?",
+                    "options": ["JPG", "MP3", "PDF", "TXT", "EXE"]
+                },
+                {
+                    "question": "Bilgisayarda bir işlemi geri almak için hangi kısayol kullanılır?",
+                    "options": ["Ctrl+Z", "Ctrl+Y", "Ctrl+X", "Ctrl+A", "Ctrl+B"]
+                },
+                {
+                    "question": "Spotify hangi amaçla kullanılır?",
+                    "options": ["Müzik dinlemek", "Video izlemek", "Oyun oynamak", "Alışveriş yapmak", "Sohbet etmek"]
+                },
+                {
+                    "question": "Bir web sitesinin güvenli olduğunu anlamak için adres çubuğuna ne bakmalısınız?",
+                    "options": ["HTTPS ve kilit simgesi", "Sadece www", "Sitenin rengi", "Yazı fontu", "Reklam sayısı"]
+                },
+                {
+                    "question": "Ekran görüntüsü almak için hangi tuş kullanılır?",
+                    "options": ["PrtScn (Print Screen)", "Delete", "Insert", "Home", "End"]
+                },
+                {
+                    "question": "Hangi program elektronik tablolar oluşturmak için kullanılır?",
+                    "options": ["Microsoft Excel", "Notepad", "Paint", "Calculator", "Media Player"]
+                },
+                {
+                    "question": "Twitter'da bir gönderi paylaşmak için kullanılan kelime nedir?",
+                    "options": ["Tweet", "Post", "Story", "Reel", "Snap"]
+                },
+                {
+                    "question": "USB belleklerin başka adı nedir?",
+                    "options": ["Flash bellek", "Hard disk", "SSD", "RAM", "ROM"]
+                },
+                {
+                    "question": "Hangi tuş kombinasyonu ile tüm metni seçebilirsiniz?",
+                    "options": ["Ctrl+A", "Ctrl+S", "Ctrl+D", "Ctrl+F", "Ctrl+G"]
+                },
+                {
+                    "question": "Amazon ne tür bir şirkettir?",
+                    "options": ["E-ticaret ve teknoloji", "Sadece kitap satışı", "Sosyal medya", "Oyun firması", "Otomobil üreticisi"]
+                },
+                {
+                    "question": "Hangisi bir video konferans uygulamasıdır?",
+                    "options": ["Microsoft Teams", "Photoshop", "AutoCAD", "MATLAB", "Visual Studio"]
+                },
+                {
+                    "question": "Bluetooth ne için kullanılır?",
+                    "options": ["Kablosuz veri aktarımı", "İnternet bağlantısı", "Ekran çözünürlüğü", "Ses seviyesi", "Pil durumu"]
+                },
+                {
+                    "question": "GIF dosyaları genellikle ne için kullanılır?",
+                    "options": ["Hareketli resimler", "Müzik", "Video", "Doküman", "Program"]
+                },
+                {
+                    "question": "LinkedIn hangi amaçla kullanılan bir sosyal medya platformudur?",
+                    "options": ["Profesyonel ağ oluşturma", "Fotoğraf paylaşma", "Video izleme", "Oyun oynama", "Müzik dinleme"]
+                },
+                {
+                    "question": "Bilgisayarda çöp kutusuna atılan dosyalar için İngilizce hangi terim kullanılır?",
+                    "options": ["Recycle Bin", "Trash Can", "Delete Folder", "Remove Box", "Waste Basket"]
+                },
+                {
+                    "question": "Hangi format sıkıştırılmış dosyalar için kullanılır?",
+                    "options": ["ZIP", "JPG", "MP3", "PDF", "TXT"]
+                },
+                {
+                    "question": "Google Drive ne tür bir hizmet sunar?",
+                    "options": ["Bulut depolama", "Oyun platformu", "Sosyal medya", "Video düzenleme", "Müzik üretimi"]
+                },
+                {
+                    "question": "Steam hangi amaçla kullanılan bir platformdur?",
+                    "options": ["Oyun satın alma ve oynama", "Film izleme", "Müzik dinleme", "E-ticaret", "Sosyal medya"]
+                },
+                {
+                    "question": "Bir dosyayı kalıcı olarak silmek için çöp kutusundan sonra ne yapılmalıdır?",
+                    "options": ["Çöp kutusunu boşalt", "Bilgisayarı kapat", "Antivirüs çalıştır", "İnterneti kapat", "Geri yükle"]
+                },
+                {
+                    "question": "Discord hangi amaçla kullanılan bir uygulamadır?",
+                    "options": ["Sesli ve yazılı sohbet", "Video düzenleme", "Fotoğraf düzenleme", "Ofis işleri", "Oyun geliştirme"]
+                },
+                {
+                    "question": "Windows'ta görev yöneticisini açmak için hangi tuş kombinasyonu kullanılır?",
+                    "options": ["Ctrl+Shift+Esc", "Ctrl+C", "Alt+F4", "Ctrl+P", "Windows+E"]
+                },
+                {
+                    "question": "Instagram'da hikaye paylaşımı kaç saat sonra otomatik silinir?",
+                    "options": ["24 saat", "12 saat", "48 saat", "1 hafta", "1 ay"]
+                },
+                {
+                    "question": "Twitch hangi içerik türü için popüler bir platformdur?",
+                    "options": ["Canlı yayın (özellikle oyun)", "Fotoğraf paylaşımı", "Müzik dinleme", "Belgesel izleme", "Alışveriş"]
+                },
+                {
+                    "question": "QR kod okumak için genellikle hangi cihaz kullanılır?",
+                    "options": ["Akıllı telefon kamerası", "Klavye", "Mouse", "Kulaklık", "Yazıcı"]
+                },
+                {
+                    "question": "Bir programı hızlıca kapatmak için hangi tuş kombinasyonu kullanılır?",
+                    "options": ["Alt+F4", "Ctrl+C", "Ctrl+V", "Ctrl+Z", "Windows+D"]
+                },
+                {
+                    "question": "TikTok ne tür içerikler için kullanılan bir uygulamadır?",
+                    "options": ["Kısa videolar", "Uzun filmler", "E-kitap okuma", "Harita navigasyonu", "Hava durumu"]
+                },
+                {
+                    "question": "Windows'ta dosya gezginini açmak için hangi tuş kombinasyonu kullanılır?",
+                    "options": ["Windows+E", "Ctrl+E", "Alt+E", "Shift+E", "Ctrl+F"]
+                },
+                {
+                    "question": "Canva hangi amaçla kullanılan bir araçtır?",
+                    "options": ["Grafik tasarım", "Video düzenleme", "Müzik yapma", "Kod yazma", "Veri analizi"]
+                },
+                {
+                    "question": "'.txt' uzantısı genellikle ne tür bir dosyayı ifade eder?",
+                    "options": ["Metin dosyası", "Resim dosyası", "Video dosyası", "Sıkıştırılmış dosya", "Uygulama dosyası"]
+                },
+                {
+                    "question": "Bilgisayarda yazı yazmak için en temel donanım hangisidir?",
+                    "options": ["Klavye", "Mouse", "Monitör", "Hoparlör", "Yazıcı"]
+                },
+                {
+                    "question": "Bilgisayarın ana çalışma alanı olarak görünen bölümüne ne denir?",
+                    "options": ["Masaüstü", "Menü çubuğu", "Görev yöneticisi", "Denetim masası", "Çöp kutusu"]
+                },
+                {
+                    "question": "Farede sağ tıklama genelde ne işe yarar?",
+                    "options": ["Bağlam menüsü açar", "Bilgisayarı kapatır", "İnterneti açar", "Ses seviyesini düşürür", "Ekranı kilitler"]
+                },
+                {
+                    "question": "Bir klasörde yeni klasör oluşturmak için yaygın kullanılan kısayol hangisidir?",
+                    "options": ["Ctrl+Shift+N", "Ctrl+N", "Ctrl+Alt+N", "Alt+N", "Shift+N"]
+                },
+                {
+                    "question": "Telefon ve bilgisayarda uygulamaları çalıştıran temel yazılım türü hangisidir?",
+                    "options": ["İşletim sistemi", "Tarayıcı", "Virüs temizleyici", "Ofis paketi", "Sürücü"]
+                }
+            ],
+            "mid": [
+                {
+                    "question": "Big O notasyonunda O(log n) karmaşıklığına sahip arama algoritması hangisidir?",
+                    "options": ["Binary Search", "Linear Search", "Bubble Sort", "Selection Sort", "Insertion Sort"]
+                },
+                {
+                    "question": "SOLID prensiplerinde 'S' harfi neyi temsil eder?",
+                    "options": ["Single Responsibility", "Simple", "Structured", "Synchronized", "Sequential"]
+                },
+                {
+                    "question": "Hangisi bir creational design pattern'dir?",
+                    "options": ["Singleton", "Observer", "Strategy", "Decorator", "Adapter"]
+                },
+                {
+                    "question": "SQL'de INNER JOIN ne yapar?",
+                    "options": ["İki tabloda eşleşen kayıtları getirir", "Tüm kayıtları getirir", "Sadece sol tabloyu getirir", "Sadece sağ tabloyu getirir", "Hiçbir kayıt getirmez"
+                    ]
+                },
+                {
+                    "question": "DNS'in temel görevi nedir?",
+                    "options": ["Alan adlarını IP adreslerine çevirmek", "Dosyaları sıkıştırmak", "Veri şifrelemek", "Virüs taraması yapmak", "Ekran çözünürlüğünü ayarlamak"
+                    ]
+                },
+                {
+                    "question": "HTTP ile HTTPS arasındaki temel fark nedir?",
+                    "options": ["HTTPS şifreli iletişim sağlar", "HTTPS daha yavaştır çünkü resim göstermez", "HTTP sadece mobilde çalışır", "HTTP her zaman güvenlidir", "Aralarında fark yoktur"
+                    ]
+                },
+                {
+                    "question": "Stack veri yapısı hangi prensiple çalışır?",
+                    "options": ["LIFO", "FIFO", "Random access", "Binary search", "Hashing"]
+                },
+                {
+                    "question": "Veritabanı normalizasyonunun temel amacı nedir?",
+                    "options": ["Veri tekrarını azaltmak", "Sunucu sayısını artırmak", "Şifrelemeyi kaldırmak", "Sorgu yazmayı zorlaştırmak", "İnternet hızını artırmak"
+                    ]
+                },
+                {
+                    "question": "API endpoint neyi ifade eder?",
+                    "options": ["Bir servisin erişim adresi", "Bir veritabanı tablosu", "Bir CSS sınıfı", "Bir hata kodu", "Bir şifreleme yöntemi"]
+                },
+                {
+                    "question": "Git'te rebase işlemi genel olarak ne için kullanılır?",
+                    "options": ["Commit geçmişini yeniden düzenlemek", "Dosya silmek", "Yeni repo açmak", "Uzak sunucu kurmak", "Branch adını değiştirmek"]
+                },
+                {
+                    "question": "Encapsulation kavramı neyi sağlar?",
+                    "options": ["Veri ve davranışı tek yapıda toplayıp iç detayı gizler", "Kodun her yerden serbestçe değişmesini sağlar", "Sadece fonksiyonları kullanır", "Belleği otomatik siler", "Ağ gecikmesini azaltır"
+                    ]
+                },
+                {
+                    "question": "RESTful API'de kaynak oluşturmak için hangi HTTP metodu kullanılır?",
+                    "options": ["POST", "GET", "PUT", "DELETE", "PATCH"]
+                },
+                {
+                    "question": "Deadlock oluşması için gerekli koşul sayısı kaçtır?",
+                    "options": ["4", "2", "3", "5", "6"]
+                },
+                {
+                    "question": "Linked List veri yapısının avantajı nedir?",
+                    "options": ["Dinamik boyutlandırma", "Sabit boyut", "Daha hızlı arama", "Daha az bellek", "Random access"]
+                },
+                {
+                    "question": "Hangi HTTP status code başarılı bir istek için döner?",
+                    "options": ["200", "404", "500", "301", "403"]
+                },
+                {
+                    "question": "Polymorphism hangi programlama paradigmasının özelliğidir?",
+                    "options": ["Object-Oriented", "Functional", "Procedural", "Logic", "Imperative"]
+                },
+                {
+                    "question": "Quick Sort algoritmasının average case zaman karmaşıklığı nedir?",
+                    "options": ["O(n log n)", "O(n²)", "O(n)", "O(log n)", "O(1)"]
+                },
+                {
+                    "question": "Hangi veri yapısı Queue prensibiyle çalışır?",
+                    "options": ["FIFO yapısı", "LIFO yapısı", "Random access", "Binary tree", "Hash table"]
+                },
+                {
+                    "question": "CI/CD'de 'CI' neyi ifade eder?",
+                    "options": ["Continuous Integration", "Code Integration", "Central Integration", "Continuous Implementation", "Code Implementation"]
+                },
+                {
+                    "question": "SQL'de PRIMARY KEY'in özelliği nedir?",
+                    "options": ["Unique ve NULL olamaz", "NULL olabilir", "Duplicate olabilir", "Opsiyoneldir", "Her tabloda birden fazla olabilir"]
+                },
+                {
+                    "question": "Hangisi bir behavioral design pattern'dir?",
+                    "options": ["Observer", "Factory", "Singleton", "Proxy", "Composite"]
+                },
+                {
+                    "question": "TCP/IP modelinde kaç katman vardır?",
+                    "options": ["4", "7", "5", "3", "6"]
+                },
+                {
+                    "question": "Hash table'da collision çözümü için kullanılan yöntemlerden biri hangisidir?",
+                    "options": ["Chaining", "Sorting", "Indexing", "Caching", "Pooling"]
+                },
+                {
+                    "question": "Agile metodolojisinde sprint süresi genellikle ne kadardır?",
+                    "options": ["2-4 hafta", "1 hafta", "6 ay", "1 ay", "3 ay"]
+                },
+                {
+                    "question": "Dependency Injection hangi SOLID prensibini destekler?",
+                    "options": ["Dependency Inversion", "Single Responsibility", "Open/Closed", "Liskov Substitution", "Interface Segregation"]
+                },
+                {
+                    "question": "Hangisi asenkron programlama konseptidir?",
+                    "options": ["Promise", "Loop", "Array", "String", "Integer"]
+                },
+                {
+                    "question": "Binary Search Tree'de inorder traversal hangi sıralamayı verir?",
+                    "options": ["Artan sıralama", "Azalan sıralama", "Random sıralama", "Sabit sıralama", "Ters sıralama"]
+                },
+                {
+                    "question": "Mikroservis mimarisinde servisler arası iletişim için yaygın kullanılan protokol hangisidir?",
+                    "options": ["HTTP/REST", "FTP", "SMTP", "Telnet", "SSH"]
+                },
+                {
+                    "question": "SQL'de GROUP BY ile birlikte kullanılan aggregate fonksiyon hangisidir?",
+                    "options": ["COUNT()", "SELECT()", "WHERE()", "JOIN()", "ORDER()"]
+                },
+                {
+                    "question": "Array ve Linked List karşılaştırıldığında Array'in avantajı nedir?",
+                    "options": ["Index ile hızlı erişim (O(1))", "Dinamik boyut", "Kolay ekleme/silme", "Daha az bellek kullanır", "Daha esnek yapı"]
+                },
+                {
+                    "question": "Hangi veri yapısı graph traversal için kullanılır?",
+                    "options": ["BFS ve DFS", "Binary Search", "Quick Sort", "Merge Sort", "Heap Sort"]
+                },
+                {
+                    "question": "Docker container'ı VM'den ayıran temel özellik nedir?",
+                    "options": ["OS kernel'ı paylaşır", "Daha yavaştır", "Daha fazla yer kaplar", "Sadece Linux'ta çalışır", "Daha güvensizdir"]
+                },
+                {
+                    "question": "Test-Driven Development (TDD) döngüsünün doğru sırası nedir?",
+                    "options": ["Red-Green-Refactor", "Green-Red-Refactor", "Refactor-Red-Green", "Test-Code-Deploy", "Code-Test-Deploy"]
+                },
+                {
+                    "question": "SQL injection saldırısından korunmak için hangi yöntem kullanılır?",
+                    "options": ["Prepared Statements", "String concatenation", "Direct query", "No validation", "Plain text passwords"]
+                },
+                {
+                    "question": "Recursive fonksiyonların potansiyel problemi nedir?",
+                    "options": ["Stack overflow riski", "Çok hızlı çalışır", "Bellek tasarrufu sağlar", "Her zaman daha verimlidir", "Kullanımı yasaktır"]
+                },
+                {
+                    "question": "MVC mimarisinde 'M' neyi temsil eder?",
+                    "options": ["Model", "Manager", "Module", "Method", "Mapper"]
+                },
+                {
+                    "question": "Git'te branch birleştirmek için hangi komut kullanılır?",
+                    "options": ["git merge", "git combine", "git join", "git unite", "git blend"]
+                },
+                {
+                    "question": "Hangi konsept functional programming'in temel özelliğidir?",
+                    "options": ["Immutability", "Inheritance", "Encapsulation", "Polymorphism", "Abstraction"]
+                },
+                {
+                    "question": "CAP teoreminde 'A' harfi neyi ifade eder?",
+                    "options": ["Availability", "Accuracy", "Agility", "Authentication", "Authorization"]
+                },
+                {
+                    "question": "Bir algoritmanın 'Time Complexity' terimi neyi ifade eder?",
+                    "options": ["Çalışma süresi verimliliği", "Bellek kullanımı", "Kod uzunluğu", "Satır sayısı", "Döngü sayısı"]
+                },
+                {
+                    "question": "Kubernetes'te en küçük deploy edilebilir birim nedir?",
+                    "options": ["Pod", "Container", "Node", "Cluster", "Service"]
+                },
+                {
+                    "question": "Hangi protokol güvenli veri iletimi sağlar?",
+                    "options": ["HTTPS", "HTTP", "FTP", "Telnet", "SMTP"]
+                },
+                {
+                    "question": "Kompozisyon vs Inheritance arasında hangisi tercih edilir?",
+                    "options": ["Kompozisyon (Composition over Inheritance)", "Her zaman Inheritance", "İkisi eşittir", "Hiçbiri kullanılmaz", "Duruma göre değişmez"
+                    ]
+                },
+                {},
+                {
+                    "question": "ABA problemi en çok hangi atomik operasyon ailesiyle ilişkilidir?",
+                    "options": ["Compare-and-swap (CAS)", "Sorting", "Garbage collection", "DNS lookup", "Context switching"]
+                },
+                {
+                    "question": "Byzantine fault tolerance için minimum node sayısı hangi formülle ifade edilir?",
+                    "options": ["3f + 1", "2f + 1", "f + 1", "4f - 1", "2f - 1"]
+                },
+                {
+                    "question": "Lamport timestamp'ların temel amacı nedir?",
+                    "options": ["Olaylar arasında mantıksal sıralama kurmak", "RAM kullanımını azaltmak", "Disk I/O'yu hızlandırmak", "Hash çakışmasını önlemek", "Ağ paketlerini sıkıştırmak"
+                    ]
+                },
+                {
+                    "question": "Snapshot isolation'ın bilinen anomalisi hangisidir?",
+                    "options": ["Write skew", "Dirty read", "Phantom read", "Lost update", "Starvation"]
+                },
+                {
+                    "question": "Quorum tabanlı bir sistemde R + W > N koşulu neyi amaçlar?",
+                    "options": ["Güncel okuma garantisini güçlendirmek", "Disk alanını azaltmak", "Şifrelemeyi devre dışı bırakmak", "Yalnızca yazmayı hızlandırmak", "Cache'i tamamen kaldırmak"
+                    ]
+                },
+                {
+                    "question": "ZooKeeper'da ephemeral node ne zaman silinir?",
+                    "options": ["Session sona erdiğinde", "Her read işleminde", "Disk dolduğunda", "Node yeniden başlatıldığında", "Leader değiştiğinde"]
+                },
+                {
+                    "question": "Gossip protocol'un temel avantajı nedir?",
+                    "options": ["Ölçeklenebilir ve dayanıklı bilgi yayılımı sağlaması", "Tek bir merkezi sunucuyu zorunlu kılması", "Her zaman tam senkron çalışması", "Çakışma ihtimalini sıfırlaması", "Ağ gecikmesini ortadan kaldırması"
+                    ]
+                },
+                {
+                    "question": "Redis hangi tür bir veritabanıdır?",
+                    "options": ["In-memory key-value store", "Relational database", "Graph database", "Document database", "Time-series database"]
+                },
+                {
+                    "question": "WebSocket'in HTTP'den farkı nedir?",
+                    "options": ["Çift yönlü iletişim sağlar", "Daha yavaştır", "Daha güvensizdir", "Sadece text gönderir", "Deprecated'dır"]
+                },
+                {
+                    "question": "Hangi veri yapısı LRU Cache implementasyonunda kullanılır?",
+                    "options": ["Doubly Linked List + Hash Map", "Array", "Single Linked List", "Binary Tree", "Stack"]
+                },
+                {
+                    "question": "OAuth 2.0'da access token'ın amacı nedir?",
+                    "options": ["Yetkilendirme sağlamak", "Şifre saklamak", "Veri şifrelemek", "Session yönetmek", "Cookie oluşturmak"]
+                }
+            ],
+            "hard": [
+                {
+                    "question": "Java'da String pool memory leak'e neden olabilir mi ve neden?",
+                    "options": ["Evet, intern() method'u dikkatli kullanılmazsa", "Hayır, GC otomatik temizler", "Sadece Java 8'de olur", "Sadece heap'te olur", "String immutable olduğu için olmaz"
+                    ]
+                },
+                {
+                    "question": "Eventual consistency hangi CAP bileşenlerini tercih eder?",
+                    "options": ["Availability ve Partition Tolerance", "Consistency ve Availability", "Consistency ve Partition Tolerance", "Sadece Consistency", "Üçünü de dengeler"
+                    ]
+                },
+                {
+                    "question": "CPU cache coherence problemi nasıl çözülür?",
+                    "options": ["MESI protokolü ile", "Daha fazla RAM ile", "Daha hızlı disk ile", "Virtual memory ile", "Garbage collection ile"]
+                },
+                {
+                    "question": "Time complexity O(n) olan sorting algoritması hangi özel durumda mümkündür?",
+                    "options": ["Counting Sort (limited range integers)", "Quick Sort", "Merge Sort", "Heap Sort", "Bubble Sort"]
+                },
+                {
+                    "question": "React'te Virtual DOM diffing algoritması hangi prensibi kullanır?",
+                    "options": ["Heuristic O(n) tree diffing", "O(n³) tree comparison", "O(log n) binary search", "O(n²) matrix comparison", "O(1) constant time"
+                    ]
+                },
+                {
+                    "question": "Database transaction'da Phantom Read hangi isolation level'da çözülür?",
+                    "options": ["Serializable", "Read Uncommitted", "Read Committed", "Repeatable Read", "Hiçbirinde çözülmez"]
+                },
+                {
+                    "question": "B+ Tree'nin B-Tree'ye göre avantajı nedir?",
+                    "options": ["Sequential access daha hızlı (leaf nodes linked)", "Daha az yer kaplar", "Insert daha hızlıdır", "Delete daha hızlıdır", "Daha basit implementasyona sahiptir"
+                    ]
+                },
+                {
+                    "question": "JavaScript event loop'ta microtask ve macrotask arasındaki fark nedir?",
+                    "options": ["Microtask önce çalışır (Promise > setTimeout)", "Macrotask önce çalışır", "İkisi eşit önceliğe sahiptir", "Sadece Node.js'te fark vardır", "Artık kullanılmıyor"
+                    ]
+                },
+                {
+                    "question": "Distributed sistemlerde Two-Phase Commit protokolünün dezavantajı nedir?",
+                    "options": ["Coordinator failure durumunda blocking olur", "Çok hızlıdır", "Çok basittir", "Tek makinede çalışır", "Garantili consistency sağlar"
+                    ]
+                },
+                {
+                    "question": "JVM'de Young Generation için kullanılan GC algoritması hangisidir?",
+                    "options": ["Copy/Copying Algorithm", "Mark and Sweep", "Reference Counting", "Mark and Compact", "Concurrent Mark Sweep"]
+                },
+                {
+                    "question": "Consistent Hashing'in avantajı nedir?",
+                    "options": ["Node ekleme/çıkarmada minimal key redistribution", "Daha hızlı hash hesaplama", "Collision olmaz", "Daha az bellek kullanır", "Şifreleme sağlar"
+                    ]
+                },
+                {
+                    "question": "TCP'de TIME_WAIT state neden gereklidir?",
+                    "options": ["Geç gelen paketleri handle etmek için", "Bağlantıyı hızlandırmak için", "Bellek tasarrufu için", "Güvenlik için", "Deprecated bir özelliktir"
+                    ]
+                },
+                {
+                    "question": "Skip List veri yapısının avantajı nedir?",
+                    "options": ["Probabilistic O(log n) ile basit implementation", "Kesin O(log n) garantisi", "O(1) search", "Daha az bellek kullanır", "Multithreading gerektirmez"
+                    ]
+                },
+                {
+                    "question": "MVCC (Multi-Version Concurrency Control) hangi sorunu çözer?",
+                    "options": ["Readers writers'ı bloklamaz", "Deadlock'u tamamen önler", "Transaction gereğini ortadan kaldırır", "Disk I/O'yu azaltır", "Network latency'yi düşürür"
+                    ]
+                },
+                {
+                    "question": "Memory Fence (Barrier) ne için kullanılır?",
+                    "options": ["Instruction reordering'i kontrol etmek", "Memory leak'i önlemek", "Garbage collection'ı tetiklemek", "Cache'i temizlemek", "RAM'i artırmak"
+                    ]
+                },
+                {
+                    "question": "Raft consensus algoritmasında fault-tolerant cluster için minimum node sayısı nedir?",
+                    "options": ["3 (fault tolerance için)", "2", "1", "5", "10"]
+                },
+                {
+                    "question": "Copy-on-Write (CoW) hangi durumda performans avantajı sağlar?",
+                    "options": ["Read-heavy workloads", "Write-heavy workloads", "Her durumda", "Hiçbir durumda", "Sadece embedded sistemlerde"]
+                },
+                {
+                    "question": "Modern SQL query optimizer hangi yaklaşımı kullanır?",
+                    "options": ["Cost-based optimization (statistics ile)", "Random plan selection", "Her zaman full table scan", "Sadece index kullanır", "İlk bulunan plan"
+                    ]
+                },
+                {
+                    "question": "Circuit Breaker pattern'de istekler reddedilip fail-fast davranışı hangi durumda olur?",
+                    "options": ["Open state", "Closed state", "Half-open state", "Failed state", "Retry state"]
+                },
+                {
+                    "question": "Zero-copy hangi sistem çağrısıyla sağlanır?",
+                    "options": ["sendfile() / splice()", "read() + write()", "malloc()", "fork()", "exec()"]
+                }
+            ]
+        }
+            ;
+        let currentQuestionIndex = 0;
+        let selectedQuestions = [];
+        let correctAnswers = 0;
+        let answered = false;
+
+        // Rastgele soru seç
+        function getRandomQuestions() {
+            const easy = shuffleArray([...questions.easy]).slice(0, 3);
+            const mid = shuffleArray([...questions.mid]).slice(0, 2);
+            const hard = shuffleArray([...questions.hard]).slice(0, 2);
+
+            return [
+                ...easy.map(q => ({ ...q, difficulty: 'easy', label: 'Kolay' })),
+                ...mid.map(q => ({ ...q, difficulty: 'medium', label: 'Orta' })),
+                ...hard.map(q => ({ ...q, difficulty: 'hard', label: 'Zor' }))
+            ];
+        }
+
+        // Array'i karıştır
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Yarışmayı başlat
+        async function startQuiz() {
+            selectedQuestions = getRandomQuestions();
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+
+            document.getElementById('startScreen').classList.add('hidden');
+            createProgressDots();
+            showQuestion();
+        }
+
+        // İlerleme noktalarını oluştur
+        function createProgressDots() {
+            const container = document.getElementById('progressContainer');
+            container.innerHTML = '';
+
+            selectedQuestions.forEach((q, index) => {
+                const dot = document.createElement('div');
+                dot.className = `progress-dot ${q.difficulty}`;
+                dot.textContent = index + 1;
+                dot.id = `dot-${index}`;
+                container.appendChild(dot);
+            });
+        }
+
+        // Soruyu göster
+        function showQuestion() {
+            answered = false;
+            document.getElementById('nextBtn').classList.remove('visible');
+
+            const question = selectedQuestions[currentQuestionIndex];
+
+            // İlerleme noktasını aktif yap
+            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === currentQuestionIndex) {
+                    dot.classList.add('active');
+                }
+            });
+
+            // Soru bilgilerini göster
+            document.getElementById('questionNumber').textContent =
+                `Soru ${currentQuestionIndex + 1} / 7 - ${question.label}`;
+            document.getElementById('questionText').textContent = question.question;
+
+            // Şıkları karıştır ve göster
+            const shuffledOptions = shuffleArray([...question.options]);
+            const correctAnswer = question.options[0]; // İlk şık her zaman doğru
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            shuffledOptions.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = option;
+                btn.onclick = () => selectAnswer(option, correctAnswer, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        // Cevap seç
+        function selectAnswer(selected, correct, clickedBtn) {
+            if (answered) return;
+            answered = true;
+
+            const isCorrect = selected === correct;
+            const allBtns = document.querySelectorAll('.option-btn');
+
+            // Tüm butonları devre dışı bırak
+            allBtns.forEach(btn => {
+                btn.style.pointerEvents = 'none';
+                if (btn.textContent === correct) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            if (!isCorrect) {
+                clickedBtn.classList.add('wrong');
+            }
+
+            // İlerleme noktasını güncelle
+            const currentDot = document.getElementById(`dot-${currentQuestionIndex}`);
+            if (isCorrect) {
+                currentDot.classList.add('correct');
+                correctAnswers++;
+
+                // Son soru mu kontrol et
+                setTimeout(() => {
+                    if (currentQuestionIndex === selectedQuestions.length - 1) {
+                        showEndScreen(true);
+                    } else {
+                        document.getElementById('nextBtn').classList.add('visible');
+                    }
+                }, 500);
+                setTimeout(() => {
+                    nextQuestion();
+                }, 2500);
+            } else {
+                currentDot.classList.add('wrong');
+                setTimeout(() => {
+                    showEndScreen(false);
+                }, 3000);
+            }
+        }
+
+        // Sonraki soru
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        // Bitiş ekranını göster
+        function showEndScreen(won) {
+            const endScreen = document.getElementById('endScreen');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultText = document.getElementById('resultText');
+
+            if (won) {
+                resultIcon.textContent = '🎉';
+                resultTitle.textContent = 'TEBRİKLER! 🏆';
+                resultText.textContent = `Tüm soruları doğru bildiniz!\n7/7 doğru cevap!\n\nÖdülünüzü almayı unutmayın! 🎁`;
+                createConfetti();
+            } else {
+                resultIcon.textContent = '😔';
+                resultTitle.textContent = 'Maalesef!';
+                resultText.textContent = `Yanlış cevap verdiniz!\n${correctAnswers}/7 doğru cevap\n\nBir dahaki sefere tekrar deneyin! 💪`;
+            }
+
+            endScreen.classList.remove('hidden');
+        }
+
+        // Konfeti efekti
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.getElementById('endScreen').appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+
+        // Yeniden başlat
+        function restartQuiz() {
+            document.getElementById('endScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>
