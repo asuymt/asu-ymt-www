@@ -1007,6 +1007,7 @@
         let selectedQuestions = [];
         let correctAnswers = 0;
         let answered = false;
+        let autoRestartTimeout = null;
 
         // Rastgele soru seç
         function getRandomQuestions() {
@@ -1149,6 +1150,11 @@
             const resultTitle = document.getElementById('resultTitle');
             const resultText = document.getElementById('resultText');
 
+            if (autoRestartTimeout) {
+                clearTimeout(autoRestartTimeout);
+                autoRestartTimeout = null;
+            }
+
             if (won) {
                 resultIcon.textContent = '🎉';
                 resultTitle.textContent = 'TEBRİKLER! 🏆';
@@ -1158,6 +1164,11 @@
                 resultIcon.textContent = '😔';
                 resultTitle.textContent = 'Maalesef!';
                 resultText.textContent = `Yanlış cevap verdiniz!\n${correctAnswers}/7 doğru cevap\n\nBir dahaki sefere tekrar deneyin! 💪`;
+
+                // 3 saniye içinde butona basılmazsa otomatik başlangıç ekranına dön.
+                autoRestartTimeout = setTimeout(() => {
+                    restartQuiz();
+                }, 5000);
             }
 
             endScreen.classList.remove('hidden');
@@ -1182,6 +1193,11 @@
 
         // Yeniden başlat
         function restartQuiz() {
+            if (autoRestartTimeout) {
+                clearTimeout(autoRestartTimeout);
+                autoRestartTimeout = null;
+            }
+
             document.getElementById('endScreen').classList.add('hidden');
             document.getElementById('startScreen').classList.remove('hidden');
         }
